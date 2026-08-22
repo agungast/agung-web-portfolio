@@ -7,7 +7,7 @@ const { showToast } = useToast()
 const titles = [
   'Front-End Developer',
   'Vue.js & Nuxt Specialist',
-  'UI/UX Enthusiast',
+  'UI/UX Designer',
   'Informatics Student'
 ]
 
@@ -68,7 +68,7 @@ function copyEmail() {
     navigator.clipboard.writeText(email).then(() => {
       showToast('Email address copied to clipboard!', 'success')
     }).catch(() => {
-      showToast('Email: agunghadi.astanto@gmail.com', 'info')
+      showToast('Email: agunghaast14@gmail.com', 'info')
     })
   } else {
     showToast('Email: agunghadi.astanto@gmail.com', 'info')
