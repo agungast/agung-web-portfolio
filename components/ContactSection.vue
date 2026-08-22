@@ -1,89 +1,340 @@
 <script setup lang="ts">
+import { ref, reactive } from 'vue'
+import { useToast } from '../composables/useToast'
+
+const { showToast } = useToast()
+
 const form = reactive({
   name: '',
   email: '',
+  subject: '',
   message: ''
 })
 
+const isSubmitting = ref(false)
 const sent = ref(false)
 
 function submit() {
-  sent.value = true
+  if (!form.name || !form.email || !form.message) {
+    showToast('Please fill in all required fields.', 'warning')
+    return
+  }
+
+  isSubmitting.value = true
+
+  // Simulate network request
+  setTimeout(() => {
+    isSubmitting.value = false
+    sent.value = true
+    showToast('Message sent successfully! I will reply soon.', 'success')
+  }, 1200)
+}
+
+function resetForm() {
+  sent.value = false
   form.name = ''
   form.email = ''
+  form.subject = ''
   form.message = ''
+}
+
+function copyEmail() {
+  const email = 'agunghadi.astanto@gmail.com'
+  if (navigator.clipboard) {
+    navigator.clipboard.writeText(email).then(() => {
+      showToast('Email address copied to clipboard!', 'success')
+    })
+  } else {
+    showToast(`Email: ${email}`, 'info')
+  }
 }
 </script>
 
 <template>
-  <section id="kontak" class="section">
-    <div class="container contact-inner">
-      <div>
-        <h2 class="section-title">Hubungi <span>Saya</span></h2>
+  <section id="contact" class="section">
+    <div class="container">
+      <div class="section-header">
+        <span class="section-badge">Get In Touch</span>
+        <h2 class="section-title">Let's Work <span>Together</span></h2>
         <p class="section-subtitle">
-          Punya proyek menarik atau sekadar ingin menyapa? Kirim pesan lewat form ini.
+          Have an exciting project in mind, an opportunity, or simply want to chat? Drop me a message!
         </p>
-        <ul class="info">
-          <li><strong>Email:</strong> nama@email.com</li>
-          <li><strong>Lokasi:</strong> Indonesia</li>
-        </ul>
       </div>
 
-      <form class="card form" @submit.prevent="submit">
-        <label>
-          Nama
-          <input v-model="form.name" type="text" required placeholder="Nama Anda">
-        </label>
-        <label>
-          Email
-          <input v-model="form.email" type="email" required placeholder="nama@email.com">
-        </label>
-        <label>
-          Pesan
-          <textarea v-model="form.message" rows="4" required placeholder="Tulis pesan Anda..." />
-        </label>
-        <button type="submit" class="btn btn-primary">Kirim Pesan</button>
-        <p v-if="sent" class="success">Terima kasih! Pesan Anda sudah terkirim.</p>
-      </form>
+      <div class="contact-grid">
+        <!-- Contact Information & Quick Channels -->
+        <div class="contact-info">
+          <div class="info-card card">
+            <h3>Contact Details</h3>
+            <p class="info-desc">
+              Feel free to reach out via email or connect with me directly across my social platforms.
+            </p>
+
+            <div class="contact-channels">
+              <div class="channel-item" @click="copyEmail">
+                <div class="channel-icon">📧</div>
+                <div class="channel-text">
+                  <span class="channel-label">Email (Click to copy)</span>
+                  <span class="channel-val">agunghadi.astanto@gmail.com</span>
+                </div>
+              </div>
+
+              <div class="channel-item">
+                <div class="channel-icon">📍</div>
+                <div class="channel-text">
+                  <span class="channel-label">Location</span>
+                  <span class="channel-val">Indonesia 🇮🇩</span>
+                </div>
+              </div>
+
+              <div class="channel-item">
+                <div class="channel-icon">⚡</div>
+                <div class="channel-text">
+                  <span class="channel-label">Response Time</span>
+                  <span class="channel-val">&lt; 24 Hours</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="social-links">
+              <a
+                href="https://github.com"
+                target="_blank"
+                rel="noopener"
+                class="social-btn"
+                aria-label="GitHub"
+              >
+                GitHub &rarr;
+              </a>
+              <a
+                href="https://linkedin.com"
+                target="_blank"
+                rel="noopener"
+                class="social-btn"
+                aria-label="LinkedIn"
+              >
+                LinkedIn &rarr;
+              </a>
+            </div>
+          </div>
+        </div>
+
+        <!-- Interactive Contact Form -->
+        <div class="contact-form-container">
+          <form
+            v-if="!sent"
+            class="card contact-form"
+            @submit.prevent="submit"
+          >
+            <div class="form-row">
+              <div class="form-group">
+                <label for="name">Your Name <span class="req">*</span></label>
+                <input
+                  id="name"
+                  v-model="form.name"
+                  type="text"
+                  required
+                  placeholder="e.g. Jane Doe"
+                >
+              </div>
+
+              <div class="form-group">
+                <label for="email">Your Email <span class="req">*</span></label>
+                <input
+                  id="email"
+                  v-model="form.email"
+                  type="email"
+                  required
+                  placeholder="e.g. jane@example.com"
+                >
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <input
+                id="subject"
+                v-model="form.subject"
+                type="text"
+                placeholder="Project Inquiry / Job Opportunity"
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="message">Message <span class="req">*</span></label>
+              <textarea
+                id="message"
+                v-model="form.message"
+                rows="5"
+                required
+                placeholder="Tell me about your project, goals, or timeline..."
+              />
+            </div>
+
+            <button
+              type="submit"
+              class="btn btn-primary submit-btn"
+              :disabled="isSubmitting"
+            >
+              <span v-if="isSubmitting" class="spinner" />
+              <span v-if="isSubmitting">Sending Message...</span>
+              <span v-else>Send Message &rarr;</span>
+            </button>
+          </form>
+
+          <!-- Success Feedback View -->
+          <div v-else class="card success-card">
+            <div class="success-icon">🎉</div>
+            <h3>Thank You!</h3>
+            <p>Your message has been received. I will get back to you as soon as possible.</p>
+            <button class="btn btn-outline" @click="resetForm">
+              Send Another Message
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 </template>
 
 <style scoped>
-.contact-inner {
+.contact-grid {
   display: grid;
-  grid-template-columns: 1fr 1.2fr;
-  gap: 48px;
+  grid-template-columns: 1fr 1.35fr;
+  gap: 36px;
+  align-items: start;
 }
 
-.info {
-  list-style: none;
-  display: grid;
-  gap: 10px;
+.info-card {
+  padding: 36px;
+  background: rgba(21, 28, 44, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+.info-card h3 {
+  font-size: 1.4rem;
+  margin-bottom: 12px;
+}
+
+.info-desc {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.6;
+  margin-bottom: 28px;
+}
+
+.contact-channels {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 32px;
+}
+
+.channel-item {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 14px 16px;
+  border-radius: 12px;
+  background: rgba(35, 48, 74, 0.3);
+  border: 1px solid var(--border);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.channel-item:hover {
+  background: rgba(56, 189, 248, 0.08);
+  border-color: var(--accent);
+  transform: translateX(4px);
+}
+
+.channel-icon {
+  font-size: 1.5rem;
+}
+
+.channel-text {
+  display: flex;
+  flex-direction: column;
+}
+
+.channel-label {
+  font-size: 0.78rem;
   color: var(--muted);
+  font-weight: 600;
+  text-transform: uppercase;
 }
 
-.form {
-  padding: 28px;
+.channel-val {
+  font-size: 0.95rem;
+  font-weight: 600;
+  color: var(--text);
+}
+
+.social-links {
+  display: flex;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.social-btn {
+  padding: 8px 18px;
+  border-radius: 10px;
+  background: rgba(35, 48, 74, 0.5);
+  border: 1px solid var(--border);
+  color: var(--accent);
+  font-size: 0.88rem;
+  font-weight: 600;
+  transition: all 0.2s ease;
+}
+
+.social-btn:hover {
+  background: rgba(56, 189, 248, 0.15);
+  border-color: var(--accent);
+  transform: translateY(-2px);
+}
+
+/* Form */
+.contact-form {
+  padding: 36px;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  background: rgba(21, 28, 44, 0.7);
+  backdrop-filter: blur(12px);
+}
+
+.form-row {
   display: grid;
+  grid-template-columns: 1fr 1fr;
   gap: 18px;
 }
 
-.form label {
-  display: grid;
-  gap: 6px;
-  font-size: 0.9rem;
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.form-group label {
+  font-size: 0.88rem;
   font-weight: 600;
+  color: var(--text-secondary);
+}
+
+.req {
+  color: var(--accent);
 }
 
 input,
 textarea {
-  background: var(--bg-soft);
+  background: rgba(11, 15, 25, 0.8);
   border: 1px solid var(--border);
-  border-radius: 10px;
-  padding: 12px 14px;
+  border-radius: 12px;
+  padding: 13px 16px;
   color: var(--text);
-  font: inherit;
+  font-family: inherit;
+  font-size: 0.95rem;
+  transition: all 0.2s ease;
   resize: vertical;
 }
 
@@ -91,15 +342,61 @@ input:focus,
 textarea:focus {
   outline: none;
   border-color: var(--accent);
+  box-shadow: 0 0 0 3px rgba(56, 189, 248, 0.15);
+  background: rgba(11, 15, 25, 0.95);
 }
 
-.success {
-  color: #34d399;
-  font-size: 0.9rem;
+.submit-btn {
+  padding: 15px;
+  font-size: 1rem;
+  margin-top: 8px;
 }
 
-@media (max-width: 768px) {
-  .contact-inner {
+.spinner {
+  width: 18px;
+  height: 18px;
+  border: 2px solid rgba(11, 15, 25, 0.3);
+  border-top-color: #0b0f19;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.success-card {
+  padding: 50px 36px;
+  text-align: center;
+  background: rgba(21, 28, 44, 0.7);
+  backdrop-filter: blur(12px);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 14px;
+}
+
+.success-icon {
+  font-size: 3.5rem;
+}
+
+.success-card h3 {
+  font-size: 1.6rem;
+  color: var(--text);
+}
+
+.success-card p {
+  color: var(--muted);
+  max-width: 400px;
+  margin-bottom: 12px;
+}
+
+@media (max-width: 860px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .form-row {
     grid-template-columns: 1fr;
   }
 }

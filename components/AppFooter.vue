@@ -1,11 +1,30 @@
 <template>
   <footer class="footer">
     <div class="container footer-inner">
-      <p>&copy; {{ new Date().getFullYear() }} Nama Saya. Dibuat dengan Nuxt.</p>
-      <div class="socials">
-        <a href="https://github.com" target="_blank" rel="noopener">GitHub</a>
-        <a href="https://linkedin.com" target="_blank" rel="noopener">LinkedIn</a>
-        <a href="https://instagram.com" target="_blank" rel="noopener">Instagram</a>
+      <div class="footer-brand">
+        <span class="brand-title">&lt;Agung.dev /&gt;</span>
+        <p class="brand-desc">
+          Building thoughtful, interactive, and modern web experiences.
+        </p>
+      </div>
+
+      <div class="footer-nav">
+        <a href="#home">Home</a>
+        <a href="#about">About</a>
+        <a href="#skills">Skills</a>
+        <a href="#projects">Projects</a>
+        <a href="#contact">Contact</a>
+      </div>
+
+      <div class="footer-bottom">
+        <p class="copy">
+          &copy; {{ new Date().getFullYear() }} Agung Hadi Astanto. Crafted with Vue 3 &amp; Nuxt 3.
+        </p>
+        <div class="socials">
+          <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a href="mailto:agunghadi.astanto@gmail.com" aria-label="Email">Email</a>
+        </div>
       </div>
     </div>
   </footer>
@@ -14,18 +33,62 @@
 <style scoped>
 .footer {
   border-top: 1px solid var(--border);
-  padding: 32px 0;
-  background: var(--bg-soft);
+  padding: 60px 0 40px;
+  background: rgba(11, 15, 25, 0.95);
 }
 
 .footer-inner {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  gap: 36px;
+}
+
+.footer-brand {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.brand-title {
+  font-family: 'Outfit', sans-serif;
+  font-size: 1.3rem;
+  font-weight: 800;
+  color: var(--accent);
+}
+
+.brand-desc {
+  color: var(--muted);
+  font-size: 0.92rem;
+  max-width: 400px;
+}
+
+.footer-nav {
+  display: flex;
+  gap: 24px;
+  flex-wrap: wrap;
+  padding-bottom: 24px;
+  border-bottom: 1px solid rgba(35, 48, 74, 0.4);
+}
+
+.footer-nav a {
+  color: var(--muted);
+  font-size: 0.92rem;
+  font-weight: 500;
+  transition: color 0.2s ease;
+}
+
+.footer-nav a:hover {
+  color: var(--accent);
+}
+
+.footer-bottom {
+  display: flex;
   justify-content: space-between;
+  align-items: center;
   flex-wrap: wrap;
   gap: 16px;
   color: var(--muted);
-  font-size: 0.9rem;
+  font-size: 0.88rem;
 }
 
 .socials {
@@ -34,10 +97,18 @@
 }
 
 .socials a {
+  color: var(--muted);
   transition: color 0.2s ease;
 }
 
 .socials a:hover {
   color: var(--accent);
+}
+
+@media (max-width: 640px) {
+  .footer-bottom {
+    flex-direction: column;
+    align-items: flex-start;
+  }
 }
 </style>

@@ -1,118 +1,619 @@
 <script setup lang="ts">
-const projects = [
+import { ref, computed, onMounted, onUnmounted } from 'vue'
+
+interface Project {
+  id: string
+  title: string
+  subtitle: string
+  category: 'webapp' | 'frontend' | 'landing'
+  description: string
+  fullDescription: string
+  features: string[]
+  tags: string[]
+  gradient: string
+  icon: string
+  demoUrl?: string
+  githubUrl?: string
+}
+
+const projects: Project[] = [
   {
-    title: 'Aplikasi Kasir Sederhana',
-    description:
-      'Aplikasi point of sale untuk UMKM dengan manajemen produk dan laporan penjualan.',
-    tags: ['Vue', 'Pinia', 'Firebase'],
-    link: '#'
+    id: 'pos-app',
+    title: 'Modern POS Dashboard',
+    subtitle: 'Point of Sale & Inventory Management',
+    category: 'webapp',
+    description: 'A comprehensive point of sale system with product catalog, cart checkout, transaction history, and sales analytics.',
+    fullDescription: 'Built to empower small businesses with an intuitive interface for managing stock inventory, handling real-time order checkouts, printing receipts, and visualizing monthly sales revenue charts.',
+    features: [
+      'Real-time product inventory & stock alert monitoring',
+      'Cart calculations with tax, discount, and change calculations',
+      'Revenue and sales analytics visual charts',
+      'Dark and light mode responsive dashboard'
+    ],
+    tags: ['Vue 3', 'Pinia', 'Tailwind CSS', 'Firebase'],
+    gradient: 'linear-gradient(135deg, #0ea5e9, #38bdf8)',
+    icon: '🛒',
+    demoUrl: 'https://example.com/pos-demo',
+    githubUrl: 'https://github.com'
   },
   {
-    title: 'Website Sekolah',
-    description:
-      'Website profil sekolah dengan CMS sederhana untuk mengelola berita dan agenda.',
-    tags: ['Nuxt', 'Tailwind', 'Supabase'],
-    link: '#'
+    id: 'school-portal',
+    title: 'School Profile & CMS Portal',
+    subtitle: 'Educational Institution Platform',
+    category: 'webapp',
+    description: 'A modern school website featuring dynamic academic announcements, student galleries, and an administrative CMS.',
+    fullDescription: 'Designed for high performance and easy content editing. Includes an intuitive dashboard for administrators to publish campus events, manage teacher directories, and upload photo galleries.',
+    features: [
+      'Dynamic CMS for school announcements and news feeds',
+      'Photo gallery with lightbox preview',
+      'Fast SSR rendering and automated SEO tags with Nuxt 3',
+      'Mobile-first responsive navigation with drawer menu'
+    ],
+    tags: ['Nuxt 3', 'TypeScript', 'Tailwind CSS', 'Supabase'],
+    gradient: 'linear-gradient(135deg, #6366f1, #a855f7)',
+    icon: '🏫',
+    demoUrl: 'https://example.com/school-demo',
+    githubUrl: 'https://github.com'
   },
   {
-    title: 'Aplikasi Cuaca',
-    description:
-      'Aplikasi cuaca real-time yang memanfaatkan public API dengan tampilan yang bersih.',
-    tags: ['JavaScript', 'REST API'],
-    link: '#'
+    id: 'weather-radar',
+    title: 'Real-Time Weather Radar',
+    subtitle: 'Interactive Meteorological Tracker',
+    category: 'frontend',
+    description: 'Interactive weather forecasting app with location search, 7-day forecast projections, and animated weather states.',
+    fullDescription: 'Fetches open meteorological APIs to provide real-time hourly forecasts, air quality index, UV warnings, and dynamic weather animations depending on current conditions.',
+    features: [
+      'Geolocation auto-detection & global city search',
+      'Hourly & 7-day weather trend charts',
+      'Interactive radar temperature map integration',
+      'Dynamic day/night background transitions'
+    ],
+    tags: ['Vue 3', 'REST API', 'Chart.js', 'CSS Grid'],
+    gradient: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
+    icon: '🌤️',
+    demoUrl: 'https://example.com/weather-demo',
+    githubUrl: 'https://github.com'
   },
   {
-    title: 'Portofolio v1',
-    description:
-      'Versi pertama website portfolio pribadi dengan animasi scroll dan dark mode.',
-    tags: ['HTML', 'CSS', 'GSAP'],
-    link: '#'
+    id: 'portfolio-v1',
+    title: 'Interactive Portfolio v1',
+    subtitle: 'Creative Developer Showcase',
+    category: 'landing',
+    description: 'A creative personal portfolio featuring smooth scroll animations, glassmorphic cards, and interactive dark aesthetics.',
+    fullDescription: 'Crafted as an exploratory project to experiment with modern CSS micro-animations, GSAP timeline triggers, and mobile responsive design systems.',
+    features: [
+      'Smooth scroll transitions and animated entry triggers',
+      'Custom SVG icons and particle backgrounds',
+      'Interactive contact modal with form validation',
+      'Optimized performance with 98+ Google Lighthouse score'
+    ],
+    tags: ['HTML5', 'Vanilla CSS', 'JavaScript', 'GSAP'],
+    gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
+    icon: '✨',
+    demoUrl: 'https://example.com/portfolio-demo',
+    githubUrl: 'https://github.com'
   }
 ]
+
+const currentCategory = ref<'all' | 'webapp' | 'frontend' | 'landing'>('all')
+const selectedProject = ref<Project | null>(null)
+
+const filteredProjects = computed(() => {
+  if (currentCategory.value === 'all') return projects
+  return projects.filter(p => p.category === currentCategory.value)
+})
+
+function openModal(project: Project) {
+  selectedProject.value = project
+  document.body.style.overflow = 'hidden'
+}
+
+function closeModal() {
+  selectedProject.value = null
+  document.body.style.overflow = ''
+}
+
+function handleKeydown(e: KeyboardEvent) {
+  if (e.key === 'Escape' && selectedProject.value) {
+    closeModal()
+  }
+}
+
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+  document.body.style.overflow = ''
+})
 </script>
 
 <template>
-  <section id="proyek" class="section">
+  <section id="projects" class="section">
     <div class="container">
-      <h2 class="section-title">Proyek <span>Pilihan</span></h2>
-      <p class="section-subtitle">Beberapa proyek yang pernah saya kerjakan.</p>
+      <div class="section-header">
+        <span class="section-badge">Featured Work</span>
+        <h2 class="section-title">Crafted with <span>Code &amp; Care</span></h2>
+        <p class="section-subtitle">
+          Explore a selection of recent web applications, UI prototypes, and client projects.
+        </p>
+      </div>
 
+      <!-- Filter Tabs -->
+      <div class="filter-tabs">
+        <button
+          class="tab-pill"
+          :class="{ active: currentCategory === 'all' }"
+          @click="currentCategory = 'all'"
+        >
+          All Projects ({{ projects.length }})
+        </button>
+        <button
+          class="tab-pill"
+          :class="{ active: currentCategory === 'webapp' }"
+          @click="currentCategory = 'webapp'"
+        >
+          Web Apps
+        </button>
+        <button
+          class="tab-pill"
+          :class="{ active: currentCategory === 'frontend' }"
+          @click="currentCategory = 'frontend'"
+        >
+          Frontend &amp; APIs
+        </button>
+        <button
+          class="tab-pill"
+          :class="{ active: currentCategory === 'landing' }"
+          @click="currentCategory = 'landing'"
+        >
+          Landing Pages
+        </button>
+      </div>
+
+      <!-- Projects Grid -->
       <div class="projects-grid">
-        <article v-for="project in projects" :key="project.title" class="card project">
-          <div class="thumb" aria-hidden="true">{{ project.title.charAt(0) }}</div>
-          <div class="body">
-            <h3>{{ project.title }}</h3>
-            <p>{{ project.description }}</p>
-            <ul class="tags">
-              <li v-for="tag in project.tags" :key="tag">{{ tag }}</li>
-            </ul>
-            <a :href="project.link" class="detail">Lihat detail &rarr;</a>
+        <article
+          v-for="project in filteredProjects"
+          :key="project.id"
+          class="project-card card"
+          @click="openModal(project)"
+        >
+          <div class="project-thumb" :style="{ background: project.gradient }">
+            <span class="project-icon">{{ project.icon }}</span>
+            <div class="project-badge">{{ project.subtitle }}</div>
+          </div>
+
+          <div class="project-body">
+            <div class="project-title-row">
+              <h3 class="project-title">{{ project.title }}</h3>
+              <span class="view-icon" aria-hidden="true">&rarr;</span>
+            </div>
+            <p class="project-desc">{{ project.description }}</p>
+
+            <div class="tags-row">
+              <span v-for="tag in project.tags" :key="tag" class="tag-chip">
+                {{ tag }}
+              </span>
+            </div>
+
+            <div class="project-footer">
+              <button class="btn-detail-link" @click.stop="openModal(project)">
+                View Case Details &rarr;
+              </button>
+            </div>
           </div>
         </article>
       </div>
     </div>
+
+    <!-- Project Detail Modal -->
+    <Teleport to="body">
+      <Transition name="modal">
+        <div
+          v-if="selectedProject"
+          class="modal-backdrop"
+          @click="closeModal"
+        >
+          <div
+            class="modal-container card"
+            role="dialog"
+            aria-modal="true"
+            @click.stop
+          >
+            <button
+              class="modal-close"
+              aria-label="Close modal"
+              @click="closeModal"
+            >
+              &times;
+            </button>
+
+            <div class="modal-banner" :style="{ background: selectedProject.gradient }">
+              <span class="banner-icon">{{ selectedProject.icon }}</span>
+              <div class="banner-info">
+                <h2>{{ selectedProject.title }}</h2>
+                <p>{{ selectedProject.subtitle }}</p>
+              </div>
+            </div>
+
+            <div class="modal-content">
+              <div class="modal-section">
+                <h4>About Project</h4>
+                <p>{{ selectedProject.fullDescription }}</p>
+              </div>
+
+              <div class="modal-section">
+                <h4>Key Features</h4>
+                <ul class="features-list">
+                  <li v-for="(feat, idx) in selectedProject.features" :key="idx">
+                    <span class="check-icon">✓</span>
+                    <span>{{ feat }}</span>
+                  </li>
+                </ul>
+              </div>
+
+              <div class="modal-section">
+                <h4>Technologies &amp; Architecture</h4>
+                <div class="tags-row modal-tags">
+                  <span v-for="tag in selectedProject.tags" :key="tag" class="tag-chip">
+                    {{ tag }}
+                  </span>
+                </div>
+              </div>
+
+              <div class="modal-actions">
+                <a
+                  v-if="selectedProject.demoUrl"
+                  :href="selectedProject.demoUrl"
+                  target="_blank"
+                  rel="noopener"
+                  class="btn btn-primary"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
+                  Live Preview
+                </a>
+                <a
+                  v-if="selectedProject.githubUrl"
+                  :href="selectedProject.githubUrl"
+                  target="_blank"
+                  rel="noopener"
+                  class="btn btn-outline"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22" />
+                  </svg>
+                  Source Code
+                </a>
+                <button class="btn btn-ghost" @click="closeModal">
+                  Close
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </Transition>
+    </Teleport>
   </section>
 </template>
 
 <style scoped>
-.projects-grid {
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
-  gap: 24px;
+.filter-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 12px;
+  flex-wrap: wrap;
+  margin-bottom: 46px;
 }
 
-.project {
+.tab-pill {
+  padding: 8px 20px;
+  border-radius: 999px;
+  background: rgba(21, 28, 44, 0.7);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.tab-pill:hover {
+  color: var(--text);
+  border-color: rgba(56, 189, 248, 0.4);
+}
+
+.tab-pill.active {
+  background: var(--accent-gradient);
+  color: #0b0f19;
+  border-color: transparent;
+  font-weight: 700;
+  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35);
+}
+
+.projects-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 28px;
+}
+
+.project-card {
   overflow: hidden;
   display: flex;
   flex-direction: column;
+  cursor: pointer;
+  background: rgba(21, 28, 44, 0.6);
+  backdrop-filter: blur(10px);
+  position: relative;
 }
 
-.thumb {
-  height: 140px;
-  display: grid;
-  place-items: center;
-  font-size: 3rem;
-  font-weight: 800;
-  color: #0b0f19;
-  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+.project-card:hover {
+  transform: translateY(-6px);
 }
 
-.body {
+.project-thumb {
+  height: 160px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   padding: 20px;
+}
+
+.project-icon {
+  font-size: 3.5rem;
+  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.25));
+  transition: transform 0.3s ease;
+}
+
+.project-card:hover .project-icon {
+  transform: scale(1.15) rotate(4deg);
+}
+
+.project-badge {
+  position: absolute;
+  bottom: 12px;
+  left: 16px;
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(8px);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 12px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+}
+
+.project-body {
+  padding: 24px;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
   flex: 1;
 }
 
-.body h3 {
-  font-size: 1.1rem;
+.project-title-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
 }
 
-.body p {
-  color: var(--muted);
+.project-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+}
+
+.view-icon {
+  color: var(--accent);
+  font-size: 1.2rem;
+  transition: transform 0.2s ease;
+}
+
+.project-card:hover .view-icon {
+  transform: translateX(4px);
+}
+
+.project-desc {
+  color: var(--text-secondary);
   font-size: 0.92rem;
+  line-height: 1.6;
   flex: 1;
 }
 
-.tags {
-  list-style: none;
+.tags-row {
   display: flex;
   flex-wrap: wrap;
   gap: 8px;
+  margin-top: 6px;
 }
 
-.tags li {
-  font-size: 0.75rem;
-  padding: 4px 10px;
-  border-radius: 999px;
-  background: rgba(56, 189, 248, 0.12);
-  color: var(--accent);
-}
-
-.detail {
-  font-size: 0.9rem;
+.tag-chip {
+  font-size: 0.78rem;
   font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 6px;
+  background: rgba(56, 189, 248, 0.1);
   color: var(--accent);
+  border: 1px solid rgba(56, 189, 248, 0.2);
+}
+
+.project-footer {
+  margin-top: 14px;
+  padding-top: 14px;
+  border-top: 1px solid rgba(35, 48, 74, 0.5);
+}
+
+.btn-detail-link {
+  background: none;
+  border: none;
+  color: var(--accent);
+  font-family: inherit;
+  font-size: 0.9rem;
+  font-weight: 700;
+  cursor: pointer;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+}
+
+.btn-detail-link:hover {
+  text-decoration: underline;
+}
+
+/* Modal styles */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 9990;
+  background: rgba(11, 15, 25, 0.85);
+  backdrop-filter: blur(12px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+}
+
+.modal-container {
+  width: 100%;
+  max-width: 620px;
+  max-height: 90vh;
+  overflow-y: auto;
+  background: #111827;
+  border: 1px solid rgba(56, 189, 248, 0.3);
+  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(56, 189, 248, 0.2);
+  position: relative;
+  padding: 0;
+}
+
+.modal-close {
+  position: absolute;
+  top: 16px;
+  right: 18px;
+  background: rgba(11, 15, 25, 0.7);
+  border: 1px solid var(--border);
+  color: var(--text);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 10;
+  transition: all 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(239, 68, 68, 0.2);
+  border-color: #ef4444;
+  color: #ef4444;
+}
+
+.modal-banner {
+  padding: 36px 30px;
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+.banner-icon {
+  font-size: 3rem;
+}
+
+.banner-info h2 {
+  font-size: 1.5rem;
+  margin-bottom: 4px;
+  color: #0b0f19;
+}
+
+.banner-info p {
+  color: rgba(11, 15, 25, 0.85);
+  font-weight: 600;
+  font-size: 0.92rem;
+}
+
+.modal-content {
+  padding: 28px 30px;
+  display: flex;
+  flex-direction: column;
+  gap: 22px;
+}
+
+.modal-section h4 {
+  font-size: 1rem;
+  color: var(--accent);
+  margin-bottom: 8px;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.modal-section p {
+  color: var(--text-secondary);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.features-list {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.features-list li {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  font-size: 0.92rem;
+  color: var(--text-secondary);
+}
+
+.check-icon {
+  color: var(--accent);
+  font-weight: bold;
+}
+
+.modal-tags {
+  margin-top: 4px;
+}
+
+.modal-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  padding-top: 14px;
+  border-top: 1px solid var(--border);
+}
+
+/* Modal transitions */
+.modal-enter-active,
+.modal-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.modal-enter-from,
+.modal-leave-to {
+  opacity: 0;
+}
+
+.modal-enter-active .modal-container,
+.modal-leave-active .modal-container {
+  transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.modal-enter-from .modal-container {
+  transform: scale(0.9) translateY(20px);
+}
+
+.modal-leave-to .modal-container {
+  transform: scale(0.9) translateY(20px);
 }
 </style>
