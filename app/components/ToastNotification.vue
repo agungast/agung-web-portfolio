@@ -52,17 +52,17 @@ const { toasts, removeToast } = useToast()
   gap: 12px;
   padding: 14px 18px;
   border-radius: 12px;
-  background: rgba(17, 24, 39, 0.95);
+  background: var(--card);
   backdrop-filter: blur(12px);
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.4), 0 0 20px rgba(56, 189, 248, 0.15);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card-hover);
   color: var(--text);
   font-size: 0.92rem;
   font-weight: 500;
 }
 
 .toast-item.success {
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: var(--border-light);
 }
 
 .toast-icon {

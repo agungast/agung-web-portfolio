@@ -41,7 +41,7 @@ onUnmounted(() => {
       <svg class="progress-ring" width="48" height="48" viewBox="0 0 48 48">
         <circle
           class="progress-ring__circle-bg"
-          stroke="rgba(255, 255, 255, 0.1)"
+          stroke="var(--border)"
           stroke-width="3"
           fill="transparent"
           r="20"
@@ -81,7 +81,7 @@ onUnmounted(() => {
   width: 48px;
   height: 48px;
   border-radius: 50%;
-  background: rgba(17, 24, 39, 0.85);
+  background: var(--card);
   backdrop-filter: blur(10px);
   border: 1px solid var(--border);
   display: flex;
@@ -89,15 +89,15 @@ onUnmounted(() => {
   justify-content: center;
   cursor: pointer;
   z-index: 90;
-  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  box-shadow: var(--shadow-card);
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease, background-color 0.3s ease;
   padding: 0;
 }
 
 .back-to-top:hover {
   transform: translateY(-4px) scale(1.05);
   border-color: var(--accent);
-  box-shadow: 0 12px 30px rgba(56, 189, 248, 0.25);
+  box-shadow: var(--shadow-card);
 }
 
 .progress-ring {

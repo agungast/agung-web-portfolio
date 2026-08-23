@@ -2,7 +2,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <span class="brand-title">&lt;Agung.dev /&gt;</span>
+        <span class="brand-title">&lt;Agung.Portfolio /&gt;</span>
         <p class="brand-desc">
           Building thoughtful, interactive, and modern web experiences.
         </p>
@@ -18,7 +18,7 @@
 
       <div class="footer-bottom">
         <p class="copy">
-          &copy; {{ new Date().getFullYear() }} Agung Hadi Astanto. Crafted with Vue 3 &amp; Nuxt 3.
+          &copy; {{ new Date().getFullYear() }} Agung Hadi Astanto. Crafted with Vue 3 &amp; Nuxt.
         </p>
         <div class="socials">
           <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
@@ -34,7 +34,8 @@
 .footer {
   border-top: 1px solid var(--border);
   padding: 60px 0 40px;
-  background: rgba(11, 15, 25, 0.95);
+  background: var(--bg-soft);
+  transition: background-color 0.3s ease, border-color 0.3s ease;
 }
 
 .footer-inner {
@@ -67,7 +68,7 @@
   gap: 24px;
   flex-wrap: wrap;
   padding-bottom: 24px;
-  border-bottom: 1px solid rgba(35, 48, 74, 0.4);
+  border-bottom: 1px solid var(--border);
 }
 
 .footer-nav a {

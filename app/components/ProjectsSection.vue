@@ -10,7 +10,6 @@ interface Project {
   fullDescription: string
   features: string[]
   tags: string[]
-  gradient: string
   icon: string
   demoUrl?: string
   githubUrl?: string
@@ -31,7 +30,6 @@ const projects: Project[] = [
       'Dark and light mode responsive dashboard'
     ],
     tags: ['Vue 3', 'Pinia', 'Tailwind CSS', 'Firebase'],
-    gradient: 'linear-gradient(135deg, #0ea5e9, #38bdf8)',
     icon: '🛒',
     demoUrl: 'https://example.com/pos-demo',
     githubUrl: 'https://github.com'
@@ -50,7 +48,6 @@ const projects: Project[] = [
       'Mobile-first responsive navigation with drawer menu'
     ],
     tags: ['Nuxt 3', 'TypeScript', 'Tailwind CSS', 'Supabase'],
-    gradient: 'linear-gradient(135deg, #6366f1, #a855f7)',
     icon: '🏫',
     demoUrl: 'https://example.com/school-demo',
     githubUrl: 'https://github.com'
@@ -69,7 +66,6 @@ const projects: Project[] = [
       'Dynamic day/night background transitions'
     ],
     tags: ['Vue 3', 'REST API', 'Chart.js', 'CSS Grid'],
-    gradient: 'linear-gradient(135deg, #06b6d4, #3b82f6)',
     icon: '🌤️',
     demoUrl: 'https://example.com/weather-demo',
     githubUrl: 'https://github.com'
@@ -88,7 +84,6 @@ const projects: Project[] = [
       'Optimized performance with 98+ Google Lighthouse score'
     ],
     tags: ['HTML5', 'Vanilla CSS', 'JavaScript', 'GSAP'],
-    gradient: 'linear-gradient(135deg, #ec4899, #8b5cf6)',
     icon: '✨',
     demoUrl: 'https://example.com/portfolio-demo',
     githubUrl: 'https://github.com'
@@ -119,6 +114,17 @@ function handleKeydown(e: KeyboardEvent) {
   }
 }
 
+function getTagClass(tag: string) {
+  const t = tag.toLowerCase()
+  if (t.includes('vue') || t.includes('nuxt')) return 'tag-emerald'
+  if (t.includes('tail') || t.includes('css')) return 'tag-sky'
+  if (t.includes('type') || t.includes('supa')) return 'tag-indigo'
+  if (t.includes('fire') || t.includes('pinia') || t.includes('node')) return 'tag-amber'
+  if (t.includes('api') || t.includes('chart')) return 'tag-cyan'
+  if (t.includes('gsap') || t.includes('html')) return 'tag-rose'
+  return ''
+}
+
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
 })
@@ -133,7 +139,7 @@ onUnmounted(() => {
   <section id="projects" class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge">Featured Work</span>
+        <span class="section-badge badge-cyan">Featured Work</span>
         <h2 class="section-title">Crafted with <span>Code &amp; Care</span></h2>
         <p class="section-subtitle">
           Explore a selection of recent web applications, UI prototypes, and client projects.
@@ -151,21 +157,21 @@ onUnmounted(() => {
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'webapp' }"
+          :class="{ active: currentCategory === 'webapp', 'btn-emerald': currentCategory === 'webapp' }"
           @click="currentCategory = 'webapp'"
         >
           Web Apps
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'frontend' }"
+          :class="{ active: currentCategory === 'frontend', 'btn-cyan': currentCategory === 'frontend' }"
           @click="currentCategory = 'frontend'"
         >
           Frontend &amp; APIs
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'landing' }"
+          :class="{ active: currentCategory === 'landing', 'btn-rose': currentCategory === 'landing' }"
           @click="currentCategory = 'landing'"
         >
           Landing Pages
@@ -180,7 +186,7 @@ onUnmounted(() => {
           class="project-card card"
           @click="openModal(project)"
         >
-          <div class="project-thumb" :style="{ background: project.gradient }">
+          <div class="project-thumb">
             <span class="project-icon">{{ project.icon }}</span>
             <div class="project-badge">{{ project.subtitle }}</div>
           </div>
@@ -193,7 +199,7 @@ onUnmounted(() => {
             <p class="project-desc">{{ project.description }}</p>
 
             <div class="tags-row">
-              <span v-for="tag in project.tags" :key="tag" class="tag-chip">
+              <span v-for="tag in project.tags" :key="tag" class="tag-chip" :class="getTagClass(tag)">
                 {{ tag }}
               </span>
             </div>
@@ -230,7 +236,7 @@ onUnmounted(() => {
               &times;
             </button>
 
-            <div class="modal-banner" :style="{ background: selectedProject.gradient }">
+            <div class="modal-banner">
               <span class="banner-icon">{{ selectedProject.icon }}</span>
               <div class="banner-info">
                 <h2>{{ selectedProject.title }}</h2>
@@ -257,7 +263,7 @@ onUnmounted(() => {
               <div class="modal-section">
                 <h4>Technologies &amp; Architecture</h4>
                 <div class="tags-row modal-tags">
-                  <span v-for="tag in selectedProject.tags" :key="tag" class="tag-chip">
+                  <span v-for="tag in selectedProject.tags" :key="tag" class="tag-chip" :class="getTagClass(tag)">
                     {{ tag }}
                   </span>
                 </div>
@@ -314,7 +320,7 @@ onUnmounted(() => {
 .tab-pill {
   padding: 8px 20px;
   border-radius: 999px;
-  background: rgba(21, 28, 44, 0.7);
+  background: var(--card);
   border: 1px solid var(--border);
   color: var(--muted);
   font-family: inherit;
@@ -326,21 +332,32 @@ onUnmounted(() => {
 
 .tab-pill:hover {
   color: var(--text);
-  border-color: rgba(56, 189, 248, 0.4);
+  border-color: var(--border-light);
 }
 
 .tab-pill.active {
-  background: var(--accent-gradient);
-  color: #0b0f19;
+  background: var(--accent);
+  color: #ffffff;
   border-color: transparent;
-  font-weight: 700;
-  box-shadow: 0 4px 15px rgba(56, 189, 248, 0.35);
+  font-weight: 600;
+}
+
+.tab-pill.active.btn-emerald {
+  background: var(--color-emerald);
+}
+
+.tab-pill.active.btn-cyan {
+  background: var(--color-cyan);
+}
+
+.tab-pill.active.btn-rose {
+  background: var(--color-rose);
 }
 
 .projects-grid {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 28px;
+  gap: 24px;
 }
 
 .project-card {
@@ -348,46 +365,46 @@ onUnmounted(() => {
   display: flex;
   flex-direction: column;
   cursor: pointer;
-  background: rgba(21, 28, 44, 0.6);
-  backdrop-filter: blur(10px);
+  background: var(--card);
+  border: 1px solid var(--border);
   position: relative;
 }
 
 .project-card:hover {
-  transform: translateY(-6px);
+  transform: translateY(-4px);
 }
 
 .project-thumb {
-  height: 160px;
+  height: 150px;
   position: relative;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 20px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
 }
 
 .project-icon {
-  font-size: 3.5rem;
-  filter: drop-shadow(0 10px 15px rgba(0, 0, 0, 0.25));
-  transition: transform 0.3s ease;
+  font-size: 3rem;
+  transition: transform 0.25s ease;
 }
 
 .project-card:hover .project-icon {
-  transform: scale(1.15) rotate(4deg);
+  transform: scale(1.1) translateY(-2px);
 }
 
 .project-badge {
   position: absolute;
   bottom: 12px;
   left: 16px;
-  background: rgba(11, 15, 25, 0.85);
-  backdrop-filter: blur(8px);
-  color: var(--text);
+  background: var(--card);
+  color: var(--text-secondary);
   font-size: 0.75rem;
   font-weight: 600;
   padding: 4px 12px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  border: 1px solid var(--border);
 }
 
 .project-body {
@@ -405,13 +422,13 @@ onUnmounted(() => {
 }
 
 .project-title {
-  font-size: 1.2rem;
-  font-weight: 700;
+  font-size: 1.15rem;
+  font-weight: 600;
 }
 
 .view-icon {
   color: var(--accent);
-  font-size: 1.2rem;
+  font-size: 1.1rem;
   transition: transform 0.2s ease;
 }
 
@@ -421,7 +438,7 @@ onUnmounted(() => {
 
 .project-desc {
   color: var(--text-secondary);
-  font-size: 0.92rem;
+  font-size: 0.9rem;
   line-height: 1.6;
   flex: 1;
 }
@@ -438,15 +455,45 @@ onUnmounted(() => {
   font-weight: 600;
   padding: 4px 10px;
   border-radius: 6px;
-  background: rgba(56, 189, 248, 0.1);
+  background: var(--chip-bg);
+  color: var(--text-secondary);
+  border: 1px solid transparent;
+}
+
+.tag-chip.tag-emerald {
+  color: var(--color-emerald);
+  background: var(--color-emerald-bg);
+}
+
+.tag-chip.tag-sky {
   color: var(--accent);
-  border: 1px solid rgba(56, 189, 248, 0.2);
+  background: rgba(var(--accent-rgb), 0.12);
+}
+
+.tag-chip.tag-indigo {
+  color: var(--color-indigo);
+  background: var(--color-indigo-bg);
+}
+
+.tag-chip.tag-amber {
+  color: var(--color-amber);
+  background: var(--color-amber-bg);
+}
+
+.tag-chip.tag-cyan {
+  color: var(--color-cyan);
+  background: var(--color-cyan-bg);
+}
+
+.tag-chip.tag-rose {
+  color: var(--color-rose);
+  background: var(--color-rose-bg);
 }
 
 .project-footer {
   margin-top: 14px;
   padding-top: 14px;
-  border-top: 1px solid rgba(35, 48, 74, 0.5);
+  border-top: 1px solid var(--border);
 }
 
 .btn-detail-link {
@@ -472,7 +519,7 @@ onUnmounted(() => {
   position: fixed;
   inset: 0;
   z-index: 9990;
-  background: rgba(11, 15, 25, 0.85);
+  background: var(--modal-backdrop);
   backdrop-filter: blur(12px);
   display: flex;
   align-items: center;
@@ -485,9 +532,9 @@ onUnmounted(() => {
   max-width: 620px;
   max-height: 90vh;
   overflow-y: auto;
-  background: #111827;
-  border: 1px solid rgba(56, 189, 248, 0.3);
-  box-shadow: 0 25px 60px rgba(0, 0, 0, 0.6), 0 0 35px rgba(56, 189, 248, 0.2);
+  background: var(--modal-bg);
+  border: 1px solid var(--border-light);
+  box-shadow: var(--shadow-card-hover);
   position: relative;
   padding: 0;
 }
@@ -496,7 +543,7 @@ onUnmounted(() => {
   position: absolute;
   top: 16px;
   right: 18px;
-  background: rgba(11, 15, 25, 0.7);
+  background: var(--btn-outline-bg);
   border: 1px solid var(--border);
   color: var(--text);
   width: 36px;
@@ -518,10 +565,12 @@ onUnmounted(() => {
 }
 
 .modal-banner {
-  padding: 36px 30px;
+  padding: 32px 30px;
   display: flex;
   align-items: center;
   gap: 20px;
+  background: var(--bg-soft);
+  border-bottom: 1px solid var(--border);
 }
 
 .banner-icon {
@@ -531,12 +580,12 @@ onUnmounted(() => {
 .banner-info h2 {
   font-size: 1.5rem;
   margin-bottom: 4px;
-  color: #0b0f19;
+  color: var(--text);
 }
 
 .banner-info p {
-  color: rgba(11, 15, 25, 0.85);
-  font-weight: 600;
+  color: var(--muted);
+  font-weight: 500;
   font-size: 0.92rem;
 }
 

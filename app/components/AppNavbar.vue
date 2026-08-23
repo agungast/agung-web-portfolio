@@ -1,5 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
+import { useTheme } from '../composables/useTheme'
+
+const { isDark, toggleTheme, initTheme } = useTheme()
 
 const links = [
   { label: 'Home', href: '#home' },
@@ -15,49 +18,61 @@ const activeSection = ref('home')
 const scrollProgress = ref(0)
 
 function handleScroll() {
+  if (typeof window === 'undefined') return
   const scrollTop = window.scrollY || document.documentElement.scrollTop
   isScrolled.value = scrollTop > 20
 
   const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
   if (docHeight > 0) {
-    scrollProgress.value = (scrollTop / docHeight) * 100
+    scrollProgress.value = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100))
+  }
+
+  // ScrollSpy Calculation
+  // 1. If near top, always activate 'home'
+  if (scrollTop < 120) {
+    activeSection.value = 'home'
+    return
+  }
+
+  // 2. If near the bottom of document, activate 'contact'
+  if (window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 60) {
+    activeSection.value = 'contact'
+    return
+  }
+
+  // 3. Find current active section by offsetTop
+  const sectionIds = ['home', 'about', 'skills', 'projects', 'contact']
+  const offsetBuffer = 180
+
+  for (let i = sectionIds.length - 1; i >= 0; i--) {
+    const id = sectionIds[i]
+    if (!id) continue
+    const el = document.getElementById(id)
+    if (el && el.offsetTop <= scrollTop + offsetBuffer) {
+      activeSection.value = id
+      break
+    }
   }
 }
 
-let observer: IntersectionObserver | null = null
-
 onMounted(() => {
+  initTheme()
   window.addEventListener('scroll', handleScroll, { passive: true })
   handleScroll()
-
-  // Setup ScrollSpy with IntersectionObserver
-  const sections = document.querySelectorAll('section[id]')
-  observer = new IntersectionObserver(
-    (entries) => {
-      entries.forEach((entry) => {
-        if (entry.isIntersecting) {
-          activeSection.value = entry.target.id
-        }
-      })
-    },
-    {
-      rootMargin: '-30% 0px -60% 0px',
-      threshold: 0
-    }
-  )
-
-  sections.forEach((sec) => observer?.observe(sec))
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', handleScroll)
-  if (observer) observer.disconnect()
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('scroll', handleScroll)
+  }
 })
 
 function scrollToSection(e: MouseEvent, href: string) {
   e.preventDefault()
   open.value = false
-  const target = document.querySelector(href)
+  const targetId = href.replace('#', '')
+  activeSection.value = targetId
+  const target = document.getElementById(targetId)
   if (target) {
     target.scrollIntoView({ behavior: 'smooth' })
   }
@@ -75,7 +90,7 @@ function scrollToSection(e: MouseEvent, href: string) {
 
     <div class="container navbar-inner">
       <a href="#home" class="logo" @click="scrollToSection($event, '#home')">
-        <span class="logo-code">&lt;</span>Agung<span class="logo-accent">.dev</span><span class="logo-code"> /&gt;</span>
+        <span class="logo-code"></span>Agung<span class="logo-accent">.Portfolio</span><span class="logo-code"></span>
       </a>
 
       <nav class="nav-links" :class="{ open }">
@@ -88,16 +103,79 @@ function scrollToSection(e: MouseEvent, href: string) {
         >
           {{ link.label }}
         </a>
-        <a
-          href="#contact"
-          class="btn-nav-cta"
-          @click="scrollToSection($event, '#contact')"
-        >
-          Let's Talk
-        </a>
+
+        <div class="mobile-actions">
+          <button
+            class="btn-theme-toggle mobile-theme-btn"
+            :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+            aria-label="Toggle theme mode"
+            @click="toggleTheme"
+          >
+            <span class="theme-label">{{ isDark ? '🌙 Dark Mode' : '☀️ Light Mode' }}</span>
+          </button>
+
+          <a
+            href="#contact"
+            class="btn-nav-cta"
+            @click="scrollToSection($event, '#contact')"
+          >
+            Let's Talk
+          </a>
+        </div>
       </nav>
 
       <div class="nav-actions">
+        <!-- Theme Toggle Button (Desktop) -->
+        <button
+          class="btn-theme-toggle"
+          :title="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+          :aria-label="isDark ? 'Switch to Light Mode' : 'Switch to Dark Mode'"
+          @click="toggleTheme"
+        >
+          <Transition name="rotate-fade" mode="out-in">
+            <!-- Moon icon (active in Dark Mode) -->
+            <svg
+              v-if="isDark"
+              key="moon"
+              class="theme-icon"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z" />
+            </svg>
+            <!-- Sun icon (active in Light Mode) -->
+            <svg
+              v-else
+              key="sun"
+              class="theme-icon sun"
+              width="20"
+              height="20"
+              viewBox="0 0 24 24"
+              fill="none"
+              stroke="currentColor"
+              stroke-width="2"
+              stroke-linecap="round"
+              stroke-linejoin="round"
+            >
+              <circle cx="12" cy="12" r="5" />
+              <line x1="12" y1="1" x2="12" y2="3" />
+              <line x1="12" y1="21" x2="12" y2="23" />
+              <line x1="4.22" y1="4.22" x2="5.64" y2="5.64" />
+              <line x1="18.36" y1="18.36" x2="19.78" y2="19.78" />
+              <line x1="1" y1="12" x2="3" y2="12" />
+              <line x1="21" y1="12" x2="23" y2="12" />
+              <line x1="4.22" y1="19.78" x2="5.64" y2="18.36" />
+              <line x1="18.36" y1="5.64" x2="19.78" y2="4.22" />
+            </svg>
+          </Transition>
+        </button>
+
         <a
           href="#contact"
           class="btn btn-outline btn-sm cta-desktop"
@@ -127,17 +205,17 @@ function scrollToSection(e: MouseEvent, href: string) {
   position: sticky;
   top: 0;
   z-index: 1000;
-  background: rgba(11, 15, 25, 0.75);
+  background: var(--nav-bg);
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
-  border-bottom: 1px solid rgba(35, 48, 74, 0.5);
-  transition: all 0.3s ease;
+  border-bottom: 1px solid var(--border);
+  transition: background-color 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
 }
 
 .navbar.scrolled {
-  background: rgba(11, 15, 25, 0.92);
-  border-bottom-color: rgba(56, 189, 248, 0.2);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.4);
+  background: var(--nav-bg-scrolled);
+  border-bottom-color: var(--border-light);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
 
 .scroll-progress {
@@ -145,8 +223,7 @@ function scrollToSection(e: MouseEvent, href: string) {
   top: 0;
   left: 0;
   height: 2.5px;
-  background: var(--accent-gradient);
-  box-shadow: 0 0 10px var(--accent);
+  background: var(--accent);
   transition: width 0.1s ease;
   z-index: 1001;
 }
@@ -180,10 +257,7 @@ function scrollToSection(e: MouseEvent, href: string) {
 }
 
 .logo-accent {
-  background: var(--accent-gradient);
-  -webkit-background-clip: text;
-  background-clip: text;
-  -webkit-text-fill-color: transparent;
+  color: var(--accent);
 }
 
 .nav-links {
@@ -208,7 +282,7 @@ function scrollToSection(e: MouseEvent, href: string) {
   left: 0;
   width: 0%;
   height: 2px;
-  background: var(--accent-gradient);
+  background: var(--accent);
   border-radius: 2px;
   transition: width 0.25s ease;
 }
@@ -226,6 +300,10 @@ function scrollToSection(e: MouseEvent, href: string) {
   width: 100%;
 }
 
+.mobile-actions {
+  display: none;
+}
+
 .btn-nav-cta {
   display: none;
 }
@@ -233,7 +311,54 @@ function scrollToSection(e: MouseEvent, href: string) {
 .nav-actions {
   display: flex;
   align-items: center;
-  gap: 16px;
+  gap: 14px;
+}
+
+/* Theme Toggle Button */
+.btn-theme-toggle {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: var(--btn-outline-bg);
+  border: 1px solid var(--border);
+  color: var(--text);
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.btn-theme-toggle:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+  transform: scale(1.05);
+}
+
+.theme-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent);
+}
+
+.theme-icon.sun {
+  color: #f59e0b;
+}
+
+.rotate-fade-enter-active,
+.rotate-fade-leave-active {
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.rotate-fade-enter-from {
+  opacity: 0;
+  transform: rotate(-90deg) scale(0.5);
+}
+
+.rotate-fade-leave-to {
+  opacity: 0;
+  transform: rotate(90deg) scale(0.5);
 }
 
 .btn-sm {
@@ -285,12 +410,33 @@ function scrollToSection(e: MouseEvent, href: string) {
     display: flex;
   }
 
+  .mobile-actions {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .mobile-theme-btn {
+    width: 100%;
+    height: auto;
+    padding: 12px;
+    justify-content: flex-start;
+    font-size: 0.95rem;
+    font-weight: 600;
+  }
+
+  .theme-label {
+    margin-left: 8px;
+  }
+
   .nav-links {
     position: fixed;
     top: 72px;
     left: 0;
     right: 0;
-    background: rgba(11, 15, 25, 0.98);
+    background: var(--nav-mobile-bg);
     backdrop-filter: blur(20px);
     -webkit-backdrop-filter: blur(20px);
     border-bottom: 1px solid var(--border);
@@ -305,10 +451,10 @@ function scrollToSection(e: MouseEvent, href: string) {
   }
 
   .nav-links.open {
-    max-height: 400px;
+    max-height: 480px;
     opacity: 1;
     padding: 24px 8%;
-    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 15px 30px rgba(0, 0, 0, 0.2);
   }
 
   .nav-links a {
@@ -319,11 +465,10 @@ function scrollToSection(e: MouseEvent, href: string) {
 
   .btn-nav-cta {
     display: inline-block;
-    margin-top: 10px;
     text-align: center;
-    background: var(--accent-gradient);
-    color: #0b0f19 !important;
-    font-weight: 700;
+    background: var(--accent);
+    color: #ffffff !important;
+    font-weight: 600;
     border-radius: 10px;
     padding: 12px 20px !important;
   }
