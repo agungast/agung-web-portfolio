@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useTheme } from '../composables/useTheme'
+import websiteLogo from '~/assets/images/website-logo.webp'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
 
@@ -90,7 +91,8 @@ function scrollToSection(e: MouseEvent, href: string) {
 
     <div class="container navbar-inner">
       <a href="#home" class="logo" @click="scrollToSection($event, '#home')">
-        <span class="logo-code"></span>Agung<span class="logo-accent">.Portfolio</span><span class="logo-code"></span>
+        <img :src="websiteLogo" alt="Agung Portfolio Logo" class="logo-img" />
+        <span class="logo-text">Agung<span class="logo-accent">.Portfolio</span></span>
       </a>
 
       <nav class="nav-links" :class="{ open }">
@@ -240,6 +242,7 @@ function scrollToSection(e: MouseEvent, href: string) {
   font-weight: 800;
   display: flex;
   align-items: center;
+  gap: 10px;
   letter-spacing: -0.01em;
   font-family: 'Outfit', sans-serif;
   transition: transform 0.2s ease;
@@ -249,11 +252,17 @@ function scrollToSection(e: MouseEvent, href: string) {
   transform: scale(1.03);
 }
 
-.logo-code {
-  color: var(--muted);
-  font-size: 1.1rem;
-  font-weight: 400;
-  margin: 0 2px;
+.logo-img {
+  width: 32px;
+  height: 32px;
+  object-fit: contain;
+  display: block;
+  filter: drop-shadow(0 2px 6px rgba(14, 165, 233, 0.25));
+}
+
+.logo-text {
+  display: flex;
+  align-items: center;
 }
 
 .logo-accent {

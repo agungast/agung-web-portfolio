@@ -19,6 +19,7 @@ export default defineNuxtConfig({
         { name: 'theme-color', content: '#0b0f19' }
       ],
       link: [
+        { rel: 'icon', type: 'image/webp', href: '/website-logo.webp' },
         { rel: 'preconnect', href: 'https://fonts.googleapis.com' },
         { rel: 'preconnect', href: 'https://fonts.gstatic.com', crossorigin: '' },
         {

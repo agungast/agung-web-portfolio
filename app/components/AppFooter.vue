@@ -1,8 +1,15 @@
+<script setup lang="ts">
+import websiteLogo from '~/assets/images/website-logo.webp'
+</script>
+
 <template>
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <span class="brand-title">&lt;Agung.Portfolio /&gt;</span>
+        <div class="brand-row">
+          <img :src="websiteLogo" alt="Agung Portfolio Logo" class="footer-logo-img" />
+          <span class="brand-title">Agung<span class="brand-accent">.Portfolio</span></span>
+        </div>
         <p class="brand-desc">
           Building thoughtful, interactive, and modern web experiences.
         </p>
@@ -47,13 +54,30 @@
 .footer-brand {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 10px;
+}
+
+.brand-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.footer-logo-img {
+  width: 28px;
+  height: 28px;
+  object-fit: contain;
+  filter: drop-shadow(0 2px 6px rgba(14, 165, 233, 0.25));
 }
 
 .brand-title {
   font-family: 'Outfit', sans-serif;
-  font-size: 1.3rem;
+  font-size: 1.25rem;
   font-weight: 800;
+  color: var(--text);
+}
+
+.brand-accent {
   color: var(--accent);
 }
 
