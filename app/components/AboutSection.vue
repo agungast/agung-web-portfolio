@@ -4,10 +4,10 @@ import { ref, onMounted } from 'vue'
 const activeTab = ref<'story' | 'education' | 'experience'>('story')
 
 const stats = [
-  { value: 12, suffix: '+', label: 'Projects Built', color: 'cyan' },
-  { value: 2, suffix: '+', label: 'Years Experience', color: 'emerald' },
-  { value: 15, suffix: '+', label: 'Tech & Tools', color: 'violet' },
-  { value: 100, suffix: '%', label: 'Dedication', color: 'amber' }
+  { value: 12, suffix: '+', label: 'Projects Built' },
+  { value: 2, suffix: '+', label: 'Years Experience' },
+  { value: 15, suffix: '+', label: 'Tech & Tools' },
+  { value: 100, suffix: '%', label: 'Dedication' }
 ]
 
 const animatedValues = ref(stats.map(() => 0))
@@ -60,8 +60,7 @@ onMounted(() => {
   <section id="about" class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge badge-violet">About Me</span>
-        <h2 class="section-title">Turning Ideas into <span>Digital Reality</span></h2>
+        <h2 class="section-title">Turning Ideas into Digital Reality</h2>
         <p class="section-subtitle">
           Get to know my journey, academic background, and passion for creating exceptional digital experiences.
         </p>
@@ -105,10 +104,10 @@ onMounted(() => {
                 My journey began with HTML/CSS and evolved into building modern reactive web applications using Vue 3, Nuxt 3, and TypeScript. I love exploring interactive UI animations and clean architecture.
               </p>
               <div class="traits">
-                <span class="trait trait-emerald">🚀 Clean Code</span>
-                <span class="trait trait-rose">🎨 Pixel-Perfect UI</span>
-                <span class="trait trait-amber">⚡ Fast Performance</span>
-                <span class="trait trait-cyan">📱 Fully Responsive</span>
+                <span class="trait">🚀 Clean Code</span>
+                <span class="trait">🎨 Pixel-Perfect UI</span>
+                <span class="trait">⚡ Fast Performance</span>
+                <span class="trait">📱 Fully Responsive</span>
               </div>
             </div>
 
@@ -116,18 +115,18 @@ onMounted(() => {
             <div v-else-if="activeTab === 'education'" class="tab-pane">
               <div class="timeline">
                 <div class="timeline-item">
-                  <div class="timeline-marker marker-indigo" />
+                  <div class="timeline-marker" />
                   <div class="timeline-content">
-                    <span class="timeline-date date-indigo">2021 &mdash; Present</span>
+                    <span class="timeline-date">2021 &mdash; Present</span>
                     <h4>Bachelor of Computer Science / Informatics</h4>
                     <p class="timeline-sub">Semester 7 Student</p>
                     <p>Focusing on Software Engineering, Web Development, Algorithms, and UI/UX Design.</p>
                   </div>
                 </div>
                 <div class="timeline-item">
-                  <div class="timeline-marker marker-emerald" />
+                  <div class="timeline-marker" />
                   <div class="timeline-content">
-                    <span class="timeline-date date-emerald">Continuous Learning</span>
+                    <span class="timeline-date">Continuous Learning</span>
                     <h4>Modern Web &amp; Vue Ecosystem Certification</h4>
                     <p class="timeline-sub">Online Coursework &amp; Self-directed Projects</p>
                     <p>Deep-diving into Nuxt 3, Pinia state management, TypeScript, and modern CSS architecture.</p>
@@ -140,18 +139,18 @@ onMounted(() => {
             <div v-else-if="activeTab === 'experience'" class="tab-pane">
               <div class="timeline">
                 <div class="timeline-item">
-                  <div class="timeline-marker marker-amber" />
+                  <div class="timeline-marker" />
                   <div class="timeline-content">
-                    <span class="timeline-date date-amber">2023 &mdash; Present</span>
+                    <span class="timeline-date">2023 &mdash; Present</span>
                     <h4>Freelance Web Developer</h4>
                     <p class="timeline-sub">Independent Projects</p>
                     <p>Developed custom landing pages, POS management dashboards, and responsive web portals for small business clients.</p>
                   </div>
                 </div>
                 <div class="timeline-item">
-                  <div class="timeline-marker marker-cyan" />
+                  <div class="timeline-marker" />
                   <div class="timeline-content">
-                    <span class="timeline-date date-cyan">Academic Projects</span>
+                    <span class="timeline-date">Academic Projects</span>
                     <h4>Frontend Lead &amp; Developer</h4>
                     <p class="timeline-sub">University Team Projects</p>
                     <p>Led UI architecture, component structure, and state management for campus development assignments.</p>
@@ -169,9 +168,8 @@ onMounted(() => {
               v-for="(stat, index) in stats"
               :key="stat.label"
               class="stat-card card"
-              :class="`stat-${stat.color}`"
             >
-              <div class="stat-number" :class="`num-${stat.color}`">
+              <div class="stat-number">
                 <span>{{ animatedValues[index] }}</span>{{ stat.suffix }}
               </div>
               <div class="stat-label">{{ stat.label }}</div>
@@ -227,9 +225,10 @@ onMounted(() => {
 }
 
 .tab-btn.active {
-  background: var(--chip-bg);
+  background: var(--card);
   border-color: var(--border-light);
-  color: var(--accent);
+  color: var(--text);
+  font-weight: 700;
 }
 
 .tab-content {
@@ -263,31 +262,15 @@ onMounted(() => {
   border-radius: 999px;
   font-size: 0.85rem;
   font-weight: 600;
-  border: 1px solid transparent;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
 }
 
-.trait-emerald {
-  color: var(--color-emerald);
-  background: var(--color-emerald-bg);
-}
-
-.trait-rose {
-  color: var(--color-rose);
-  background: var(--color-rose-bg);
-}
-
-.trait-amber {
-  color: var(--color-amber);
-  background: var(--color-amber-bg);
-}
-
-.trait-cyan {
-  color: var(--color-cyan);
-  background: var(--color-cyan-bg);
-}
-
 .trait:hover {
+  border-color: var(--border-light);
+  color: var(--text);
   transform: translateY(-2px);
 }
 
@@ -320,12 +303,8 @@ onMounted(() => {
   border-radius: 50%;
   margin-top: 4px;
   flex-shrink: 0;
+  background: var(--text-secondary);
 }
-
-.marker-indigo { background: var(--color-indigo); }
-.marker-emerald { background: var(--color-emerald); }
-.marker-amber { background: var(--color-amber); }
-.marker-cyan { background: var(--color-cyan); }
 
 .timeline-content {
   flex: 1;
@@ -338,12 +317,8 @@ onMounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 4px;
+  color: var(--text-secondary);
 }
-
-.date-indigo { color: var(--color-indigo); }
-.date-emerald { color: var(--color-emerald); }
-.date-amber { color: var(--color-amber); }
-.date-cyan { color: var(--color-cyan); }
 
 .timeline-content h4 {
   font-size: 1.05rem;
@@ -370,21 +345,16 @@ onMounted(() => {
   text-align: center;
   background: var(--card);
   border: 1px solid var(--border);
-  backdrop-filter: blur(12px);
 }
 
 .stat-number {
   font-size: clamp(2rem, 3.5vw, 2.6rem);
   font-weight: 800;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
+  color: var(--text);
   line-height: 1;
   margin-bottom: 8px;
 }
-
-.num-cyan { color: var(--color-cyan); }
-.num-emerald { color: var(--color-emerald); }
-.num-violet { color: var(--color-violet); }
-.num-amber { color: var(--color-amber); }
 
 .stat-label {
   font-size: 0.85rem;
@@ -399,7 +369,14 @@ onMounted(() => {
   align-items: flex-start;
   background: var(--card);
   border: 1px solid var(--border);
-  border-left: 3px solid var(--color-amber);
+  border-radius: 16px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+}
+
+.highlight-box:hover {
+  border-color: var(--border-light);
+  box-shadow: var(--shadow-card);
+  transform: translateY(-2px);
 }
 
 .highlight-icon {

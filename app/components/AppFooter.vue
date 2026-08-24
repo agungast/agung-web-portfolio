@@ -8,7 +8,7 @@ import websiteLogo from '~/assets/images/website-logo.webp'
       <div class="footer-brand">
         <div class="brand-row">
           <img :src="websiteLogo" alt="Agung Portfolio Logo" class="footer-logo-img" />
-          <span class="brand-title">Agung<span class="brand-accent">.Portfolio</span></span>
+          <span class="brand-title">Agung.Portfolio</span>
         </div>
         <p class="brand-desc">
           Building thoughtful, interactive, and modern web experiences.
@@ -71,14 +71,10 @@ import websiteLogo from '~/assets/images/website-logo.webp'
 }
 
 .brand-title {
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
   font-size: 1.25rem;
   font-weight: 800;
   color: var(--text);
-}
-
-.brand-accent {
-  color: var(--accent);
 }
 
 .brand-desc {

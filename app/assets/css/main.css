@@ -1,3 +1,17 @@
+:root {
+  /* Typography System */
+  --font-heading: 'Outfit', sans-serif;
+  --font-body: 'DM Sans', system-ui, -apple-system, sans-serif;
+  --tracking-tighter: -0.035em;
+  --tracking-tight: -0.02em;
+  --tracking-normal: -0.01em;
+  --tracking-wide: 0.06em;
+  --lh-tight: 1.1;
+  --lh-snug: 1.35;
+  --lh-body: 1.65;
+  --lh-relaxed: 1.75;
+}
+
 :root,
 html.dark {
   --bg: #0b0f19;
@@ -11,25 +25,10 @@ html.dark {
   --text-secondary: #cbd5e1;
   --muted: #94a3b8;
   
-  /* Primary Accent */
+  /* Primary Accent & Button Contrast */
   --accent: #38bdf8;
   --accent-rgb: 56, 189, 248;
-  --accent-2: #818cf8;
-  --accent-2-rgb: 129, 140, 248;
-  
-  /* Multi-Accent Palette */
-  --color-emerald: #10b981;
-  --color-emerald-bg: rgba(16, 185, 129, 0.12);
-  --color-amber: #f59e0b;
-  --color-amber-bg: rgba(245, 158, 11, 0.12);
-  --color-violet: #8b5cf6;
-  --color-violet-bg: rgba(139, 92, 246, 0.12);
-  --color-rose: #f43f5e;
-  --color-rose-bg: rgba(244, 63, 94, 0.12);
-  --color-cyan: #06b6d4;
-  --color-cyan-bg: rgba(6, 182, 212, 0.12);
-  --color-indigo: #6366f1;
-  --color-indigo-bg: rgba(99, 102, 241, 0.12);
+  --btn-primary-text: #070b14;
 
   --nav-bg: rgba(11, 15, 25, 0.85);
   --nav-bg-scrolled: rgba(11, 15, 25, 0.95);
@@ -42,55 +41,40 @@ html.dark {
   --modal-backdrop: rgba(11, 15, 25, 0.85);
   --btn-outline-bg: #151c2c;
   --chip-bg: rgba(35, 48, 74, 0.5);
-  --shadow-card: 0 4px 16px rgba(0, 0, 0, 0.25);
+  --shadow-card: none;
   --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
 
 html.light {
-  --bg: #f8fafc;
-  --bg-soft: #f1f5f9;
-  --card: #ffffff;
-  --card-hover: #f8fafc;
-  --card-glass: rgba(255, 255, 255, 0.92);
-  --border: #e2e8f0;
-  --border-light: #cbd5e1;
-  --text: #0f172a;
-  --text-secondary: #334155;
+  --bg: #eaedf2;
+  --bg-soft: #dfe3e8;
+  --card: #f4f6f8;
+  --card-hover: #fcfdfd;
+  --card-glass: rgba(244, 246, 248, 0.94);
+  --border: #ccd2db;
+  --border-light: #b4bcc8;
+  --text: #1e293b;
+  --text-secondary: #475569;
   --muted: #64748b;
   
-  /* Primary Accent */
+  /* Primary Accent & Button Contrast */
   --accent: #0284c7;
   --accent-rgb: 2, 132, 199;
-  --accent-2: #4f46e5;
-  --accent-2-rgb: 79, 70, 229;
-  
-  /* Multi-Accent Palette */
-  --color-emerald: #059669;
-  --color-emerald-bg: rgba(5, 150, 105, 0.1);
-  --color-amber: #d97706;
-  --color-amber-bg: rgba(217, 119, 6, 0.1);
-  --color-violet: #7c3aed;
-  --color-violet-bg: rgba(124, 58, 237, 0.1);
-  --color-rose: #e11d48;
-  --color-rose-bg: rgba(225, 29, 72, 0.1);
-  --color-cyan: #0891b2;
-  --color-cyan-bg: rgba(8, 145, 178, 0.1);
-  --color-indigo: #4f46e5;
-  --color-indigo-bg: rgba(79, 70, 229, 0.1);
+  --btn-primary-text: #ffffff;
 
-  --nav-bg: rgba(248, 250, 252, 0.88);
-  --nav-bg-scrolled: rgba(255, 255, 255, 0.96);
-  --nav-mobile-bg: rgba(255, 255, 255, 0.98);
+  --nav-bg: rgba(234, 237, 242, 0.88);
+  --nav-bg-scrolled: rgba(244, 246, 248, 0.96);
+  --nav-mobile-bg: rgba(244, 246, 248, 0.98);
   --code-bg: #0f172a;
   --code-header: #1e293b;
-  --grid-line: rgba(203, 213, 225, 0.4);
-  --input-bg: #ffffff;
-  --modal-bg: #ffffff;
-  --modal-backdrop: rgba(15, 23, 42, 0.6);
-  --btn-outline-bg: #ffffff;
-  --chip-bg: #f1f5f9;
-  --shadow-card: 0 2px 10px rgba(0, 0, 0, 0.04), 0 1px 3px rgba(0, 0, 0, 0.02);
-  --shadow-card-hover: 0 8px 20px rgba(0, 0, 0, 0.08);
+  --grid-line: rgba(148, 163, 184, 0.25);
+  --input-bg: #f4f6f8;
+  --modal-bg: #f4f6f8;
+  --modal-backdrop: rgba(15, 23, 42, 0.55);
+  --btn-outline-bg: #f4f6f8;
+  --chip-bg: #dfe3e8;
+  --shadow-card: none;
+  --shadow-card-hover: 0 8px 22px rgba(15, 23, 42, 0.09);
 }
 
 * {
@@ -105,10 +89,10 @@ html {
 }
 
 body {
-  font-family: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  font-family: var(--font-body);
   background-color: var(--bg);
   color: var(--text);
-  line-height: 1.65;
+  line-height: var(--lh-body);
   overflow-x: hidden;
   position: relative;
   -webkit-font-smoothing: antialiased;
@@ -116,9 +100,10 @@ body {
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: 'Outfit', 'Plus Jakarta Sans', sans-serif;
+  font-family: var(--font-heading);
   color: var(--text);
-  letter-spacing: -0.02em;
+  letter-spacing: var(--tracking-tight);
+  line-height: var(--lh-snug);
   transition: color 0.3s ease;
 }
 
@@ -132,19 +117,36 @@ img {
   display: block;
 }
 
+/* Browser Surfaces & Polish */
+::selection {
+  background-color: rgba(var(--accent-rgb), 0.25);
+  color: var(--accent);
+}
+
+:focus-visible {
+  outline: 2px solid var(--accent);
+  outline-offset: 2px;
+}
+
+.stat-num,
+.skill-percentage {
+  font-variant-numeric: tabular-nums;
+}
+
 /* Custom Scrollbar */
 ::-webkit-scrollbar {
-  width: 7px;
+  width: 8px;
+  height: 8px;
 }
 ::-webkit-scrollbar-track {
   background: var(--bg);
 }
 ::-webkit-scrollbar-thumb {
   background: var(--border);
-  border-radius: 4px;
+  border-radius: 6px;
 }
 ::-webkit-scrollbar-thumb:hover {
-  background: var(--accent);
+  background: var(--border-light);
 }
 
 .container {
@@ -160,46 +162,6 @@ img {
 .section-header {
   text-align: center;
   margin-bottom: 50px;
-}
-
-.section-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  padding: 6px 14px;
-  font-size: 0.8rem;
-  font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
-  color: var(--accent);
-  background: var(--chip-bg);
-  border: 1px solid var(--border);
-  border-radius: 999px;
-  margin-bottom: 12px;
-}
-
-.section-badge.badge-amber {
-  color: var(--color-amber);
-  background: var(--color-amber-bg);
-  border-color: transparent;
-}
-
-.section-badge.badge-emerald {
-  color: var(--color-emerald);
-  background: var(--color-emerald-bg);
-  border-color: transparent;
-}
-
-.section-badge.badge-violet {
-  color: var(--color-violet);
-  background: var(--color-violet-bg);
-  border-color: transparent;
-}
-
-.section-badge.badge-rose {
-  color: var(--color-rose);
-  background: var(--color-rose-bg);
-  border-color: transparent;
 }
 
 .section-title {
@@ -246,8 +208,8 @@ img {
 
 .btn-primary {
   background: var(--accent);
-  color: #ffffff;
-  font-weight: 600;
+  color: var(--btn-primary-text);
+  font-weight: 700;
 }
 
 .btn-primary:hover {

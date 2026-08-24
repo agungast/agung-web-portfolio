@@ -114,17 +114,6 @@ function handleKeydown(e: KeyboardEvent) {
   }
 }
 
-function getTagClass(tag: string) {
-  const t = tag.toLowerCase()
-  if (t.includes('vue') || t.includes('nuxt')) return 'tag-emerald'
-  if (t.includes('tail') || t.includes('css')) return 'tag-sky'
-  if (t.includes('type') || t.includes('supa')) return 'tag-indigo'
-  if (t.includes('fire') || t.includes('pinia') || t.includes('node')) return 'tag-amber'
-  if (t.includes('api') || t.includes('chart')) return 'tag-cyan'
-  if (t.includes('gsap') || t.includes('html')) return 'tag-rose'
-  return ''
-}
-
 onMounted(() => {
   window.addEventListener('keydown', handleKeydown)
 })
@@ -139,8 +128,7 @@ onUnmounted(() => {
   <section id="projects" class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge badge-cyan">Featured Work</span>
-        <h2 class="section-title">Crafted with <span>Code &amp; Care</span></h2>
+        <h2 class="section-title">Crafted with Code &amp; Care</h2>
         <p class="section-subtitle">
           Explore a selection of recent web applications, UI prototypes, and client projects.
         </p>
@@ -157,21 +145,21 @@ onUnmounted(() => {
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'webapp', 'btn-emerald': currentCategory === 'webapp' }"
+          :class="{ active: currentCategory === 'webapp' }"
           @click="currentCategory = 'webapp'"
         >
           Web Apps
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'frontend', 'btn-cyan': currentCategory === 'frontend' }"
+          :class="{ active: currentCategory === 'frontend' }"
           @click="currentCategory = 'frontend'"
         >
           Frontend &amp; APIs
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'landing', 'btn-rose': currentCategory === 'landing' }"
+          :class="{ active: currentCategory === 'landing' }"
           @click="currentCategory = 'landing'"
         >
           Landing Pages
@@ -199,7 +187,7 @@ onUnmounted(() => {
             <p class="project-desc">{{ project.description }}</p>
 
             <div class="tags-row">
-              <span v-for="tag in project.tags" :key="tag" class="tag-chip" :class="getTagClass(tag)">
+              <span v-for="tag in project.tags" :key="tag" class="tag-chip">
                 {{ tag }}
               </span>
             </div>
@@ -226,6 +214,7 @@ onUnmounted(() => {
             class="modal-container card"
             role="dialog"
             aria-modal="true"
+            aria-labelledby="modal-project-title"
             @click.stop
           >
             <button
@@ -239,7 +228,7 @@ onUnmounted(() => {
             <div class="modal-banner">
               <span class="banner-icon">{{ selectedProject.icon }}</span>
               <div class="banner-info">
-                <h2>{{ selectedProject.title }}</h2>
+                <h2 id="modal-project-title">{{ selectedProject.title }}</h2>
                 <p>{{ selectedProject.subtitle }}</p>
               </div>
             </div>
@@ -263,7 +252,7 @@ onUnmounted(() => {
               <div class="modal-section">
                 <h4>Technologies &amp; Architecture</h4>
                 <div class="tags-row modal-tags">
-                  <span v-for="tag in selectedProject.tags" :key="tag" class="tag-chip" :class="getTagClass(tag)">
+                  <span v-for="tag in selectedProject.tags" :key="tag" class="tag-chip">
                     {{ tag }}
                   </span>
                 </div>
@@ -337,21 +326,9 @@ onUnmounted(() => {
 
 .tab-pill.active {
   background: var(--accent);
-  color: #ffffff;
-  border-color: transparent;
-  font-weight: 600;
-}
-
-.tab-pill.active.btn-emerald {
-  background: var(--color-emerald);
-}
-
-.tab-pill.active.btn-cyan {
-  background: var(--color-cyan);
-}
-
-.tab-pill.active.btn-rose {
-  background: var(--color-rose);
+  color: var(--btn-primary-text);
+  border-color: var(--accent);
+  font-weight: 700;
 }
 
 .projects-grid {
@@ -423,16 +400,17 @@ onUnmounted(() => {
 
 .project-title {
   font-size: 1.15rem;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .view-icon {
-  color: var(--accent);
+  color: var(--text-secondary);
   font-size: 1.1rem;
-  transition: transform 0.2s ease;
+  transition: transform 0.2s ease, color 0.2s ease;
 }
 
 .project-card:hover .view-icon {
+  color: var(--text);
   transform: translateX(4px);
 }
 
@@ -452,42 +430,12 @@ onUnmounted(() => {
 
 .tag-chip {
   font-size: 0.78rem;
-  font-weight: 600;
+  font-weight: 500;
   padding: 4px 10px;
   border-radius: 6px;
-  background: var(--chip-bg);
+  background: var(--card);
   color: var(--text-secondary);
-  border: 1px solid transparent;
-}
-
-.tag-chip.tag-emerald {
-  color: var(--color-emerald);
-  background: var(--color-emerald-bg);
-}
-
-.tag-chip.tag-sky {
-  color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.12);
-}
-
-.tag-chip.tag-indigo {
-  color: var(--color-indigo);
-  background: var(--color-indigo-bg);
-}
-
-.tag-chip.tag-amber {
-  color: var(--color-amber);
-  background: var(--color-amber-bg);
-}
-
-.tag-chip.tag-cyan {
-  color: var(--color-cyan);
-  background: var(--color-cyan-bg);
-}
-
-.tag-chip.tag-rose {
-  color: var(--color-rose);
-  background: var(--color-rose-bg);
+  border: 1px solid var(--border);
 }
 
 .project-footer {
@@ -499,18 +447,20 @@ onUnmounted(() => {
 .btn-detail-link {
   background: none;
   border: none;
-  color: var(--accent);
+  color: var(--text);
   font-family: inherit;
   font-size: 0.9rem;
-  font-weight: 700;
+  font-weight: 600;
   cursor: pointer;
   padding: 0;
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  transition: color 0.2s ease;
 }
 
 .btn-detail-link:hover {
+  color: var(--accent);
   text-decoration: underline;
 }
 

@@ -54,8 +54,7 @@ function copyEmail() {
   <section id="contact" class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge badge-amber">Get In Touch</span>
-        <h2 class="section-title">Let's Work <span>Together</span></h2>
+        <h2 class="section-title">Let's Work Together</h2>
         <p class="section-subtitle">
           Have an exciting project in mind, an opportunity, or simply want to chat? Drop me a message!
         </p>
@@ -72,7 +71,7 @@ function copyEmail() {
 
             <div class="contact-channels">
               <div class="channel-item" @click="copyEmail">
-                <div class="channel-icon icon-sky">📧</div>
+                <div class="channel-icon">📧</div>
                 <div class="channel-text">
                   <span class="channel-label">Email (Click to copy)</span>
                   <span class="channel-val">agunghadi.astanto@gmail.com</span>
@@ -80,7 +79,7 @@ function copyEmail() {
               </div>
 
               <div class="channel-item">
-                <div class="channel-icon icon-rose">📍</div>
+                <div class="channel-icon">📍</div>
                 <div class="channel-text">
                   <span class="channel-label">Location</span>
                   <span class="channel-val">Indonesia 🇮🇩</span>
@@ -88,7 +87,7 @@ function copyEmail() {
               </div>
 
               <div class="channel-item">
-                <div class="channel-icon icon-amber">⚡</div>
+                <div class="channel-icon">⚡</div>
                 <div class="channel-text">
                   <span class="channel-label">Response Time</span>
                   <span class="channel-val">&lt; 24 Hours</span>
@@ -101,7 +100,7 @@ function copyEmail() {
                 href="https://github.com"
                 target="_blank"
                 rel="noopener"
-                class="social-btn btn-indigo"
+                class="social-btn"
                 aria-label="GitHub"
               >
                 GitHub &rarr;
@@ -110,7 +109,7 @@ function copyEmail() {
                 href="https://linkedin.com"
                 target="_blank"
                 rel="noopener"
-                class="social-btn btn-sky"
+                class="social-btn"
                 aria-label="LinkedIn"
               >
                 LinkedIn &rarr;
@@ -257,18 +256,8 @@ function copyEmail() {
   justify-content: center;
   border-radius: 10px;
   flex-shrink: 0;
-}
-
-.icon-sky {
-  background: rgba(var(--accent-rgb), 0.12);
-}
-
-.icon-rose {
-  background: var(--color-rose-bg);
-}
-
-.icon-amber {
-  background: var(--color-amber-bg);
+  background: var(--chip-bg);
+  border: 1px solid var(--border);
 }
 
 .channel-text {
@@ -300,20 +289,15 @@ function copyEmail() {
   border-radius: 10px;
   font-size: 0.88rem;
   font-weight: 600;
+  background: var(--card);
+  border: 1px solid var(--border);
+  color: var(--text-secondary);
   transition: all 0.2s ease;
 }
 
-.social-btn.btn-indigo {
-  color: var(--color-indigo);
-  background: var(--color-indigo-bg);
-}
-
-.social-btn.btn-sky {
-  color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.12);
-}
-
 .social-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
   transform: translateY(-2px);
 }
 
@@ -346,7 +330,8 @@ function copyEmail() {
 }
 
 .req {
-  color: var(--accent);
+  color: var(--muted);
+  font-weight: 500;
 }
 
 input,
@@ -374,13 +359,20 @@ textarea:focus {
   padding: 15px;
   font-size: 1rem;
   margin-top: 8px;
+  min-height: 48px;
+}
+
+.submit-btn:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+  transform: none;
 }
 
 .spinner {
   width: 18px;
   height: 18px;
-  border: 2px solid rgba(11, 15, 25, 0.3);
-  border-top-color: #0b0f19;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  border-top-color: #ffffff;
   border-radius: 50%;
   animation: spin 0.8s linear infinite;
 }

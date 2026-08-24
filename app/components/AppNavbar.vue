@@ -85,14 +85,14 @@ function scrollToSection(e: MouseEvent, href: string) {
     <!-- Top Scroll Progress Bar -->
     <div
       class="scroll-progress"
-      :style="{ width: `${scrollProgress}%` }"
+      :style="{ transform: `scaleX(${scrollProgress / 100})` }"
       aria-hidden="true"
     />
 
     <div class="container navbar-inner">
       <a href="#home" class="logo" @click="scrollToSection($event, '#home')">
         <img :src="websiteLogo" alt="Agung Portfolio Logo" class="logo-img" />
-        <span class="logo-text">Agung<span class="logo-accent">.Portfolio</span></span>
+        <span class="logo-text">Agung.Portfolio</span>
       </a>
 
       <nav class="nav-links" :class="{ open }">
@@ -224,9 +224,11 @@ function scrollToSection(e: MouseEvent, href: string) {
   position: absolute;
   top: 0;
   left: 0;
+  width: 100%;
   height: 2.5px;
   background: var(--accent);
-  transition: width 0.1s ease;
+  transform-origin: left center;
+  transition: transform 0.08s linear;
   z-index: 1001;
 }
 
@@ -261,12 +263,7 @@ function scrollToSection(e: MouseEvent, href: string) {
 }
 
 .logo-text {
-  display: flex;
-  align-items: center;
-}
-
-.logo-accent {
-  color: var(--accent);
+  color: var(--text);
 }
 
 .nav-links {
@@ -289,11 +286,13 @@ function scrollToSection(e: MouseEvent, href: string) {
   position: absolute;
   bottom: 0;
   left: 0;
-  width: 0%;
+  width: 100%;
   height: 2px;
-  background: var(--accent);
+  background: var(--text);
   border-radius: 2px;
-  transition: width 0.25s ease;
+  transform: scaleX(0);
+  transform-origin: left center;
+  transition: transform 0.25s ease;
 }
 
 .nav-links a:hover {
@@ -301,12 +300,12 @@ function scrollToSection(e: MouseEvent, href: string) {
 }
 
 .nav-links a.active {
-  color: var(--accent);
-  font-weight: 600;
+  color: var(--text);
+  font-weight: 700;
 }
 
 .nav-links a.active::after {
-  width: 100%;
+  transform: scaleX(1);
 }
 
 .mobile-actions {
@@ -339,8 +338,7 @@ function scrollToSection(e: MouseEvent, href: string) {
 }
 
 .btn-theme-toggle:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--border-light);
   transform: scale(1.05);
 }
 
@@ -348,11 +346,7 @@ function scrollToSection(e: MouseEvent, href: string) {
   display: flex;
   align-items: center;
   justify-content: center;
-  color: var(--accent);
-}
-
-.theme-icon.sun {
-  color: #f59e0b;
+  color: var(--text);
 }
 
 .rotate-fade-enter-active,

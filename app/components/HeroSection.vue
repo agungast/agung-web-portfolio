@@ -100,13 +100,10 @@ onUnmounted(() => {
     }"
   >
     <div class="spotlight-layer" aria-hidden="true" />
-    <div class="grid-background" aria-hidden="true" />
 
     <div class="container hero-inner">
       <div class="hero-content">
-        <p class="greeting">
-          <span class="greeting-badge">Hello, I'm</span>
-        </p>
+        <p class="greeting">Hello, I'm</p>
         <h1 class="hero-name">
           Agung Hadi Astanto
         </h1>
@@ -131,7 +128,7 @@ onUnmounted(() => {
             </svg>
           </a>
           <button class="btn btn-outline" @click="copyEmail">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
               <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
               <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
             </svg>
@@ -139,15 +136,15 @@ onUnmounted(() => {
           </button>
         </div>
 
-        <!-- Floating tech pills -->
+        <!-- Tech stack tags -->
         <div class="tech-pills">
           <span class="pill-label">Tech Stack:</span>
           <div class="pills-list">
-            <span class="tech-pill pill-emerald">Vue 3</span>
-            <span class="tech-pill pill-cyan">Nuxt 3</span>
-            <span class="tech-pill pill-indigo">TypeScript</span>
-            <span class="tech-pill pill-sky">Tailwind CSS</span>
-            <span class="tech-pill pill-amber">Node.js</span>
+            <span class="tech-pill">Vue 3</span>
+            <span class="tech-pill">Nuxt 3</span>
+            <span class="tech-pill">TypeScript</span>
+            <span class="tech-pill">Tailwind CSS</span>
+            <span class="tech-pill">Node.js</span>
           </div>
         </div>
       </div>
@@ -190,19 +187,6 @@ onUnmounted(() => {
   z-index: 1;
 }
 
-.grid-background {
-  position: absolute;
-  inset: 0;
-  background-image: 
-    linear-gradient(to right, var(--grid-line) 1px, transparent 1px),
-    linear-gradient(to bottom, var(--grid-line) 1px, transparent 1px);
-  background-size: 50px 50px;
-  mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 70%, transparent 100%);
-  -webkit-mask-image: radial-gradient(ellipse 80% 60% at 50% 40%, #000 70%, transparent 100%);
-  pointer-events: none;
-  z-index: 0;
-}
-
 .hero-inner {
   display: grid;
   grid-template-columns: 1.15fr 0.85fr;
@@ -216,15 +200,11 @@ onUnmounted(() => {
   margin-bottom: 8px;
 }
 
-.greeting-badge {
-  display: inline-flex;
-  align-items: center;
-  gap: 6px;
-  font-size: 1.5rem;
-  font-weight: 800;
-  color: var(--accent);
-  background: var(--accent-bg);
-  padding: 4px 0px;
+.greeting {
+  font-size: 1.15rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  margin-bottom: 6px;
 }
 
 .hero-name {
@@ -245,12 +225,12 @@ onUnmounted(() => {
 }
 
 .typewriter-text {
-  color: var(--accent);
+  color: var(--text);
 }
 
 .cursor {
   font-weight: 300;
-  color: var(--accent);
+  color: var(--muted);
   margin-left: 2px;
   animation: blink 1s infinite;
 }
@@ -295,48 +275,20 @@ onUnmounted(() => {
 }
 
 .tech-pill {
-  font-size: 0.8rem;
-  font-weight: 600;
-  padding: 5px 12px;
+  font-size: 0.82rem;
+  font-weight: 500;
+  padding: 4px 12px;
   border-radius: 8px;
-  background: var(--chip-bg);
+  background: var(--card);
   border: 1px solid var(--border);
   color: var(--text-secondary);
   transition: all 0.2s ease;
 }
 
 .tech-pill:hover {
-  transform: translateY(-2px);
-}
-
-.tech-pill.pill-emerald {
-  color: var(--color-emerald);
-  background: var(--color-emerald-bg);
-  border-color: transparent;
-}
-
-.tech-pill.pill-cyan {
-  color: var(--color-cyan);
-  background: var(--color-cyan-bg);
-  border-color: transparent;
-}
-
-.tech-pill.pill-indigo {
-  color: var(--color-indigo);
-  background: var(--color-indigo-bg);
-  border-color: transparent;
-}
-
-.tech-pill.pill-sky {
+  border-color: var(--accent);
   color: var(--accent);
-  background: rgba(var(--accent-rgb), 0.12);
-  border-color: transparent;
-}
-
-.tech-pill.pill-amber {
-  color: var(--color-amber);
-  background: var(--color-amber-bg);
-  border-color: transparent;
+  transform: translateY(-1px);
 }
 
 /* Hero Visual Profile Frame */
@@ -354,17 +306,15 @@ onUnmounted(() => {
   border-radius: 24px;
   background: var(--card);
   border: 1px solid var(--border);
-  box-shadow: var(--shadow-card);
   display: flex;
   align-items: flex-end;
   justify-content: center;
   overflow: hidden;
-  transition: transform 0.3s ease, border-color 0.3s ease, box-shadow 0.3s ease;
+  transition: transform 0.3s ease, border-color 0.3s ease;
 }
 
 .profile-frame:hover {
   border-color: var(--border-light);
-  box-shadow: var(--shadow-card-hover);
   transform: translateY(-4px);
 }
 

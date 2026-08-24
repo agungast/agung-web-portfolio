@@ -55,8 +55,7 @@ onMounted(() => {
   <section id="skills" class="section">
     <div class="container">
       <div class="section-header">
-        <span class="section-badge badge-emerald">Tech Stack</span>
-        <h2 class="section-title">Skills &amp; <span>Expertise</span></h2>
+        <h2 class="section-title">Skills &amp; Expertise</h2>
         <p class="section-subtitle">
           Core technologies, modern frameworks, and tools I use to build scalable web applications.
         </p>
@@ -73,21 +72,21 @@ onMounted(() => {
         </button>
         <button
           class="filter-pill"
-          :class="{ active: selectedCategory === 'frontend', 'btn-cyan': selectedCategory === 'frontend' }"
+          :class="{ active: selectedCategory === 'frontend' }"
           @click="selectedCategory = 'frontend'"
         >
           Frontend Core
         </button>
         <button
           class="filter-pill"
-          :class="{ active: selectedCategory === 'framework', 'btn-emerald': selectedCategory === 'framework' }"
-          @click="selectedCategory = 'framework'"
+          :class="{ active: selectedCategory === 'framework' }"
+          @click="selectedCategory === 'framework'"
         >
           Vue &amp; Ecosystem
         </button>
         <button
           class="filter-pill"
-          :class="{ active: selectedCategory === 'tools', 'btn-amber': selectedCategory === 'tools' }"
+          :class="{ active: selectedCategory === 'tools' }"
           @click="selectedCategory = 'tools'"
         >
           Tools &amp; Backend
@@ -100,25 +99,23 @@ onMounted(() => {
           v-for="(skill, index) in filteredSkills"
           :key="skill.name"
           class="skill-card card"
-          :class="`skill-cat-${skill.category}`"
           :style="{ transitionDelay: `${index * 50}ms` }"
         >
           <div class="skill-header">
             <div class="skill-info">
-              <span class="skill-icon" :class="`icon-${skill.category}`">{{ skill.icon }}</span>
+              <span class="skill-icon">{{ skill.icon }}</span>
               <div>
-                <h4 class="skill-title">{{ skill.name }}</h4>
-                <span class="skill-badge" :class="`badge-${skill.category}`">{{ skill.experience }}</span>
+                <h3 class="skill-title">{{ skill.name }}</h3>
+                <span class="skill-badge">{{ skill.experience }}</span>
               </div>
             </div>
-            <span class="skill-percentage" :class="`pct-${skill.category}`">{{ isVisible ? skill.level : 0 }}%</span>
+            <span class="skill-percentage">{{ isVisible ? skill.level : 0 }}%</span>
           </div>
 
           <div class="progress-bar-bg" aria-hidden="true">
             <div
               class="progress-bar-fill"
-              :class="`fill-${skill.category}`"
-              :style="{ width: isVisible ? `${skill.level}%` : '0%' }"
+              :style="{ transform: `scaleX(${isVisible ? skill.level / 100 : 0})` }"
             />
           </div>
         </div>
@@ -156,21 +153,9 @@ onMounted(() => {
 
 .filter-pill.active {
   background: var(--accent);
-  color: #ffffff;
-  border-color: transparent;
-  font-weight: 600;
-}
-
-.filter-pill.active.btn-cyan {
-  background: var(--color-cyan);
-}
-
-.filter-pill.active.btn-emerald {
-  background: var(--color-emerald);
-}
-
-.filter-pill.active.btn-amber {
-  background: var(--color-amber);
+  color: var(--btn-primary-text);
+  border-color: var(--accent);
+  font-weight: 700;
 }
 
 .skills-grid {
@@ -212,48 +197,27 @@ onMounted(() => {
   border: 1px solid var(--border);
 }
 
-.icon-frontend {
-  background: var(--color-cyan-bg);
-  border-color: transparent;
-}
-
-.icon-framework {
-  background: var(--color-emerald-bg);
-  border-color: transparent;
-}
-
-.icon-tools {
-  background: var(--color-amber-bg);
-  border-color: transparent;
-}
-
 .skill-title {
-  font-size: 0.98rem;
-  font-weight: 600;
+  font-size: 1.05rem;
+  font-weight: 700;
   color: var(--text);
   margin-bottom: 2px;
 }
 
 .skill-badge {
-  font-size: 0.75rem;
+  font-size: 0.72rem;
   font-weight: 600;
   text-transform: uppercase;
-  letter-spacing: 0.04em;
+  letter-spacing: 0.05em;
+  color: var(--muted);
 }
-
-.badge-frontend { color: var(--color-cyan); }
-.badge-framework { color: var(--color-emerald); }
-.badge-tools { color: var(--color-amber); }
 
 .skill-percentage {
-  font-size: 1.1rem;
+  font-size: 1.05rem;
   font-weight: 700;
-  font-family: 'Outfit', sans-serif;
+  font-family: var(--font-heading);
+  color: var(--text);
 }
-
-.pct-frontend { color: var(--color-cyan); }
-.pct-framework { color: var(--color-emerald); }
-.pct-tools { color: var(--color-amber); }
 
 .progress-bar-bg {
   width: 100%;
@@ -264,15 +228,13 @@ onMounted(() => {
 }
 
 .progress-bar-fill {
+  width: 100%;
   height: 100%;
   border-radius: 999px;
   background: var(--accent);
-  transition: width 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  transform-origin: left center;
+  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
 }
-
-.fill-frontend { background: var(--color-cyan); }
-.fill-framework { background: var(--color-emerald); }
-.fill-tools { background: var(--color-amber); }
 
 @media (max-width: 640px) {
   .skills-grid {
