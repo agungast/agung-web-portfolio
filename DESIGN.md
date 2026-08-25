@@ -76,3 +76,23 @@ Hindari *Inter*, *Roboto*, atau *System Default*. Gunakan kombinasi Display Seri
   * *Secondary / Outline:* Transparent background, border `1px solid var(--border-subtle)`, text `--text-primary`.
 * **Hover State:** Hindari transform bounce atau zoom berlebihan. Gunakan transisi halus pada *opacity*, *border-color*, atau *background-tint* (150ms ease-out).
 * **Dividers:** Gunakan hairline separator `border-t border-[var(--border-subtle)]` daripada membungkus setiap item dalam kotak/card.
+
+## Color System (Derived from Brandmark)
+
+### Base & Tinted Neutrals (Derived from Deep Ultramarine #1a2a6c / #0f172a)
+* `--canvas-bg`: oklch(0.14 0.03 260) /* Deep Obsidian Blue - Canvas Utama */
+* `--canvas-subtle`: oklch(0.18 0.035 255) /* Card / Container Section */
+* `--canvas-elevated`: oklch(0.24 0.04 250) /* Floating Popover / Nav Surface */
+* `--border-subtle`: oklch(0.28 0.03 250 / 0.5) /* Divider struktural */
+
+### Typography (High Contrast & Intentional Tones)
+* `--text-primary`: oklch(0.97 0.008 240) /* Off-white dengan cool undertone */
+* `--text-secondary`: oklch(0.78 0.03 245) /* Muted body text yang tetap terbaca */
+* `--text-muted`: oklch(0.60 0.035 250) /* Metadata, tags, & captions */
+
+### Brand Accents (Controlled Cyan & Ultramarine from Logo)
+* `--brand-cyan-text`: oklch(0.72 0.12 215) /* Cyan matang untuk teks / highlight (.Portfolio) - Anti Slop */
+* `--brand-cyan-surface`: oklch(0.72 0.12 215 / 0.12) /* Cyan transparan untuk chip / background badge */
+* `--brand-primary`: oklch(0.55 0.19 255) /* Royal Cobalt Blue (Titik tengah logo) */
+* `--brand-primary-hover`: oklch(0.62 0.21 255)
+* `--brand-deep`: oklch(0.35 0.16 265) /* Deep Navy Accent */

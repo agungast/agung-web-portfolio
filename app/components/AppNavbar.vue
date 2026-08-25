@@ -92,7 +92,7 @@ function scrollToSection(e: MouseEvent, href: string) {
     <div class="container navbar-inner">
       <a href="#home" class="logo" @click="scrollToSection($event, '#home')">
         <img :src="websiteLogo" alt="Agung Portfolio Logo" class="logo-img" />
-        <span class="logo-text">Agung.Portfolio</span>
+        <span class="logo-text">Agung<span class="logo-accent">.Portfolio</span></span>
       </a>
 
       <nav class="nav-links" :class="{ open }">
@@ -259,11 +259,17 @@ function scrollToSection(e: MouseEvent, href: string) {
   height: 32px;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 2px 6px rgba(14, 165, 233, 0.25));
+  filter: drop-shadow(0 2px 6px var(--brand-cyan-surface));
 }
 
 .logo-text {
+  display: flex;
+  align-items: center;
   color: var(--text);
+}
+
+.logo-accent {
+  color: var(--brand-cyan-text);
 }
 
 .nav-links {

@@ -10,37 +10,45 @@
   --lh-snug: 1.35;
   --lh-body: 1.65;
   --lh-relaxed: 1.75;
+  
+  /* Brand Accents (Controlled Cyan & Ultramarine from Logo) */
+  --brand-cyan-text: oklch(0.72 0.12 215);
+  --brand-cyan-surface: oklch(0.72 0.12 215 / 0.12);
+  --brand-primary: oklch(0.55 0.19 255);
+  --brand-primary-hover: oklch(0.62 0.21 255);
+  --brand-deep: oklch(0.35 0.16 265);
 }
 
 :root,
 html.dark {
-  --bg: #0b0f19;
-  --bg-soft: #111827;
-  --card: #151c2c;
-  --card-hover: #1e2638;
-  --card-glass: rgba(21, 28, 44, 0.85);
-  --border: #23304a;
-  --border-light: #334155;
-  --text: #f8fafc;
-  --text-secondary: #cbd5e1;
-  --muted: #94a3b8;
+  --bg: oklch(0.14 0.03 260);
+  --bg-soft: oklch(0.18 0.035 255);
+  --card: oklch(0.24 0.04 250);
+  --card-hover: oklch(0.28 0.04 250);
+  --card-glass: oklch(0.24 0.04 250 / 0.85);
+  --border: oklch(0.28 0.03 250 / 0.5);
+  --border-light: oklch(0.35 0.04 250 / 0.6);
+  --text: oklch(0.97 0.008 240);
+  --text-secondary: oklch(0.78 0.03 245);
+  --muted: oklch(0.60 0.035 250);
   
   /* Primary Accent & Button Contrast */
-  --accent: #38bdf8;
-  --accent-rgb: 56, 189, 248;
-  --btn-primary-text: #070b14;
+  --accent: var(--brand-cyan-text);
+  --accent-rgb: 114, 193, 245; /* Approx for shadow */
+  --accent-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-cyan-text));
+  --btn-primary-text: #ffffff;
 
-  --nav-bg: rgba(11, 15, 25, 0.85);
-  --nav-bg-scrolled: rgba(11, 15, 25, 0.95);
-  --nav-mobile-bg: rgba(11, 15, 25, 0.98);
-  --code-bg: #0f172a;
-  --code-header: #1e293b;
-  --grid-line: rgba(35, 48, 74, 0.2);
-  --input-bg: #111827;
-  --modal-bg: #111827;
-  --modal-backdrop: rgba(11, 15, 25, 0.85);
-  --btn-outline-bg: #151c2c;
-  --chip-bg: rgba(35, 48, 74, 0.5);
+  --nav-bg: oklch(0.14 0.03 260 / 0.85);
+  --nav-bg-scrolled: oklch(0.14 0.03 260 / 0.95);
+  --nav-mobile-bg: oklch(0.14 0.03 260 / 0.98);
+  --code-bg: oklch(0.12 0.03 260);
+  --code-header: oklch(0.18 0.035 255);
+  --grid-line: oklch(0.28 0.03 250 / 0.2);
+  --input-bg: oklch(0.18 0.035 255);
+  --modal-bg: oklch(0.18 0.035 255);
+  --modal-backdrop: oklch(0.14 0.03 260 / 0.85);
+  --btn-outline-bg: oklch(0.24 0.04 250);
+  --chip-bg: var(--brand-cyan-surface);
   --shadow-card: none;
   --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.35);
 }
@@ -58,8 +66,9 @@ html.light {
   --muted: #64748b;
   
   /* Primary Accent & Button Contrast */
-  --accent: #0284c7;
-  --accent-rgb: 2, 132, 199;
+  --accent: var(--brand-cyan-text);
+  --accent-rgb: 14, 165, 233;
+  --accent-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-cyan-text));
   --btn-primary-text: #ffffff;
 
   --nav-bg: rgba(234, 237, 242, 0.88);
@@ -207,13 +216,15 @@ img {
 }
 
 .btn-primary {
-  background: var(--accent);
+  background: var(--accent-gradient);
   color: var(--btn-primary-text);
   font-weight: 700;
+  border: none;
 }
 
 .btn-primary:hover {
-  filter: brightness(1.08);
+  box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35);
+  transform: translateY(-2px);
 }
 
 .btn-outline {
@@ -244,13 +255,11 @@ img {
   border: 1px solid var(--border);
   border-radius: 14px;
   box-shadow: var(--shadow-card);
-  transition: transform 0.25s ease,
-              border-color 0.25s ease,
-              box-shadow 0.25s ease,
-              background-color 0.3s ease;
+  transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
 }
 
 .card:hover {
-  border-color: var(--border-light);
+  border-color: var(--accent);
   box-shadow: var(--shadow-card-hover);
+  transform: translateY(-4px);
 }

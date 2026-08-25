@@ -10,18 +10,18 @@ interface Skill {
 }
 
 const skills: Skill[] = [
-  { name: 'HTML5 & CSS3', level: 95, category: 'frontend', icon: '🌐', experience: 'Advanced' },
-  { name: 'JavaScript (ES6+)', level: 88, category: 'frontend', icon: '⚡', experience: 'Advanced' },
-  { name: 'TypeScript', level: 80, category: 'frontend', icon: '📘', experience: 'Intermediate' },
-  { name: 'Vue.js 3 (Composition API)', level: 85, category: 'framework', icon: '💚', experience: 'Advanced' },
-  { name: 'Nuxt 3', level: 82, category: 'framework', icon: '🚀', experience: 'Advanced' },
-  { name: 'Tailwind CSS', level: 90, category: 'frontend', icon: '🎨', experience: 'Advanced' },
-  { name: 'Pinia / State Management', level: 80, category: 'framework', icon: '🍍', experience: 'Intermediate' },
-  { name: 'REST APIs & Fetch', level: 85, category: 'tools', icon: '🔌', experience: 'Advanced' },
-  { name: 'Git & GitHub', level: 82, category: 'tools', icon: '🐙', experience: 'Advanced' },
-  { name: 'Node.js Basics', level: 68, category: 'tools', icon: '🟢', experience: 'Intermediate' },
-  { name: 'Firebase / Supabase', level: 75, category: 'tools', icon: '🔥', experience: 'Intermediate' },
-  { name: 'Responsive Web Design', level: 92, category: 'frontend', icon: '📱', experience: 'Advanced' }
+  { name: 'HTML5 & CSS3', level: 95, category: 'frontend', icon: 'logos:html-5', experience: 'Advanced' },
+  { name: 'JavaScript (ES6+)', level: 88, category: 'frontend', icon: 'logos:javascript', experience: 'Advanced' },
+  { name: 'TypeScript', level: 80, category: 'frontend', icon: 'logos:typescript-icon', experience: 'Intermediate' },
+  { name: 'Vue.js 3', level: 85, category: 'framework', icon: 'logos:vue', experience: 'Advanced' },
+  { name: 'Nuxt 3', level: 82, category: 'framework', icon: 'logos:nuxt-icon', experience: 'Advanced' },
+  { name: 'Tailwind CSS', level: 90, category: 'frontend', icon: 'logos:tailwindcss-icon', experience: 'Advanced' },
+  { name: 'Pinia / State Management', level: 80, category: 'framework', icon: 'logos:pinia', experience: 'Intermediate' },
+  { name: 'REST APIs & Fetch', level: 85, category: 'tools', icon: 'vscode-icons:file-type-api', experience: 'Advanced' },
+  { name: 'Git & GitHub', level: 82, category: 'tools', icon: 'logos:github-icon', experience: 'Advanced' },
+  { name: 'Node.js Basics', level: 68, category: 'tools', icon: 'logos:nodejs-icon', experience: 'Intermediate' },
+  { name: 'Firebase / Supabase', level: 75, category: 'tools', icon: 'logos:firebase', experience: 'Intermediate' },
+  { name: 'Responsive Web Design', level: 92, category: 'frontend', icon: 'ph:devices-fill', experience: 'Advanced' }
 ]
 
 const selectedCategory = ref<'all' | 'frontend' | 'framework' | 'tools'>('all')
@@ -103,7 +103,9 @@ onMounted(() => {
         >
           <div class="skill-header">
             <div class="skill-info">
-              <span class="skill-icon">{{ skill.icon }}</span>
+              <div class="skill-icon">
+                <Icon :name="skill.icon" />
+              </div>
               <div>
                 <h3 class="skill-title">{{ skill.name }}</h3>
                 <span class="skill-badge">{{ skill.experience }}</span>
@@ -171,6 +173,14 @@ onMounted(() => {
   display: flex;
   flex-direction: column;
   gap: 16px;
+  perspective: 1000px;
+}
+
+.skill-card:hover .skill-icon {
+  transform: translateZ(12px) scale(1.08) rotate(-4deg);
+  border-color: var(--accent);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.1),
+              0 8px 16px rgba(0,0,0,0.25);
 }
 
 .skill-header {
@@ -182,19 +192,24 @@ onMounted(() => {
 .skill-info {
   display: flex;
   align-items: center;
-  gap: 12px;
+  gap: 14px;
 }
 
 .skill-icon {
-  font-size: 1.5rem;
+  font-size: 1.8rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 44px;
-  height: 44px;
-  border-radius: 10px;
-  background: var(--chip-bg);
-  border: 1px solid var(--border);
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  background: var(--card-hover);
+  border: 1px solid var(--border-light);
+  box-shadow: inset 0 2px 4px rgba(255,255,255,0.04),
+              0 4px 10px rgba(0,0,0,0.12);
+  color: var(--brand-cyan-text); /* Fallback for monochrome icons */
+  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+  transform-style: preserve-3d;
 }
 
 .skill-title {
