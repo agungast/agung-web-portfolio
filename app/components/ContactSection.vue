@@ -39,7 +39,7 @@ function resetForm() {
 }
 
 function copyEmail() {
-  const email = 'agunghadi.astanto@gmail.com'
+  const email = 'agunghaast14@gmail.com'
   if (navigator.clipboard) {
     navigator.clipboard.writeText(email).then(() => {
       showToast('Email address copied to clipboard!', 'success')
@@ -74,7 +74,7 @@ function copyEmail() {
                 <div class="channel-icon">📧</div>
                 <div class="channel-text">
                   <span class="channel-label">Email (Click to copy)</span>
-                  <span class="channel-val">agunghadi.astanto@gmail.com</span>
+                  <span class="channel-val">agunghaast14@gmail.com</span>
                 </div>
               </div>
 
@@ -97,7 +97,7 @@ function copyEmail() {
 
             <div class="social-links">
               <a
-                href="https://github.com"
+                href="https://github.com/agungast"
                 target="_blank"
                 rel="noopener"
                 class="social-btn"
@@ -106,7 +106,7 @@ function copyEmail() {
                 GitHub &rarr;
               </a>
               <a
-                href="https://linkedin.com"
+                href="https://www.linkedin.com/in/agunghadiastanto/"
                 target="_blank"
                 rel="noopener"
                 class="social-btn"
@@ -119,7 +119,7 @@ function copyEmail() {
         </div>
 
         <!-- Interactive Contact Form -->
-        <div class="contact-form-container">
+        <div class="contact-form-container" v-reveal :style="{ transitionDelay: '200ms' }">
           <form
             v-if="!sent"
             class="card contact-form"

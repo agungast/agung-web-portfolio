@@ -169,9 +169,11 @@ onUnmounted(() => {
       <!-- Projects Grid -->
       <div class="projects-grid">
         <article
-          v-for="project in filteredProjects"
+          v-for="(project, index) in filteredProjects"
           :key="project.id"
           class="project-card card"
+          v-reveal
+          :style="{ transitionDelay: `${index * 100}ms` }"
           @click="openModal(project)"
         >
           <div class="project-thumb">

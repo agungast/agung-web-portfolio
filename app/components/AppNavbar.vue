@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useTheme } from '../composables/useTheme'
 import websiteLogo from '~/assets/images/website-logo.webp'
 
@@ -18,6 +18,33 @@ const isScrolled = ref(false)
 const activeSection = ref('home')
 const scrollProgress = ref(0)
 
+// Magic sliding indicator
+const navItems = ref<HTMLElement[]>([])
+const indicatorStyle = ref({ width: '0px', transform: 'translateX(0px)', opacity: '0' })
+
+function updateIndicator() {
+  const activeIndex = links.findIndex(l => l.href.replace('#', '') === activeSection.value)
+  if (activeIndex !== -1 && navItems.value[activeIndex]) {
+    const el = navItems.value[activeIndex]
+    indicatorStyle.value = {
+      width: `${el.offsetWidth}px`,
+      transform: `translateX(${el.offsetLeft}px)`,
+      opacity: '1'
+    }
+  } else {
+    indicatorStyle.value.opacity = '0'
+  }
+}
+
+watch(activeSection, () => {
+  nextTick(() => {
+    updateIndicator()
+  })
+})
+
+let scrollTimeout: ReturnType<typeof setTimeout> | null = null
+const isProgrammaticScroll = ref(false)
+
 function handleScroll() {
   if (typeof window === 'undefined') return
   const scrollTop = window.scrollY || document.documentElement.scrollTop
@@ -27,6 +54,8 @@ function handleScroll() {
   if (docHeight > 0) {
     scrollProgress.value = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100))
   }
+
+  if (isProgrammaticScroll.value) return
 
   // ScrollSpy Calculation
   // 1. If near top, always activate 'home'
@@ -59,18 +88,29 @@ function handleScroll() {
 onMounted(() => {
   initTheme()
   window.addEventListener('scroll', handleScroll, { passive: true })
+  window.addEventListener('resize', updateIndicator, { passive: true })
   handleScroll()
+  setTimeout(updateIndicator, 100) // Ensure fonts are loaded before calculating width
 })
 
 onUnmounted(() => {
   if (typeof window !== 'undefined') {
     window.removeEventListener('scroll', handleScroll)
+    window.removeEventListener('resize', updateIndicator)
   }
 })
 
 function scrollToSection(e: MouseEvent, href: string) {
   e.preventDefault()
   open.value = false
+  
+  isProgrammaticScroll.value = true
+  if (scrollTimeout) clearTimeout(scrollTimeout)
+  
+  scrollTimeout = setTimeout(() => {
+    isProgrammaticScroll.value = false
+  }, 1000)
+
   const targetId = href.replace('#', '')
   activeSection.value = targetId
   const target = document.getElementById(targetId)
@@ -96,11 +136,13 @@ function scrollToSection(e: MouseEvent, href: string) {
       </a>
 
       <nav class="nav-links" :class="{ open }">
+        <div class="nav-indicator" :style="indicatorStyle" aria-hidden="true"></div>
         <a
-          v-for="link in links"
+          v-for="(link, index) in links"
           :key="link.href"
           :href="link.href"
           :class="{ active: activeSection === link.href.replace('#', '') }"
+          ref="navItems"
           @click="scrollToSection($event, link.href)"
         >
           {{ link.label }}
@@ -216,8 +258,7 @@ function scrollToSection(e: MouseEvent, href: string) {
 
 .navbar.scrolled {
   background: var(--nav-bg-scrolled);
-  border-bottom-color: var(--border-light);
-  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
+  border-bottom-color: var(--border);
 }
 
 .scroll-progress {
@@ -276,6 +317,18 @@ function scrollToSection(e: MouseEvent, href: string) {
   display: flex;
   align-items: center;
   gap: 32px;
+  position: relative;
+}
+
+.nav-indicator {
+  position: absolute;
+  bottom: -2px;
+  left: 0;
+  height: 2px;
+  background: var(--text);
+  border-radius: 2px;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+  z-index: 1;
 }
 
 .nav-links a {
@@ -285,20 +338,7 @@ function scrollToSection(e: MouseEvent, href: string) {
   position: relative;
   padding: 6px 2px;
   transition: color 0.25s ease;
-}
-
-.nav-links a:not(.btn-nav-cta)::after {
-  content: '';
-  position: absolute;
-  bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 2px;
-  background: var(--text);
-  border-radius: 2px;
-  transform: scaleX(0);
-  transform-origin: left center;
-  transition: transform 0.25s ease;
+  z-index: 2;
 }
 
 .nav-links a:hover {
@@ -308,10 +348,6 @@ function scrollToSection(e: MouseEvent, href: string) {
 .nav-links a.active {
   color: var(--text);
   font-weight: 700;
-}
-
-.nav-links a.active::after {
-  transform: scaleX(1);
 }
 
 .mobile-actions {

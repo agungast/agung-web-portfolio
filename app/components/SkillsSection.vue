@@ -17,8 +17,8 @@ const skills: Skill[] = [
   { name: 'Nuxt 3', level: 82, category: 'framework', icon: 'logos:nuxt-icon', experience: 'Advanced' },
   { name: 'Tailwind CSS', level: 90, category: 'frontend', icon: 'logos:tailwindcss-icon', experience: 'Advanced' },
   { name: 'Pinia / State Management', level: 80, category: 'framework', icon: 'logos:pinia', experience: 'Intermediate' },
-  { name: 'REST APIs & Fetch', level: 85, category: 'tools', icon: 'vscode-icons:file-type-api', experience: 'Advanced' },
-  { name: 'Git & GitHub', level: 82, category: 'tools', icon: 'logos:github-icon', experience: 'Advanced' },
+  { name: 'REST APIs & Fetch', level: 85, category: 'tools', icon: 'mdi:api', experience: 'Advanced' },
+  { name: 'Git & GitHub', level: 82, category: 'tools', icon: 'mdi:github', experience: 'Advanced' },
   { name: 'Node.js Basics', level: 68, category: 'tools', icon: 'logos:nodejs-icon', experience: 'Intermediate' },
   { name: 'Firebase / Supabase', level: 75, category: 'tools', icon: 'logos:firebase', experience: 'Intermediate' },
   { name: 'Responsive Web Design', level: 92, category: 'frontend', icon: 'ph:devices-fill', experience: 'Advanced' }
@@ -30,24 +30,6 @@ const isVisible = ref(false)
 const filteredSkills = computed(() => {
   if (selectedCategory.value === 'all') return skills
   return skills.filter(s => s.category === selectedCategory.value)
-})
-
-onMounted(() => {
-  const section = document.getElementById('skills')
-  if (!section) return
-
-  const observer = new IntersectionObserver(
-    (entries) => {
-      const entry = entries[0]
-      if (entry?.isIntersecting) {
-        isVisible.value = true
-        observer.disconnect()
-      }
-    },
-    { threshold: 0.15 }
-  )
-
-  observer.observe(section)
 })
 </script>
 
@@ -62,7 +44,7 @@ onMounted(() => {
       </div>
 
       <!-- Filter Category Buttons -->
-      <div class="category-filters">
+      <div class="category-filters" v-reveal>
         <button
           class="filter-pill"
           :class="{ active: selectedCategory === 'all' }"
@@ -99,7 +81,8 @@ onMounted(() => {
           v-for="(skill, index) in filteredSkills"
           :key="skill.name"
           class="skill-card card"
-          :style="{ transitionDelay: `${index * 50}ms` }"
+          v-reveal
+          :style="{ transitionDelay: `${index * 30}ms` }"
         >
           <div class="skill-header">
             <div class="skill-info">
@@ -111,13 +94,13 @@ onMounted(() => {
                 <span class="skill-badge">{{ skill.experience }}</span>
               </div>
             </div>
-            <span class="skill-percentage">{{ isVisible ? skill.level : 0 }}%</span>
+            <span class="skill-percentage">{{ skill.level }}%</span>
           </div>
 
           <div class="progress-bar-bg" aria-hidden="true">
             <div
               class="progress-bar-fill"
-              :style="{ transform: `scaleX(${isVisible ? skill.level / 100 : 0})` }"
+              :style="{ transform: `scaleX(${skill.level / 100})` }"
             />
           </div>
         </div>

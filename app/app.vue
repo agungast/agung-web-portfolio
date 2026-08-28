@@ -10,7 +10,9 @@ onMounted(() => {
 </script>
 
 <template>
-  <div>
+  <div class="app-shell">
+    <SplashScreen />
+    <BackgroundElements />
     <AppNavbar />
     <NuxtPage />
     <AppFooter />
@@ -18,3 +20,9 @@ onMounted(() => {
     <ToastNotification />
   </div>
 </template>
+
+<style scoped>
+.app-shell {
+  position: relative;
+}
+</style>

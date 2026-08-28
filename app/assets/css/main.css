@@ -43,7 +43,7 @@ html.dark {
   --nav-mobile-bg: oklch(0.14 0.03 260 / 0.98);
   --code-bg: oklch(0.12 0.03 260);
   --code-header: oklch(0.18 0.035 255);
-  --grid-line: oklch(0.28 0.03 250 / 0.2);
+  --grid-line: oklch(0.28 0.03 250 / 0.45); /* Increased opacity from 0.2 */
   --input-bg: oklch(0.18 0.035 255);
   --modal-bg: oklch(0.18 0.035 255);
   --modal-backdrop: oklch(0.14 0.03 260 / 0.85);
@@ -54,11 +54,11 @@ html.dark {
 }
 
 html.light {
-  --bg: #eaedf2;
-  --bg-soft: #dfe3e8;
-  --card: #f4f6f8;
-  --card-hover: #fcfdfd;
-  --card-glass: rgba(244, 246, 248, 0.94);
+  --bg: #e2e6eb; /* Slightly darker grayish-white */
+  --bg-soft: #cbd2da;
+  --card: #eff2f6; /* Off-white for cards */
+  --card-hover: #ffffff;
+  --card-glass: rgba(239, 242, 246, 0.94);
   --border: #ccd2db;
   --border-light: #b4bcc8;
   --text: #1e293b;
@@ -76,7 +76,7 @@ html.light {
   --nav-mobile-bg: rgba(244, 246, 248, 0.98);
   --code-bg: #0f172a;
   --code-header: #1e293b;
-  --grid-line: rgba(148, 163, 184, 0.25);
+  --grid-line: rgba(148, 163, 184, 0.45); /* Increased opacity from 0.25 */
   --input-bg: #f4f6f8;
   --modal-bg: #f4f6f8;
   --modal-backdrop: rgba(15, 23, 42, 0.55);
@@ -100,6 +100,9 @@ html {
 body {
   font-family: var(--font-body);
   background-color: var(--bg);
+  background-image:
+    radial-gradient(circle at 1px 1px, var(--grid-line) 1px, transparent 0);
+  background-size: 32px 32px;
   color: var(--text);
   line-height: var(--lh-body);
   overflow-x: hidden;
@@ -263,3 +266,36 @@ img {
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-4px);
 }
+
+/* Bento Cell System (Asymmetric Grid) */
+.bento-cell {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 28px;
+  transition: border-color 150ms ease-out, transform 150ms ease-out;
+}
+
+.bento-cell:hover {
+  border-color: var(--brand-cyan-text);
+  transform: translateY(-2px);
+}
+
+/* Global Reveal Animations */
+.reveal-up {
+  opacity: 0;
+  transform: translateY(30px);
+  /* Use a strict, anti-slop cubic bezier for entrance (no bounce) */
+  transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: opacity, transform;
+}
+
+.reveal-up.is-revealed {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* Add stagger delays for multiple reveals */
+.delay-100 { transition-delay: 100ms; }
+.delay-200 { transition-delay: 200ms; }
+.delay-300 { transition-delay: 300ms; }

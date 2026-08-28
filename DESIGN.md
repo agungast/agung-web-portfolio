@@ -9,7 +9,7 @@ File ini menjadi sumber kebenaran visual utama untuk seluruh styling proyek. Pat
 * **No Pure Grayscale:** Jangan pernah gunakan `#000000`, `#ffffff`, `#333333`, atau `gray-500` bawaan Tailwind. Semua warna netral wajib memiliki *undertone* (tint).
 * **No Nested Cards:** Hindari pola *card-inside-card* dengan border tipis dan drop shadow melayang. Gunakan garis pemisah subtil (*1px solid rules*) atau whitespace untuk memisahkan konten.
 * **No Default Gradients:** Dilarang menggunakan gradien ungu-ke-sian (`purple-600 to cyan-400`) atau efek glow neon pada tombol/background.
-* **Asymmetric & Editorial Flow:** Prioritaskan layout asimetris, ritme vertikal yang dinamis, dan tipografi hierarkis daripada grid 3-kolom standar atau *bento-box* klise.
+* **Asymmetric & Editorial Flow:** Prioritaskan layout asimetris dan ritme vertikal yang dinamis. Grid simetris 3-kolom standar atau *bento-box* **seragam** tetap dilarang. Namun, *Asymmetric Bento* (sel berukuran bervariasi, tanpa nested cards, border `1px solid` saja, radius maks `8px`) **diizinkan** untuk section dengan data heterogen.
 * **Intentional High Contrast:** Teks sekunder harus tetap memenuhi standar WCAG AA (rasio kontras minimum 4.5:1), hindari teks abu-abu pudar tak terbaca.
 
 ---

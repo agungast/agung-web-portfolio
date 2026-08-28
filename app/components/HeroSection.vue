@@ -1,9 +1,11 @@
 <script setup lang="ts">
-import { ref, onMounted, onUnmounted } from 'vue'
+import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useToast } from '../composables/useToast'
+import { useAppState } from '../composables/useAppState'
 import profileImg from '~/assets/images/profile-picture.webp'
 
 const { showToast } = useToast()
+const { isAppReady } = useAppState()
 
 const titles = [
   'Front-End Developer',
@@ -65,7 +67,7 @@ function handleMouseMove(e: MouseEvent) {
 }
 
 function copyEmail() {
-  const email = 'agunghadi.astanto@gmail.com'
+  const email = 'agunghaast14@gmail.com'
   if (navigator.clipboard) {
     navigator.clipboard.writeText(email).then(() => {
       showToast('Email address copied to clipboard!', 'success')
@@ -73,14 +75,22 @@ function copyEmail() {
       showToast('Email: agunghaast14@gmail.com', 'info')
     })
   } else {
-    showToast('Email: agunghadi.astanto@gmail.com', 'info')
+    showToast('Email: agunghaast14@gmail.com', 'info')
   }
 }
 
 onMounted(() => {
-  typeLoop()
+  if (isAppReady.value) {
+    typeLoop()
+  }
   const hero = document.getElementById('home')
   hero?.addEventListener('mousemove', handleMouseMove)
+})
+
+watch(isAppReady, (ready) => {
+  if (ready) {
+    setTimeout(typeLoop, 400) // slight delay after splash finishes
+  }
 })
 
 onUnmounted(() => {
@@ -103,23 +113,29 @@ onUnmounted(() => {
 
     <div class="container hero-inner">
       <div class="hero-content">
-        <p class="greeting">Hello, I'm</p>
-        <h1 class="hero-name">
-          Agung Hadi Astanto
-        </h1>
-
-        <div class="typewriter-container">
-          <span class="typewriter-text">{{ currentTitle }}</span>
-          <span class="cursor">|</span>
+        <div class="mask-wrap">
+          <p class="greeting reveal-text" :class="{ 'is-visible': isAppReady }">Hello, I'm</p>
+        </div>
+        <div class="mask-wrap">
+          <h1 class="hero-name reveal-text delay-1" :class="{ 'is-visible': isAppReady }">
+            Agung Hadi Astanto
+          </h1>
         </div>
 
-        <p class="desc">
+        <div class="mask-wrap">
+          <div class="typewriter-container reveal-text delay-2" :class="{ 'is-visible': isAppReady }">
+            <span class="typewriter-text">{{ currentTitle }}</span>
+            <span class="cursor">|</span>
+          </div>
+        </div>
+
+        <p class="desc reveal-up" :class="{ 'is-revealed': isAppReady }">
           Passionate in crafting fast, accessible, and interactive modern web applications.
           Focused on the Vue &amp; Nuxt ecosystem with an eye for clean UI/UX aesthetics.
         </p>
 
         <!-- Action buttons -->
-        <div class="actions">
+        <div class="actions reveal-up delay-100" :class="{ 'is-revealed': isAppReady }">
           <a href="#projects" class="btn btn-primary">
             Explore Work
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
@@ -137,7 +153,7 @@ onUnmounted(() => {
         </div>
 
         <!-- Tech stack tags -->
-        <div class="tech-pills">
+        <div class="tech-pills reveal-up delay-200" :class="{ 'is-revealed': isAppReady }">
           <span class="pill-label">Tech Stack:</span>
           <div class="pills-list">
             <span class="tech-pill">Vue 3</span>
@@ -150,7 +166,7 @@ onUnmounted(() => {
       </div>
 
       <!-- Hero Visual Minimalist Profile Frame -->
-      <div class="hero-visual">
+      <div class="hero-visual reveal-up delay-300" :class="{ 'is-revealed': isAppReady }">
         <div class="profile-frame">
           <img
             :src="profileImg"
@@ -179,13 +195,32 @@ onUnmounted(() => {
   inset: 0;
   pointer-events: none;
   background: radial-gradient(
-    700px circle at var(--spotlight-x, 50%) var(--spotlight-y, 40%),
+    circle 700px at var(--spotlight-x, 50%) var(--spotlight-y, 40%),
     var(--spotlight-aura),
-    transparent 70%
+    transparent 80%
   );
-  transition: background 0.1s ease-out;
-  z-index: 1;
+  opacity: 1;
+  transition: opacity 0.5s ease;
 }
+
+/* Masked Typography Reveal Classes */
+.mask-wrap {
+  overflow: hidden;
+}
+
+.reveal-text {
+  display: block;
+  transform: translateY(110%);
+  transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+  will-change: transform;
+}
+
+.reveal-text.is-visible {
+  transform: translateY(0);
+}
+
+.reveal-text.delay-1 { transition-delay: 100ms; }
+.reveal-text.delay-2 { transition-delay: 200ms; }
 
 .hero-inner {
   display: grid;

@@ -28,9 +28,9 @@ import websiteLogo from '~/assets/images/website-logo.webp'
           &copy; {{ new Date().getFullYear() }} Agung Hadi Astanto. Crafted with Vue 3 &amp; Nuxt.
         </p>
         <div class="socials">
-          <a href="https://github.com" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
-          <a href="https://linkedin.com" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-          <a href="mailto:agunghadi.astanto@gmail.com" aria-label="Email">Email</a>
+          <a href="https://github.com/agungast" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+          <a href="https://www.linkedin.com/in/agunghadiastanto/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agunghaast14@gmail.com" target="_blank" rel="noopener" aria-label="Email">Email</a>
         </div>
       </div>
     </div>

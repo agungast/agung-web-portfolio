@@ -1,7 +1,5 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-
-const activeTab = ref<'story' | 'education' | 'experience'>('story')
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const stats = [
   { value: 12, suffix: '+', label: 'Projects Built' },
@@ -37,6 +35,27 @@ function animateStats() {
   })
 }
 
+// Live clock
+const currentTime = ref('')
+const currentDate = ref('')
+let clockInterval: ReturnType<typeof setInterval> | null = null
+
+function updateClock() {
+  const now = new Date()
+  currentTime.value = now.toLocaleTimeString('en-US', {
+    hour: '2-digit',
+    minute: '2-digit',
+    second: '2-digit',
+    hour12: false
+  })
+  currentDate.value = now.toLocaleDateString('en-US', {
+    weekday: 'long',
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric'
+  })
+}
+
 onMounted(() => {
   const section = document.getElementById('about')
   if (!section) return
@@ -53,6 +72,14 @@ onMounted(() => {
   )
 
   observer.observe(section)
+
+  // Start clock
+  updateClock()
+  clockInterval = setInterval(updateClock, 1000)
+})
+
+onUnmounted(() => {
+  if (clockInterval) clearInterval(clockInterval)
 })
 </script>
 
@@ -66,108 +93,33 @@ onMounted(() => {
         </p>
       </div>
 
-      <div class="about-grid">
-        <!-- Left column: Interactive Tabs -->
-        <div class="about-left">
-          <div class="tabs-nav">
-            <button
-              class="tab-btn"
-              :class="{ active: activeTab === 'story' }"
-              @click="activeTab = 'story'"
-            >
-              My Story
-            </button>
-            <button
-              class="tab-btn"
-              :class="{ active: activeTab === 'education' }"
-              @click="activeTab = 'education'"
-            >
-              Education
-            </button>
-            <button
-              class="tab-btn"
-              :class="{ active: activeTab === 'experience' }"
-              @click="activeTab = 'experience'"
-            >
-              Experience
-            </button>
-          </div>
-
-          <div class="tab-content card">
-            <!-- Story Tab -->
-            <div v-if="activeTab === 'story'" class="tab-pane">
-              <h3>Passionate Frontend Developer</h3>
-              <p>
-                I am an Informatics student with a relentless drive for building clean, performant, and intuitive user interfaces. I bridge the gap between design and robust frontend engineering.
-              </p>
-              <p>
-                My journey began with HTML/CSS and evolved into building modern reactive web applications using Vue 3, Nuxt 3, and TypeScript. I love exploring interactive UI animations and clean architecture.
-              </p>
-              <div class="traits">
-                <span class="trait">🚀 Clean Code</span>
-                <span class="trait">🎨 Pixel-Perfect UI</span>
-                <span class="trait">⚡ Fast Performance</span>
-                <span class="trait">📱 Fully Responsive</span>
-              </div>
-            </div>
-
-            <!-- Education Tab -->
-            <div v-else-if="activeTab === 'education'" class="tab-pane">
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-marker" />
-                  <div class="timeline-content">
-                    <span class="timeline-date">2021 &mdash; Present</span>
-                    <h4>Bachelor of Computer Science / Informatics</h4>
-                    <p class="timeline-sub">Semester 7 Student</p>
-                    <p>Focusing on Software Engineering, Web Development, Algorithms, and UI/UX Design.</p>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-marker" />
-                  <div class="timeline-content">
-                    <span class="timeline-date">Continuous Learning</span>
-                    <h4>Modern Web &amp; Vue Ecosystem Certification</h4>
-                    <p class="timeline-sub">Online Coursework &amp; Self-directed Projects</p>
-                    <p>Deep-diving into Nuxt 3, Pinia state management, TypeScript, and modern CSS architecture.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <!-- Experience Tab -->
-            <div v-else-if="activeTab === 'experience'" class="tab-pane">
-              <div class="timeline">
-                <div class="timeline-item">
-                  <div class="timeline-marker" />
-                  <div class="timeline-content">
-                    <span class="timeline-date">2023 &mdash; Present</span>
-                    <h4>Freelance Web Developer</h4>
-                    <p class="timeline-sub">Independent Projects</p>
-                    <p>Developed custom landing pages, POS management dashboards, and responsive web portals for small business clients.</p>
-                  </div>
-                </div>
-                <div class="timeline-item">
-                  <div class="timeline-marker" />
-                  <div class="timeline-content">
-                    <span class="timeline-date">Academic Projects</span>
-                    <h4>Frontend Lead &amp; Developer</h4>
-                    <p class="timeline-sub">University Team Projects</p>
-                    <p>Led UI architecture, component structure, and state management for campus development assignments.</p>
-                  </div>
-                </div>
-              </div>
-            </div>
+      <!-- Asymmetric Bento Grid -->
+      <div class="bento-grid">
+        <!-- Row 1: Story (wide) + Stats (narrow) -->
+        <div class="bento-cell cell-story" v-reveal>
+          <span class="cell-label">My Story</span>
+          <h3>Passionate Frontend Developer</h3>
+          <p>
+            I am an Informatics student with a relentless drive for building clean, performant, and intuitive user interfaces. I bridge the gap between design and robust frontend engineering.
+          </p>
+          <p>
+            My journey began with HTML/CSS and evolved into building modern reactive web applications using Vue 3, Nuxt 3, and TypeScript. I love exploring interactive UI animations and clean architecture.
+          </p>
+          <div class="traits">
+            <span class="trait">🚀 Clean Code</span>
+            <span class="trait">🎨 Pixel-Perfect UI</span>
+            <span class="trait">⚡ Fast Performance</span>
+            <span class="trait">📱 Fully Responsive</span>
           </div>
         </div>
 
-        <!-- Right column: Animated Stats Counters & Highlights -->
-        <div class="about-right">
-          <div class="stats-grid">
+        <div class="bento-cell cell-stats" v-reveal>
+          <span class="cell-label">Numbers</span>
+          <div class="stats-inner">
             <div
               v-for="(stat, index) in stats"
               :key="stat.label"
-              class="stat-card card"
+              class="stat-item"
             >
               <div class="stat-number">
                 <span>{{ animatedValues[index] }}</span>{{ stat.suffix }}
@@ -175,15 +127,64 @@ onMounted(() => {
               <div class="stat-label">{{ stat.label }}</div>
             </div>
           </div>
+        </div>
 
-          <div class="highlight-box card">
-            <div class="highlight-icon">💡</div>
-            <div>
-              <h4>Looking for collaboration?</h4>
-              <p>I am open to internship, full-time junior frontend roles, or freelance projects.</p>
-              <a href="#contact" class="highlight-link">Let's connect &rarr;</a>
+        <!-- Row 2: Education + Experience + CTA -->
+        <div class="bento-cell cell-edu" v-reveal>
+          <span class="cell-label">Education</span>
+          <div class="timeline">
+            <div class="timeline-entry">
+              <span class="timeline-date">2023 &mdash; Present</span>
+              <h4>Bachelor of Informatics</h4>
+              <p class="timeline-sub">Semester 7 Student</p>
+              <p>Focusing on Software Engineering, Web Development, and UI/UX Design.</p>
+            </div>
+            <div class="timeline-divider"></div>
+            <div class="timeline-entry">
+              <span class="timeline-date">Continuous Learning</span>
+              <h4>Modern Web Certification</h4>
+              <p class="timeline-sub">Self-directed Projects</p>
+              <p>Deep-diving into Nuxt 3, Pinia, TypeScript, and modern CSS architecture.</p>
             </div>
           </div>
+        </div>
+
+        <div class="bento-cell cell-exp" v-reveal>
+          <span class="cell-label">Experience</span>
+          <div class="timeline">
+            <div class="timeline-entry">
+              <span class="timeline-date">2023 &mdash; Present</span>
+              <h4>Freelance Web Developer</h4>
+              <p class="timeline-sub">Independent Projects</p>
+              <p>Developed landing pages, POS dashboards, and responsive web portals for clients.</p>
+            </div>
+            <div class="timeline-divider"></div>
+            <div class="timeline-entry">
+              <span class="timeline-date">Academic Projects</span>
+              <h4>Frontend Lead</h4>
+              <p class="timeline-sub">University Team Projects</p>
+              <p>Led UI architecture and state management for campus assignments.</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="bento-cell cell-cta" v-reveal>
+          <div class="cta-inner">
+            <span class="cta-emoji">💡</span>
+            <h4>Looking for collaboration?</h4>
+            <p>I am open to internship, full-time junior frontend roles, or freelance projects.</p>
+            <a href="#contact" class="cta-link">Let's connect &rarr;</a>
+          </div>
+        </div>
+
+        <!-- Row 3: Clock -->
+        <div class="bento-cell cell-clock" v-reveal>
+          <span class="cell-label">Local Time</span>
+          <div class="clock-display">
+            <span class="clock-time">{{ currentTime }}</span>
+          </div>
+          <span class="clock-date">{{ currentDate }}</span>
+          <span class="clock-location">Indonesia 🇮🇩</span>
         </div>
       </div>
     </div>
@@ -191,62 +192,71 @@ onMounted(() => {
 </template>
 
 <style scoped>
-.about-grid {
+/* Bento Grid Layout - Asymmetric */
+.bento-grid {
   display: grid;
-  grid-template-columns: 1.25fr 0.75fr;
-  gap: 36px;
-  align-items: start;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto auto;
+  gap: 16px;
 }
 
-.tabs-nav {
+/* Cell placements */
+.cell-story {
+  grid-column: 1 / 3; /* spans 2 cols */
+  grid-row: 1;
+}
+
+.cell-stats {
+  grid-column: 3;
+  grid-row: 1;
+}
+
+.cell-edu {
+  grid-column: 1;
+  grid-row: 2;
+}
+
+.cell-exp {
+  grid-column: 2;
+  grid-row: 2;
+}
+
+.cell-cta {
+  grid-column: 3;
+  grid-row: 2;
   display: flex;
-  gap: 10px;
-  margin-bottom: 16px;
-  border-bottom: 1px solid var(--border);
-  padding-bottom: 12px;
+  align-items: center;
 }
 
-.tab-btn {
-  background: transparent;
-  border: 1px solid transparent;
-  color: var(--muted);
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 600;
-  padding: 8px 18px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: all 0.2s ease;
+.cell-clock {
+  grid-column: 1 / 4; /* full width */
+  grid-row: 3;
+  text-align: center;
+  padding: 20px 28px;
 }
 
-.tab-btn:hover {
-  color: var(--text);
-  background: rgba(255, 255, 255, 0.05);
-}
-
-.tab-btn.active {
-  background: var(--card);
-  border-color: var(--border-light);
-  color: var(--text);
+/* Cell Label (Overline) */
+.cell-label {
+  display: block;
+  font-size: 0.75rem;
   font-weight: 700;
-}
-
-.tab-content {
-  padding: 32px;
-  background: var(--card);
-  min-height: 340px;
-}
-
-.tab-pane h3 {
-  font-size: 1.35rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--brand-cyan-text);
   margin-bottom: 16px;
+}
+
+/* Story Cell */
+.cell-story h3 {
+  font-size: 1.35rem;
+  margin-bottom: 14px;
   color: var(--text);
 }
 
-.tab-pane p {
+.cell-story p {
   color: var(--text-secondary);
-  font-size: 0.98rem;
-  margin-bottom: 16px;
+  font-size: 0.95rem;
+  margin-bottom: 12px;
   line-height: 1.7;
 }
 
@@ -254,162 +264,192 @@ onMounted(() => {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
-  margin-top: 24px;
+  margin-top: 20px;
 }
 
 .trait {
   padding: 6px 14px;
-  border-radius: 999px;
+  border-radius: 6px;
   font-size: 0.85rem;
   font-weight: 600;
-  background: var(--card);
+  background: var(--bg-soft);
   border: 1px solid var(--border);
   color: var(--text-secondary);
-  transition: all 0.2s ease;
+  transition: border-color 150ms ease-out, color 150ms ease-out;
 }
 
 .trait:hover {
-  border-color: var(--border-light);
+  border-color: var(--brand-cyan-text);
   color: var(--text);
-  transform: translateY(-2px);
 }
 
-/* Timeline */
-.timeline {
-  display: flex;
-  flex-direction: column;
-  gap: 24px;
-}
-
-.timeline-item {
-  display: flex;
-  gap: 16px;
-  position: relative;
-}
-
-.timeline-item:not(:last-child)::before {
-  content: '';
-  position: absolute;
-  left: 6px;
-  top: 20px;
-  bottom: -20px;
-  width: 2px;
-  background: var(--border);
-}
-
-.timeline-marker {
-  width: 14px;
-  height: 14px;
-  border-radius: 50%;
-  margin-top: 4px;
-  flex-shrink: 0;
-  background: var(--text-secondary);
-}
-
-.timeline-content {
-  flex: 1;
-}
-
-.timeline-date {
-  display: inline-block;
-  font-size: 0.78rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 4px;
-  color: var(--text-secondary);
-}
-
-.timeline-content h4 {
-  font-size: 1.05rem;
-  margin-bottom: 4px;
-}
-
-.timeline-sub {
-  color: var(--muted) !important;
-  font-size: 0.88rem !important;
-  font-weight: 500;
-  margin-bottom: 6px !important;
-}
-
-/* Stats */
-.stats-grid {
+/* Stats Cell */
+.stats-inner {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
+  gap: 20px;
 }
 
-.stat-card {
-  padding: 24px 20px;
+.stat-item {
   text-align: center;
-  background: var(--card);
-  border: 1px solid var(--border);
 }
 
 .stat-number {
-  font-size: clamp(2rem, 3.5vw, 2.6rem);
+  font-size: clamp(1.8rem, 3vw, 2.4rem);
   font-weight: 800;
   font-family: var(--font-heading);
   color: var(--text);
   line-height: 1;
-  margin-bottom: 8px;
+  margin-bottom: 6px;
 }
 
 .stat-label {
-  font-size: 0.85rem;
+  font-size: 0.8rem;
   color: var(--muted);
   font-weight: 500;
 }
 
-.highlight-box {
-  padding: 22px;
+/* Timeline (Education & Experience) */
+.timeline {
   display: flex;
-  gap: 16px;
-  align-items: flex-start;
-  background: var(--card);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  flex-direction: column;
+  gap: 0;
 }
 
-.highlight-box:hover {
-  border-color: var(--border-light);
-  box-shadow: var(--shadow-card);
-  transform: translateY(-2px);
+.timeline-entry {
+  padding: 4px 0;
 }
 
-.highlight-icon {
-  font-size: 1.6rem;
+.timeline-divider {
+  height: 1px;
+  background: var(--border);
+  margin: 16px 0;
 }
 
-.highlight-box h4 {
+.timeline-date {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 6px;
+  color: var(--brand-cyan-text);
+}
+
+.timeline-entry h4 {
   font-size: 1rem;
   margin-bottom: 4px;
 }
 
-.highlight-box p {
-  font-size: 0.88rem;
+.timeline-sub {
   color: var(--muted);
+  font-size: 0.85rem;
+  font-weight: 500;
+  margin-bottom: 6px;
+}
+
+.timeline-entry p:last-child {
+  color: var(--text-secondary);
+  font-size: 0.9rem;
+  line-height: 1.6;
+}
+
+/* CTA Cell */
+.cta-inner {
+  text-align: center;
+}
+
+.cta-emoji {
+  font-size: 2rem;
+  display: block;
+  margin-bottom: 12px;
+}
+
+.cta-inner h4 {
+  font-size: 1.05rem;
   margin-bottom: 8px;
 }
 
-.highlight-link {
+.cta-inner p {
   font-size: 0.88rem;
+  color: var(--muted);
+  margin-bottom: 14px;
+  line-height: 1.6;
+}
+
+.cta-link {
+  font-size: 0.9rem;
   font-weight: 700;
-  color: var(--color-amber);
+  color: var(--brand-cyan-text);
   display: inline-flex;
   align-items: center;
   gap: 4px;
+  transition: opacity 150ms ease-out;
 }
 
-.highlight-link:hover {
+.cta-link:hover {
+  opacity: 0.8;
   text-decoration: underline;
 }
 
+/* Clock Cell */
+.clock-display {
+  margin-bottom: 8px;
+}
+
+.clock-time {
+  font-family: var(--font-heading);
+  font-size: clamp(2rem, 4vw, 3rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  color: var(--text);
+  font-variant-numeric: tabular-nums;
+}
+
+.clock-date {
+  display: block;
+  font-size: 0.88rem;
+  color: var(--text-secondary);
+  margin-bottom: 4px;
+}
+
+.clock-location {
+  font-size: 0.8rem;
+  color: var(--muted);
+}
+
+/* Responsive */
 @media (max-width: 860px) {
-  .about-grid {
+  .bento-grid {
     grid-template-columns: 1fr;
+  }
+
+  .cell-story,
+  .cell-stats,
+  .cell-edu,
+  .cell-exp,
+  .cell-cta,
+  .cell-clock {
+    grid-column: 1;
+    grid-row: auto;
+  }
+}
+
+@media (min-width: 861px) and (max-width: 1024px) {
+  .bento-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .cell-story {
+    grid-column: 1 / 3;
+  }
+
+  .cell-clock {
+    grid-column: 1 / 3;
+  }
+
+  .cell-cta {
+    grid-column: auto;
   }
 }
 </style>
