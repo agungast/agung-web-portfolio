@@ -1,6 +1,6 @@
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.vueApp.directive('reveal', {
-    mounted(el: HTMLElement) {
+    mounted(el) {
       el.classList.add('reveal-up')
       
       const observer = new IntersectionObserver((entries) => {

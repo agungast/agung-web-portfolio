@@ -1,5 +1,5 @@
-<script setup lang="ts">
-import websiteLogo from '~/assets/images/website-logo.webp'
+<script setup>
+import websiteLogo from '~/assets/images/new-website-logo.webp'
 </script>
 
 <template>
@@ -30,7 +30,7 @@ import websiteLogo from '~/assets/images/website-logo.webp'
         <div class="socials">
           <a href="https://github.com/agungast" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
           <a href="https://www.linkedin.com/in/agunghadiastanto/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agunghaast14@gmail.com" target="_blank" rel="noopener" aria-label="Email">Email</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agung.astanto14@gmail.com" target="_blank" rel="noopener" aria-label="Email">Email</a>
         </div>
       </div>
     </div>
@@ -67,7 +67,7 @@ import websiteLogo from '~/assets/images/website-logo.webp'
   width: 28px;
   height: 28px;
   object-fit: contain;
-  filter: drop-shadow(0 2px 6px var(--brand-cyan-surface));
+  filter: drop-shadow(0 2px 8px rgba(var(--accent-rgb), 0.15));
 }
 
 .brand-title {
@@ -78,7 +78,8 @@ import websiteLogo from '~/assets/images/website-logo.webp'
 }
 
 .brand-accent {
-  color: var(--brand-cyan-text);
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .brand-desc {

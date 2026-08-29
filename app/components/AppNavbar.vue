@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useTheme } from '../composables/useTheme'
-import websiteLogo from '~/assets/images/website-logo.webp'
+import websiteLogo from '~/assets/images/new-website-logo.webp'
 
 const { isDark, toggleTheme, initTheme } = useTheme()
 
@@ -19,7 +19,7 @@ const activeSection = ref('home')
 const scrollProgress = ref(0)
 
 // Magic sliding indicator
-const navItems = ref<HTMLElement[]>([])
+const navItems = ref([])
 const indicatorStyle = ref({ width: '0px', transform: 'translateX(0px)', opacity: '0' })
 
 function updateIndicator() {
@@ -42,7 +42,7 @@ watch(activeSection, () => {
   })
 })
 
-let scrollTimeout: ReturnType<typeof setTimeout> | null = null
+let scrollTimeout = null
 const isProgrammaticScroll = ref(false)
 
 function handleScroll() {
@@ -100,7 +100,7 @@ onUnmounted(() => {
   }
 })
 
-function scrollToSection(e: MouseEvent, href: string) {
+function scrollToSection(e, href) {
   e.preventDefault()
   open.value = false
   
@@ -300,7 +300,7 @@ function scrollToSection(e: MouseEvent, href: string) {
   height: 32px;
   object-fit: contain;
   display: block;
-  filter: drop-shadow(0 2px 6px var(--brand-cyan-surface));
+  filter: drop-shadow(0 2px 8px rgba(var(--accent-rgb), 0.15));
 }
 
 .logo-text {
@@ -310,7 +310,8 @@ function scrollToSection(e: MouseEvent, href: string) {
 }
 
 .logo-accent {
-  color: var(--brand-cyan-text);
+  color: var(--muted);
+  font-weight: 500;
 }
 
 .nav-links {

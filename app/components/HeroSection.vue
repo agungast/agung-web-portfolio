@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
 import { useToast } from '../composables/useToast'
 import { useAppState } from '../composables/useAppState'
@@ -8,10 +8,10 @@ const { showToast } = useToast()
 const { isAppReady } = useAppState()
 
 const titles = [
-  'Front-End Developer',
-  'Vue.js & Nuxt Specialist',
   'UI/UX Designer',
-  'Informatics Student'
+  'Frontend Developer',
+  'Digital Product Designer',
+  'Computer Engineering Student'
 ]
 
 const currentTitle = ref('')
@@ -20,7 +20,7 @@ const charIndex = ref(0)
 const isDeleting = ref(false)
 const typingSpeed = ref(100)
 
-let typingTimeout: ReturnType<typeof setTimeout> | null = null
+let typingTimeout = null
 
 function typeLoop() {
   const currentFullTitle = titles[titleIndex.value] ?? ''
@@ -56,7 +56,7 @@ function typeLoop() {
 const mouseX = ref(50)
 const mouseY = ref(50)
 
-function handleMouseMove(e: MouseEvent) {
+function handleMouseMove(e) {
   const heroEl = document.getElementById('home')
   if (!heroEl) return
   const rect = heroEl.getBoundingClientRect()
@@ -67,15 +67,15 @@ function handleMouseMove(e: MouseEvent) {
 }
 
 function copyEmail() {
-  const email = 'agunghaast14@gmail.com'
+  const email = 'agung.astanto14@gmail.com'
   if (navigator.clipboard) {
     navigator.clipboard.writeText(email).then(() => {
       showToast('Email address copied to clipboard!', 'success')
     }).catch(() => {
-      showToast('Email: agunghaast14@gmail.com', 'info')
+      showToast('Email: agung.astanto14@gmail.com', 'info')
     })
   } else {
-    showToast('Email: agunghaast14@gmail.com', 'info')
+    showToast('Email: agung.astanto14@gmail.com', 'info')
   }
 }
 
@@ -130,8 +130,7 @@ onUnmounted(() => {
         </div>
 
         <p class="desc reveal-up" :class="{ 'is-revealed': isAppReady }">
-          Passionate in crafting fast, accessible, and interactive modern web applications.
-          Focused on the Vue &amp; Nuxt ecosystem with an eye for clean UI/UX aesthetics.
+          Computer Engineering student at Politeknik Negeri Semarang specializing in UI/UX Design and digital product development. Dedicated to crafting intuitive, user-centered web and mobile experiences.
         </p>
 
         <!-- Action buttons -->
@@ -154,13 +153,13 @@ onUnmounted(() => {
 
         <!-- Tech stack tags -->
         <div class="tech-pills reveal-up delay-200" :class="{ 'is-revealed': isAppReady }">
-          <span class="pill-label">Tech Stack:</span>
+          <span class="pill-label">Focus &amp; Stack:</span>
           <div class="pills-list">
-            <span class="tech-pill">Vue 3</span>
-            <span class="tech-pill">Nuxt 3</span>
-            <span class="tech-pill">TypeScript</span>
-            <span class="tech-pill">Tailwind CSS</span>
-            <span class="tech-pill">Node.js</span>
+            <span class="tech-pill">Figma (UI/UX)</span>
+            <span class="tech-pill">Laravel</span>
+            <span class="tech-pill">Flutter</span>
+            <span class="tech-pill">Vue 3 / Nuxt</span>
+            <span class="tech-pill">Git &amp; GitHub</span>
           </div>
         </div>
       </div>
@@ -229,10 +228,6 @@ onUnmounted(() => {
   align-items: center;
   position: relative;
   z-index: 2;
-}
-
-.greeting {
-  margin-bottom: 8px;
 }
 
 .greeting {
@@ -321,8 +316,8 @@ onUnmounted(() => {
 }
 
 .tech-pill:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--border-light);
+  color: var(--text);
   transform: translateY(-1px);
 }
 

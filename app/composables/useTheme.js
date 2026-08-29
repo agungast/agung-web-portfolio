@@ -1,13 +1,11 @@
 import { ref, computed, onMounted } from 'vue'
 
-export type Theme = 'dark' | 'light'
-
-const theme = ref<Theme>('dark')
+const theme = ref('dark')
 
 export function useTheme() {
   const isDark = computed(() => theme.value === 'dark')
 
-  function applyTheme(newTheme: Theme) {
+  function applyTheme(newTheme) {
     theme.value = newTheme
     if (typeof document !== 'undefined') {
       const root = document.documentElement
@@ -33,7 +31,7 @@ export function useTheme() {
   function initTheme() {
     if (typeof window === 'undefined') return
 
-    const savedTheme = localStorage.getItem('theme') as Theme | null
+    const savedTheme = localStorage.getItem('theme')
     if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
       applyTheme(savedTheme)
     } else {

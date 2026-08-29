@@ -11,79 +11,87 @@
   --lh-body: 1.65;
   --lh-relaxed: 1.75;
   
-  /* Brand Accents (Controlled Cyan & Ultramarine from Logo) */
-  --brand-cyan-text: oklch(0.72 0.12 215);
-  --brand-cyan-surface: oklch(0.72 0.12 215 / 0.12);
-  --brand-primary: oklch(0.55 0.19 255);
-  --brand-primary-hover: oklch(0.62 0.21 255);
-  --brand-deep: oklch(0.35 0.16 265);
+  /* Brand Monochrome Core Tokens */
+  --brand-mono-highlight: oklch(0.98 0 0);
+  --brand-mono-surface: rgba(255, 255, 255, 0.08);
+  --brand-primary: #ffffff;
+  --brand-primary-hover: #e4e4e7;
+  --brand-deep: #27272a;
+
+  /* Backward Compatibility Aliases */
+  --brand-cyan-text: var(--brand-mono-highlight);
+  --brand-cyan-surface: var(--brand-mono-surface);
 }
 
 :root,
 html.dark {
-  --bg: oklch(0.14 0.03 260);
-  --bg-soft: oklch(0.18 0.035 255);
-  --card: oklch(0.24 0.04 250);
-  --card-hover: oklch(0.28 0.04 250);
-  --card-glass: oklch(0.24 0.04 250 / 0.85);
-  --border: oklch(0.28 0.03 250 / 0.5);
-  --border-light: oklch(0.35 0.04 250 / 0.6);
-  --text: oklch(0.97 0.008 240);
-  --text-secondary: oklch(0.78 0.03 245);
-  --muted: oklch(0.60 0.035 250);
+  --bg: oklch(0.12 0.005 260);
+  --bg-soft: oklch(0.16 0.006 260);
+  --card: oklch(0.18 0.008 260);
+  --card-hover: oklch(0.22 0.010 260);
+  --card-glass: oklch(0.18 0.008 260 / 0.88);
+  --border: oklch(0.26 0.008 260 / 0.55);
+  --border-light: oklch(0.38 0.010 260 / 0.65);
+  --text: oklch(0.98 0 0);
+  --text-secondary: oklch(0.80 0.005 260);
+  --muted: oklch(0.58 0.008 260);
   
-  /* Primary Accent & Button Contrast */
-  --accent: var(--brand-cyan-text);
-  --accent-rgb: 114, 193, 245; /* Approx for shadow */
-  --accent-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-cyan-text));
-  --btn-primary-text: #ffffff;
+  /* Primary Accent & Button Contrast (Silver Chrome) */
+  --accent: oklch(0.98 0 0);
+  --accent-rgb: 255, 255, 255;
+  --accent-gradient: linear-gradient(135deg, #ffffff 0%, #a1a1aa 100%);
+  --btn-primary-text: #09090b;
 
-  --nav-bg: oklch(0.14 0.03 260 / 0.85);
-  --nav-bg-scrolled: oklch(0.14 0.03 260 / 0.95);
-  --nav-mobile-bg: oklch(0.14 0.03 260 / 0.98);
-  --code-bg: oklch(0.12 0.03 260);
-  --code-header: oklch(0.18 0.035 255);
-  --grid-line: oklch(0.28 0.03 250 / 0.45); /* Increased opacity from 0.2 */
-  --input-bg: oklch(0.18 0.035 255);
-  --modal-bg: oklch(0.18 0.035 255);
-  --modal-backdrop: oklch(0.14 0.03 260 / 0.85);
-  --btn-outline-bg: oklch(0.24 0.04 250);
-  --chip-bg: var(--brand-cyan-surface);
+  --nav-bg: oklch(0.12 0.005 260 / 0.85);
+  --nav-bg-scrolled: oklch(0.12 0.005 260 / 0.95);
+  --nav-mobile-bg: oklch(0.12 0.005 260 / 0.98);
+  --code-bg: oklch(0.10 0.005 260);
+  --code-header: oklch(0.15 0.006 260);
+  --grid-line: rgba(255, 255, 255, 0.05);
+  --input-bg: oklch(0.15 0.006 260);
+  --modal-bg: oklch(0.16 0.006 260);
+  --modal-backdrop: rgba(0, 0, 0, 0.85);
+  --btn-outline-bg: oklch(0.18 0.008 260);
+  --chip-bg: rgba(255, 255, 255, 0.07);
+  --spotlight-aura: rgba(255, 255, 255, 0.06);
   --shadow-card: none;
-  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.35);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.5);
 }
 
 html.light {
-  --bg: #e2e6eb; /* Slightly darker grayish-white */
-  --bg-soft: #cbd2da;
-  --card: #eff2f6; /* Off-white for cards */
-  --card-hover: #ffffff;
-  --card-glass: rgba(239, 242, 246, 0.94);
-  --border: #ccd2db;
-  --border-light: #b4bcc8;
-  --text: #1e293b;
-  --text-secondary: #475569;
-  --muted: #64748b;
+  --bg: #f4f4f6;
+  --bg-soft: #e5e7eb;
+  --card: #ffffff;
+  --card-hover: #fafafa;
+  --card-glass: rgba(255, 255, 255, 0.94);
+  --border: #d4d4d8;
+  --border-light: #a1a1aa;
+  --text: #09090b;
+  --text-secondary: #3f3f46;
+  --muted: #71717a;
   
-  /* Primary Accent & Button Contrast */
-  --accent: var(--brand-cyan-text);
-  --accent-rgb: 14, 165, 233;
-  --accent-gradient: linear-gradient(135deg, var(--brand-primary), var(--brand-cyan-text));
+  /* Primary Accent & Button Contrast (Dark Obsidian Carbon) */
+  --brand-mono-highlight: #09090b;
+  --brand-mono-surface: rgba(0, 0, 0, 0.05);
+  --accent: #18181b;
+  --accent-rgb: 24, 24, 27;
+  --accent-gradient: linear-gradient(135deg, #18181b 0%, #3f3f46 100%);
   --btn-primary-text: #ffffff;
 
-  --nav-bg: rgba(234, 237, 242, 0.88);
-  --nav-bg-scrolled: rgba(244, 246, 248, 0.96);
-  --nav-mobile-bg: rgba(244, 246, 248, 0.98);
-  --code-bg: #0f172a;
-  --code-header: #1e293b;
-  --grid-line: rgba(148, 163, 184, 0.45); /* Increased opacity from 0.25 */
-  --input-bg: #f4f6f8;
-  --modal-bg: #f4f6f8;
-  --modal-backdrop: rgba(15, 23, 42, 0.55);
-  --btn-outline-bg: #f4f6f8;
-  --chip-bg: #dfe3e8;
-  --shadow-card: none;
-  --shadow-card-hover: 0 8px 22px rgba(15, 23, 42, 0.09);
+  --nav-bg: rgba(244, 244, 246, 0.88);
+  --nav-bg-scrolled: rgba(255, 255, 255, 0.96);
+  --nav-mobile-bg: rgba(255, 255, 255, 0.98);
+  --code-bg: #18181b;
+  --code-header: #27272a;
+  --grid-line: rgba(0, 0, 0, 0.06);
+  --input-bg: #f4f4f5;
+  --modal-bg: #ffffff;
+  --modal-backdrop: rgba(0, 0, 0, 0.6);
+  --btn-outline-bg: #ffffff;
+  --chip-bg: rgba(0, 0, 0, 0.05);
+  --spotlight-aura: rgba(0, 0, 0, 0.03);
+  --shadow-card: 0 1px 3px rgba(0, 0, 0, 0.04);
+  --shadow-card-hover: 0 8px 24px rgba(0, 0, 0, 0.08);
 }
 
 * {
@@ -132,7 +140,7 @@ img {
 /* Browser Surfaces & Polish */
 ::selection {
   background-color: rgba(var(--accent-rgb), 0.25);
-  color: var(--accent);
+  color: var(--text);
 }
 
 :focus-visible {
@@ -222,11 +230,11 @@ img {
   background: var(--accent-gradient);
   color: var(--btn-primary-text);
   font-weight: 700;
-  border: none;
+  border: 1px solid var(--border-light);
 }
 
 .btn-primary:hover {
-  box-shadow: 0 4px 14px rgba(var(--accent-rgb), 0.35);
+  box-shadow: 0 4px 16px rgba(var(--accent-rgb), 0.25);
   transform: translateY(-2px);
 }
 
@@ -237,8 +245,9 @@ img {
 }
 
 .btn-outline:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--border-light);
+  color: var(--text);
+  background: var(--card-hover);
 }
 
 .btn-ghost {
@@ -262,7 +271,7 @@ img {
 }
 
 .card:hover {
-  border-color: var(--accent);
+  border-color: var(--border-light);
   box-shadow: var(--shadow-card-hover);
   transform: translateY(-4px);
 }
@@ -277,7 +286,7 @@ img {
 }
 
 .bento-cell:hover {
-  border-color: var(--brand-cyan-text);
+  border-color: var(--border-light);
   transform: translateY(-2px);
 }
 
@@ -285,7 +294,6 @@ img {
 .reveal-up {
   opacity: 0;
   transform: translateY(30px);
-  /* Use a strict, anti-slop cubic bezier for entrance (no bounce) */
   transition: opacity 0.7s ease-out, transform 0.7s cubic-bezier(0.16, 1, 0.3, 1);
   will-change: opacity, transform;
 }
@@ -295,7 +303,7 @@ img {
   transform: translateY(0);
 }
 
-/* Add stagger delays for multiple reveals */
+/* Stagger Delays */
 .delay-100 { transition-delay: 100ms; }
 .delay-200 { transition-delay: 200ms; }
 .delay-300 { transition-delay: 300ms; }

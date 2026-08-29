@@ -1,4 +1,4 @@
-<script setup lang="ts">
+<script setup>
 import { ref, reactive } from 'vue'
 import { useToast } from '../composables/useToast'
 
@@ -39,7 +39,7 @@ function resetForm() {
 }
 
 function copyEmail() {
-  const email = 'agunghaast14@gmail.com'
+  const email = 'agung.astanto14@gmail.com'
   if (navigator.clipboard) {
     navigator.clipboard.writeText(email).then(() => {
       showToast('Email address copied to clipboard!', 'success')
@@ -74,7 +74,7 @@ function copyEmail() {
                 <div class="channel-icon">📧</div>
                 <div class="channel-text">
                   <span class="channel-label">Email (Click to copy)</span>
-                  <span class="channel-val">agunghaast14@gmail.com</span>
+                  <span class="channel-val">agung.astanto14@gmail.com</span>
                 </div>
               </div>
 
@@ -82,7 +82,7 @@ function copyEmail() {
                 <div class="channel-icon">📍</div>
                 <div class="channel-text">
                   <span class="channel-label">Location</span>
-                  <span class="channel-val">Indonesia 🇮🇩</span>
+                  <span class="channel-val">Semarang, Central Java, Indonesia 🇮🇩</span>
                 </div>
               </div>
 
@@ -296,8 +296,8 @@ function copyEmail() {
 }
 
 .social-btn:hover {
-  border-color: var(--accent);
-  color: var(--accent);
+  border-color: var(--border-light);
+  color: var(--text);
   transform: translateY(-2px);
 }
 

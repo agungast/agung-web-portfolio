@@ -47,9 +47,9 @@
   position: absolute;
   inset: 0;
   background:
-    radial-gradient(ellipse 600px 500px at 10% 20%, oklch(0.55 0.19 255 / 0.05), transparent),
-    radial-gradient(ellipse 500px 400px at 85% 75%, oklch(0.72 0.12 215 / 0.04), transparent),
-    radial-gradient(ellipse 400px 350px at 50% 50%, oklch(0.35 0.16 265 / 0.03), transparent);
+    radial-gradient(ellipse 650px 550px at 15% 15%, var(--spotlight-aura), transparent 70%),
+    radial-gradient(ellipse 550px 450px at 85% 80%, var(--spotlight-aura), transparent 70%),
+    radial-gradient(ellipse 400px 350px at 50% 50%, var(--spotlight-aura), transparent 70%);
 }
 
 .decor-element {

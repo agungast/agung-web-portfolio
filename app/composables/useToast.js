@@ -1,16 +1,10 @@
 import { ref } from 'vue'
 
-export interface ToastMessage {
-  id: number
-  text: string
-  type?: 'success' | 'info' | 'warning'
-}
-
-const toasts = ref<ToastMessage[]>([])
+const toasts = ref([])
 let nextId = 1
 
 export function useToast() {
-  function showToast(text: string, type: 'success' | 'info' | 'warning' = 'success', duration = 3000) {
+  function showToast(text, type = 'success', duration = 3000) {
     const id = nextId++
     toasts.value.push({ id, text, type })
 
@@ -19,7 +13,7 @@ export function useToast() {
     }, duration)
   }
 
-  function removeToast(id: number) {
+  function removeToast(id) {
     toasts.value = toasts.value.filter(t => t.id !== id)
   }
 

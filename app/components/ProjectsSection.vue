@@ -1,104 +1,75 @@
-<script setup lang="ts">
+<script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 
-interface Project {
-  id: string
-  title: string
-  subtitle: string
-  category: 'webapp' | 'frontend' | 'landing'
-  description: string
-  fullDescription: string
-  features: string[]
-  tags: string[]
-  icon: string
-  demoUrl?: string
-  githubUrl?: string
-}
-
-const projects: Project[] = [
+const projects = [
   {
-    id: 'pos-app',
-    title: 'Modern POS Dashboard',
-    subtitle: 'Point of Sale & Inventory Management',
-    category: 'webapp',
-    description: 'A comprehensive point of sale system with product catalog, cart checkout, transaction history, and sales analytics.',
-    fullDescription: 'Built to empower small businesses with an intuitive interface for managing stock inventory, handling real-time order checkouts, printing receipts, and visualizing monthly sales revenue charts.',
+    id: 'wicara',
+    title: 'WICARA – Campus Complaints & Service Rating',
+    subtitle: 'Integrated Campus Reporting & Rating Ecosystem',
+    category: 'web-mobile',
+    description: 'An end-to-end digital ecosystem comprising a responsive Web Admin Panel and Flutter Mobile App for campus reporting, lost & found, and service ratings.',
+    fullDescription: 'Developed through Project-Based Learning at Polines. Designed comprehensive information architecture, user flows, and high-fidelity Figma prototypes for both the Web Admin Panel and Mobile App. Implemented the responsive web frontend within the Laravel ecosystem and built the cross-platform mobile client using Flutter, maintaining strict design system fidelity and end-to-end Git version control.',
     features: [
-      'Real-time product inventory & stock alert monitoring',
-      'Cart calculations with tax, discount, and change calculations',
-      'Revenue and sales analytics visual charts',
-      'Dark and light mode responsive dashboard'
+      'Web Admin Panel (Laravel) & Mobile App (Flutter)',
+      'Figma Information Architecture, User Flows & Hi-Fi Prototypes',
+      'Lost & Found Reporting with Status Tracking',
+      'Academic Service Rating & Feedback Analytics',
+      'Pixel-perfect Design System Execution & Git Integration'
     ],
-    tags: ['Vue 3', 'Pinia', 'Tailwind CSS', 'Firebase'],
-    icon: '🛒',
-    demoUrl: 'https://example.com/pos-demo',
-    githubUrl: 'https://github.com'
+    tags: ['Figma', 'UI/UX Design', 'Laravel', 'Flutter', 'Git & GitHub'],
+    icon: '📢',
+    demoUrl: '',
+    githubUrl: 'https://github.com/agungast'
   },
   {
-    id: 'school-portal',
-    title: 'School Profile & CMS Portal',
-    subtitle: 'Educational Institution Platform',
-    category: 'webapp',
-    description: 'A modern school website featuring dynamic academic announcements, student galleries, and an administrative CMS.',
-    fullDescription: 'Designed for high performance and easy content editing. Includes an intuitive dashboard for administrators to publish campus events, manage teacher directories, and upload photo galleries.',
+    id: 'gudangku',
+    title: 'GUDANGKU – Warehouse Management System',
+    subtitle: 'Inventory Tracking & Real-Time Stock Dashboard',
+    category: 'web-mobile',
+    description: 'A centralized warehouse management web dashboard for real-time stock monitoring, inventory flow, and simplified operational data entry.',
+    fullDescription: 'Engineered during Project-Based Learning at Polines. Designed intuitive user flows and high-fidelity dashboard UI in Figma, then executed the frontend implementation using Laravel. Optimized complex UI components including structured data tables, status KPI cards, and custom data filters to streamline daily warehouse workflows.',
     features: [
-      'Dynamic CMS for school announcements and news feeds',
-      'Photo gallery with lightbox preview',
-      'Fast SSR rendering and automated SEO tags with Nuxt 3',
-      'Mobile-first responsive navigation with drawer menu'
+      'Real-time Inventory & Stock Level Tracking',
+      'Figma Dashboard UI & Information Architecture',
+      'Dynamic Data Tables, Status Cards & Advanced Filters',
+      'Optimized UI Component Architecture for Rapid Entry',
+      'Collaborative Git Repository & Branch Workflow'
     ],
-    tags: ['Nuxt 3', 'TypeScript', 'Tailwind CSS', 'Supabase'],
-    icon: '🏫',
-    demoUrl: 'https://example.com/school-demo',
-    githubUrl: 'https://github.com'
+    tags: ['Figma', 'UI/UX Design', 'Laravel', 'Blade', 'Git & GitHub'],
+    icon: '📦',
+    demoUrl: '',
+    githubUrl: 'https://github.com/agungast'
   },
   {
-    id: 'weather-radar',
-    title: 'Real-Time Weather Radar',
-    subtitle: 'Interactive Meteorological Tracker',
-    category: 'frontend',
-    description: 'Interactive weather forecasting app with location search, 7-day forecast projections, and animated weather states.',
-    fullDescription: 'Fetches open meteorological APIs to provide real-time hourly forecasts, air quality index, UV warnings, and dynamic weather animations depending on current conditions.',
+    id: 'tanikita',
+    title: 'TaniKita – Mobile App for Farmer Empowerment',
+    subtitle: 'HIMI UNSURYA National UI/UX Design Competition 2025',
+    category: 'uiux',
+    description: 'A user-centered mobile app concept and interactive prototype designed to optimize agricultural supply chains and empower local farmers.',
+    fullDescription: 'Crafted for the national UI/UX Design Competition HIMI UNSURYA (February 2025). Conducted in-depth user research, problem framing, and persona development tailored to agricultural supply chains and digital literacy levels. Created intuitive high-fidelity prototypes in Figma under tight competition deadlines from ideation to final deliverables.',
     features: [
-      'Geolocation auto-detection & global city search',
-      'Hourly & 7-day weather trend charts',
-      'Interactive radar temperature map integration',
-      'Dynamic day/night background transitions'
+      'User Research & Problem Framing for Agricultural Supply',
+      'User Personas & Digital Literacy-Friendly Flows',
+      'Interactive Figma High-Fidelity Prototype Simulation',
+      'Supply Chain Efficiency & Logistics Architecture',
+      'Rapid Prototyping under Competitive Deadlines'
     ],
-    tags: ['Vue 3', 'REST API', 'Chart.js', 'CSS Grid'],
-    icon: '🌤️',
-    demoUrl: 'https://example.com/weather-demo',
-    githubUrl: 'https://github.com'
-  },
-  {
-    id: 'portfolio-v1',
-    title: 'Interactive Portfolio v1',
-    subtitle: 'Creative Developer Showcase',
-    category: 'landing',
-    description: 'A creative personal portfolio featuring smooth scroll animations, glassmorphic cards, and interactive dark aesthetics.',
-    fullDescription: 'Crafted as an exploratory project to experiment with modern CSS micro-animations, GSAP timeline triggers, and mobile responsive design systems.',
-    features: [
-      'Smooth scroll transitions and animated entry triggers',
-      'Custom SVG icons and particle backgrounds',
-      'Interactive contact modal with form validation',
-      'Optimized performance with 98+ Google Lighthouse score'
-    ],
-    tags: ['HTML5', 'Vanilla CSS', 'JavaScript', 'GSAP'],
-    icon: '✨',
-    demoUrl: 'https://example.com/portfolio-demo',
-    githubUrl: 'https://github.com'
+    tags: ['Figma', 'UI/UX Design', 'User Research', 'Wireframing', 'Interactive Prototype'],
+    icon: '🌱',
+    demoUrl: '',
+    githubUrl: 'https://github.com/agungast'
   }
 ]
 
-const currentCategory = ref<'all' | 'webapp' | 'frontend' | 'landing'>('all')
-const selectedProject = ref<Project | null>(null)
+const currentCategory = ref('all')
+const selectedProject = ref(null)
 
 const filteredProjects = computed(() => {
   if (currentCategory.value === 'all') return projects
   return projects.filter(p => p.category === currentCategory.value)
 })
 
-function openModal(project: Project) {
+function openModal(project) {
   selectedProject.value = project
   document.body.style.overflow = 'hidden'
 }
@@ -108,7 +79,7 @@ function closeModal() {
   document.body.style.overflow = ''
 }
 
-function handleKeydown(e: KeyboardEvent) {
+function handleKeydown(e) {
   if (e.key === 'Escape' && selectedProject.value) {
     closeModal()
   }
@@ -145,24 +116,17 @@ onUnmounted(() => {
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'webapp' }"
-          @click="currentCategory = 'webapp'"
+          :class="{ active: currentCategory === 'web-mobile' }"
+          @click="currentCategory = 'web-mobile'"
         >
-          Web Apps
+          Web &amp; Mobile Systems
         </button>
         <button
           class="tab-pill"
-          :class="{ active: currentCategory === 'frontend' }"
-          @click="currentCategory = 'frontend'"
+          :class="{ active: currentCategory === 'uiux' }"
+          @click="currentCategory = 'uiux'"
         >
-          Frontend &amp; APIs
-        </button>
-        <button
-          class="tab-pill"
-          :class="{ active: currentCategory === 'landing' }"
-          @click="currentCategory = 'landing'"
-        >
-          Landing Pages
+          UI/UX Case Studies
         </button>
       </div>
 
@@ -462,7 +426,7 @@ onUnmounted(() => {
 }
 
 .btn-detail-link:hover {
-  color: var(--accent);
+  color: var(--text);
   text-decoration: underline;
 }
 
@@ -511,9 +475,9 @@ onUnmounted(() => {
 }
 
 .modal-close:hover {
-  background: rgba(239, 68, 68, 0.2);
-  border-color: #ef4444;
-  color: #ef4444;
+  background: var(--card-hover);
+  border-color: var(--border-light);
+  color: var(--text);
 }
 
 .modal-banner {

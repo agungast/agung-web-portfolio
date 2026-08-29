@@ -1,14 +1,14 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const stats = [
-  { value: 12, suffix: '+', label: 'Projects Built' },
-  { value: 2, suffix: '+', label: 'Years Experience' },
-  { value: 15, suffix: '+', label: 'Tech & Tools' },
-  { value: 100, suffix: '%', label: 'Dedication' }
+  { value: 3.84, suffix: '', label: 'Cumulative GPA' },
+  { value: 3, suffix: '+', label: 'Key Projects' },
+  { value: 2, suffix: '+', label: 'Years Design & Dev' },
+  { value: 100, suffix: '%', label: 'Precision & Quality' }
 ]
 
-const animatedValues = ref(stats.map(() => 0))
+const animatedValues = ref(stats.map(s => s.value % 1 !== 0 ? '0.00' : '0'))
 let animated = false
 
 function animateStats() {
@@ -24,11 +24,14 @@ function animateStats() {
     const timer = setInterval(() => {
       frame++
       const progress = frame / totalFrames
-      const current = Math.round(stat.value * progress)
-      animatedValues.value[index] = current
+      if (stat.value % 1 !== 0) {
+        animatedValues.value[index] = (stat.value * progress).toFixed(2)
+      } else {
+        animatedValues.value[index] = Math.round(stat.value * progress).toString()
+      }
 
       if (frame === totalFrames) {
-        animatedValues.value[index] = stat.value
+        animatedValues.value[index] = stat.value % 1 !== 0 ? stat.value.toFixed(2) : stat.value.toString()
         clearInterval(timer)
       }
     }, frameDuration)
@@ -38,7 +41,7 @@ function animateStats() {
 // Live clock
 const currentTime = ref('')
 const currentDate = ref('')
-let clockInterval: ReturnType<typeof setInterval> | null = null
+let clockInterval = null
 
 function updateClock() {
   const now = new Date()
@@ -98,18 +101,18 @@ onUnmounted(() => {
         <!-- Row 1: Story (wide) + Stats (narrow) -->
         <div class="bento-cell cell-story" v-reveal>
           <span class="cell-label">My Story</span>
-          <h3>Passionate Frontend Developer</h3>
+          <h3>Bridging UI/UX Design &amp; Frontend Engineering</h3>
           <p>
-            I am an Informatics student with a relentless drive for building clean, performant, and intuitive user interfaces. I bridge the gap between design and robust frontend engineering.
+            I am a Computer Engineering Technology student at Politeknik Negeri Semarang (GPA 3.81/4.00), specializing in UI/UX Design and digital product development.
           </p>
           <p>
-            My journey began with HTML/CSS and evolved into building modern reactive web applications using Vue 3, Nuxt 3, and TypeScript. I love exploring interactive UI animations and clean architecture.
+            I build intuitive web and mobile interfaces grounded in user-centered design, problem framing, and high-fidelity prototyping, then translate them seamlessly into responsive, pixel-perfect code using Laravel, Flutter, and Vue.
           </p>
           <div class="traits">
-            <span class="trait">🚀 Clean Code</span>
-            <span class="trait">🎨 Pixel-Perfect UI</span>
-            <span class="trait">⚡ Fast Performance</span>
-            <span class="trait">📱 Fully Responsive</span>
+            <span class="trait">🎯 User-Centered Design</span>
+            <span class="trait">📐 Figma Prototyping</span>
+            <span class="trait">💻 Web &amp; Mobile Dev</span>
+            <span class="trait">🤝 Team Leadership</span>
           </div>
         </div>
 
@@ -135,35 +138,35 @@ onUnmounted(() => {
           <div class="timeline">
             <div class="timeline-entry">
               <span class="timeline-date">2023 &mdash; Present</span>
-              <h4>Bachelor of Informatics</h4>
-              <p class="timeline-sub">Semester 7 Student</p>
-              <p>Focusing on Software Engineering, Web Development, and UI/UX Design.</p>
-            </div>
-            <div class="timeline-divider"></div>
-            <div class="timeline-entry">
-              <span class="timeline-date">Continuous Learning</span>
-              <h4>Modern Web Certification</h4>
-              <p class="timeline-sub">Self-directed Projects</p>
-              <p>Deep-diving into Nuxt 3, Pinia, TypeScript, and modern CSS architecture.</p>
+              <h4>Politeknik Negeri Semarang</h4>
+              <p class="timeline-sub">Sarjana Terapan (B.App.Sc) in Computer Engineering Technology</p>
+              <p>GPA: <strong>3.84 / 4.00</strong>. Focusing on digital product engineering, UI/UX design, and software systems.</p>
             </div>
           </div>
         </div>
 
         <div class="bento-cell cell-exp" v-reveal>
-          <span class="cell-label">Experience</span>
+          <span class="cell-label">Experience &amp; Leadership</span>
           <div class="timeline">
             <div class="timeline-entry">
-              <span class="timeline-date">2023 &mdash; Present</span>
-              <h4>Freelance Web Developer</h4>
-              <p class="timeline-sub">Independent Projects</p>
-              <p>Developed landing pages, POS dashboards, and responsive web portals for clients.</p>
+              <span class="timeline-date">2024 &mdash; 2026</span>
+              <h4>Polytechnic Computer Club (UKM PCC)</h4>
+              <p class="timeline-sub">Project Lead Techcomfest 2026 &bull; R&amp;D &amp; Multimedia Staff</p>
+              <p>Led national-level IT competition, conducted multimedia/design workshops, and supervised organizational projects.</p>
             </div>
             <div class="timeline-divider"></div>
             <div class="timeline-entry">
-              <span class="timeline-date">Academic Projects</span>
-              <h4>Frontend Lead</h4>
-              <p class="timeline-sub">University Team Projects</p>
-              <p>Led UI architecture and state management for campus assignments.</p>
+              <span class="timeline-date">Jun 2023 &mdash; Aug 2023</span>
+              <h4>PT. Jagat Media Teknologi</h4>
+              <p class="timeline-sub">Graphic Designer</p>
+              <p>Designed brand visual communication, marketing assets, layouting, and typography.</p>
+            </div>
+            <div class="timeline-divider"></div>
+            <div class="timeline-entry">
+              <span class="timeline-date">Jun 2022 &mdash; Dec 2022</span>
+              <h4>PT. Telkom Akses Semarang</h4>
+              <p class="timeline-sub">Warehouse Operations Intern</p>
+              <p>Managed inventory quality control, logistics data organization, and supply chain tracking.</p>
             </div>
           </div>
         </div>
@@ -171,8 +174,8 @@ onUnmounted(() => {
         <div class="bento-cell cell-cta" v-reveal>
           <div class="cta-inner">
             <span class="cta-emoji">💡</span>
-            <h4>Looking for collaboration?</h4>
-            <p>I am open to internship, full-time junior frontend roles, or freelance projects.</p>
+            <h4>Looking for a UI/UX Designer &amp; Developer?</h4>
+            <p>I am eager to contribute to user-oriented product teams, internships, and digital innovation projects.</p>
             <a href="#contact" class="cta-link">Let's connect &rarr;</a>
           </div>
         </div>
@@ -184,7 +187,7 @@ onUnmounted(() => {
             <span class="clock-time">{{ currentTime }}</span>
           </div>
           <span class="clock-date">{{ currentDate }}</span>
-          <span class="clock-location">Indonesia 🇮🇩</span>
+          <span class="clock-location">Semarang, Indonesia 🇮🇩</span>
         </div>
       </div>
     </div>
@@ -242,7 +245,7 @@ onUnmounted(() => {
   font-weight: 700;
   text-transform: uppercase;
   letter-spacing: 0.08em;
-  color: var(--brand-cyan-text);
+  color: var(--muted);
   margin-bottom: 16px;
 }
 
@@ -279,7 +282,7 @@ onUnmounted(() => {
 }
 
 .trait:hover {
-  border-color: var(--brand-cyan-text);
+  border-color: var(--border-light);
   color: var(--text);
 }
 
@@ -333,7 +336,7 @@ onUnmounted(() => {
   text-transform: uppercase;
   letter-spacing: 0.05em;
   margin-bottom: 6px;
-  color: var(--brand-cyan-text);
+  color: var(--muted);
 }
 
 .timeline-entry h4 {
@@ -380,7 +383,7 @@ onUnmounted(() => {
 .cta-link {
   font-size: 0.9rem;
   font-weight: 700;
-  color: var(--brand-cyan-text);
+  color: var(--text);
   display: inline-flex;
   align-items: center;
   gap: 4px;

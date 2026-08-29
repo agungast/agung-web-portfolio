@@ -1,7 +1,7 @@
-<script setup lang="ts">
+<script setup>
 import { ref, onMounted } from 'vue'
 import { useAppState } from '../composables/useAppState'
-import websiteLogo from '~/assets/images/website-logo.webp'
+import websiteLogo from '~/assets/images/new-website-logo.webp'
 
 const { isAppReady } = useAppState()
 const isLeaving = ref(false)
@@ -61,7 +61,7 @@ onMounted(() => {
   width: 72px;
   height: 72px;
   object-fit: contain;
-  filter: drop-shadow(0 4px 12px var(--brand-cyan-surface));
+  filter: drop-shadow(0 4px 16px rgba(var(--accent-rgb), 0.18));
 }
 
 @keyframes pulse {

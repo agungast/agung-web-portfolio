@@ -1,30 +1,31 @@
-<script setup lang="ts">
-import { ref, computed, onMounted } from 'vue'
+<script setup>
+import { ref, computed } from 'vue'
 
-interface Skill {
-  name: string
-  level: number
-  category: 'frontend' | 'framework' | 'tools'
-  icon: string
-  experience: string
-}
+const skills = [
+  // UI/UX Design & Research
+  { name: 'Figma', level: 95, category: 'uiux', icon: 'logos:figma', experience: 'Advanced' },
+  { name: 'User Research & Personas', level: 90, category: 'uiux', icon: 'ph:users-three-fill', experience: 'Advanced' },
+  { name: 'Wireframing & User Flow', level: 92, category: 'uiux', icon: 'ph:tree-structure-fill', experience: 'Advanced' },
+  { name: 'Design Systems & Hierarchy', level: 90, category: 'uiux', icon: 'ph:diamonds-four-fill', experience: 'Advanced' },
+  { name: 'Interactive Prototyping', level: 94, category: 'uiux', icon: 'ph:cursor-click-fill', experience: 'Advanced' },
+  { name: 'Usability Testing', level: 88, category: 'uiux', icon: 'ph:check-circle-fill', experience: 'Advanced' },
 
-const skills: Skill[] = [
+  // Frontend & Mobile Development
+  { name: 'Laravel', level: 88, category: 'frontend', icon: 'logos:laravel', experience: 'Advanced' },
+  { name: 'Flutter (Mobile)', level: 82, category: 'frontend', icon: 'logos:flutter', experience: 'Intermediate' },
+  { name: 'Vue.js 3 & Nuxt', level: 85, category: 'frontend', icon: 'logos:vue', experience: 'Advanced' },
   { name: 'HTML5 & CSS3', level: 95, category: 'frontend', icon: 'logos:html-5', experience: 'Advanced' },
   { name: 'JavaScript (ES6+)', level: 88, category: 'frontend', icon: 'logos:javascript', experience: 'Advanced' },
-  { name: 'TypeScript', level: 80, category: 'frontend', icon: 'logos:typescript-icon', experience: 'Intermediate' },
-  { name: 'Vue.js 3', level: 85, category: 'framework', icon: 'logos:vue', experience: 'Advanced' },
-  { name: 'Nuxt 3', level: 82, category: 'framework', icon: 'logos:nuxt-icon', experience: 'Advanced' },
-  { name: 'Tailwind CSS', level: 90, category: 'frontend', icon: 'logos:tailwindcss-icon', experience: 'Advanced' },
-  { name: 'Pinia / State Management', level: 80, category: 'framework', icon: 'logos:pinia', experience: 'Intermediate' },
-  { name: 'REST APIs & Fetch', level: 85, category: 'tools', icon: 'mdi:api', experience: 'Advanced' },
-  { name: 'Git & GitHub', level: 82, category: 'tools', icon: 'mdi:github', experience: 'Advanced' },
-  { name: 'Node.js Basics', level: 68, category: 'tools', icon: 'logos:nodejs-icon', experience: 'Intermediate' },
-  { name: 'Firebase / Supabase', level: 75, category: 'tools', icon: 'logos:firebase', experience: 'Intermediate' },
-  { name: 'Responsive Web Design', level: 92, category: 'frontend', icon: 'ph:devices-fill', experience: 'Advanced' }
+  { name: 'PHP & REST APIs', level: 84, category: 'frontend', icon: 'logos:php', experience: 'Advanced' },
+
+  // Tools & Creative
+  { name: 'Git & GitHub', level: 90, category: 'tools', icon: 'mdi:github', experience: 'Advanced' },
+  { name: 'Canva & Graphic Design', level: 92, category: 'tools', icon: 'logos:canva', experience: 'Advanced' },
+  { name: 'CapCut & Video Editing', level: 86, category: 'tools', icon: 'ph:video-camera-fill', experience: 'Advanced' },
+  { name: 'Notion & Project Workflow', level: 90, category: 'tools', icon: 'logos:notion-icon', experience: 'Advanced' }
 ]
 
-const selectedCategory = ref<'all' | 'frontend' | 'framework' | 'tools'>('all')
+const selectedCategory = ref('all')
 const isVisible = ref(false)
 
 const filteredSkills = computed(() => {
@@ -54,24 +55,24 @@ const filteredSkills = computed(() => {
         </button>
         <button
           class="filter-pill"
-          :class="{ active: selectedCategory === 'frontend' }"
-          @click="selectedCategory = 'frontend'"
+          :class="{ active: selectedCategory === 'uiux' }"
+          @click="selectedCategory = 'uiux'"
         >
-          Frontend Core
+          UI/UX Design
         </button>
         <button
           class="filter-pill"
-          :class="{ active: selectedCategory === 'framework' }"
-          @click="selectedCategory === 'framework'"
+          :class="{ active: selectedCategory === 'frontend' }"
+          @click="selectedCategory = 'frontend'"
         >
-          Vue &amp; Ecosystem
+          Frontend &amp; Mobile
         </button>
         <button
           class="filter-pill"
           :class="{ active: selectedCategory === 'tools' }"
           @click="selectedCategory = 'tools'"
         >
-          Tools &amp; Backend
+          Tools &amp; Creative
         </button>
       </div>
 
@@ -161,7 +162,7 @@ const filteredSkills = computed(() => {
 
 .skill-card:hover .skill-icon {
   transform: translateZ(12px) scale(1.08) rotate(-4deg);
-  border-color: var(--accent);
+  border-color: var(--border-light);
   box-shadow: inset 0 2px 4px rgba(255,255,255,0.1),
               0 8px 16px rgba(0,0,0,0.25);
 }
@@ -190,7 +191,7 @@ const filteredSkills = computed(() => {
   border: 1px solid var(--border-light);
   box-shadow: inset 0 2px 4px rgba(255,255,255,0.04),
               0 4px 10px rgba(0,0,0,0.12);
-  color: var(--brand-cyan-text); /* Fallback for monochrome icons */
+  color: var(--text); /* Fallback for monochrome icons */
   transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
   transform-style: preserve-3d;
 }
