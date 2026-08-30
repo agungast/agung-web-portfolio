@@ -71,7 +71,12 @@ function copyEmail() {
 
             <div class="contact-channels">
               <div class="channel-item" @click="copyEmail">
-                <div class="channel-icon">📧</div>
+                <div class="channel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <rect width="20" height="16" x="2" y="4" rx="2" />
+                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                  </svg>
+                </div>
                 <div class="channel-text">
                   <span class="channel-label">Email (Click to copy)</span>
                   <span class="channel-val">agung.astanto14@gmail.com</span>
@@ -79,15 +84,25 @@ function copyEmail() {
               </div>
 
               <div class="channel-item">
-                <div class="channel-icon">📍</div>
+                <div class="channel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M20 10c0 4.993-5.539 10.193-7.399 11.799a1 1 0 0 1-1.202 0C9.539 20.193 4 14.993 4 10a8 8 0 0 1 16 0" />
+                    <circle cx="12" cy="10" r="3" />
+                  </svg>
+                </div>
                 <div class="channel-text">
                   <span class="channel-label">Location</span>
-                  <span class="channel-val">Semarang, Central Java, Indonesia 🇮🇩</span>
+                  <span class="channel-val">Semarang, Central Java, Indonesia</span>
                 </div>
               </div>
 
               <div class="channel-item">
-                <div class="channel-icon">⚡</div>
+                <div class="channel-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    <circle cx="12" cy="12" r="10" />
+                    <polyline points="12 6 12 12 16 14" />
+                  </svg>
+                </div>
                 <div class="channel-text">
                   <span class="channel-label">Response Time</span>
                   <span class="channel-val">&lt; 24 Hours</span>
@@ -183,7 +198,12 @@ function copyEmail() {
 
           <!-- Success Feedback View -->
           <div v-else class="card success-card">
-            <div class="success-icon">🎉</div>
+            <div class="success-icon">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+                <polyline points="22 4 12 14.01 9 11.01" />
+              </svg>
+            </div>
             <h3>Thank You!</h3>
             <p>Your message has been received. I will get back to you as soon as possible.</p>
             <button class="btn btn-outline" @click="resetForm">

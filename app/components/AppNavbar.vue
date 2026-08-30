@@ -155,7 +155,7 @@ function scrollToSection(e, href) {
             aria-label="Toggle theme mode"
             @click="toggleTheme"
           >
-            <span class="theme-label">{{ isDark ? '🌙 Dark Mode' : '☀️ Light Mode' }}</span>
+            <span class="theme-label">{{ isDark ? 'Dark Mode' : 'Light Mode' }}</span>
           </button>
 
           <a

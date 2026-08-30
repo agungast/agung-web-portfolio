@@ -1,109 +1,47 @@
 <script setup>
-import { ref, computed } from 'vue'
-
 const skills = [
-  // UI/UX Design & Research
-  { name: 'Figma', level: 95, category: 'uiux', icon: 'logos:figma', experience: 'Advanced' },
-  { name: 'User Research & Personas', level: 90, category: 'uiux', icon: 'ph:users-three-fill', experience: 'Advanced' },
-  { name: 'Wireframing & User Flow', level: 92, category: 'uiux', icon: 'ph:tree-structure-fill', experience: 'Advanced' },
-  { name: 'Design Systems & Hierarchy', level: 90, category: 'uiux', icon: 'ph:diamonds-four-fill', experience: 'Advanced' },
-  { name: 'Interactive Prototyping', level: 94, category: 'uiux', icon: 'ph:cursor-click-fill', experience: 'Advanced' },
-  { name: 'Usability Testing', level: 88, category: 'uiux', icon: 'ph:check-circle-fill', experience: 'Advanced' },
-
-  // Frontend & Mobile Development
-  { name: 'Laravel', level: 88, category: 'frontend', icon: 'logos:laravel', experience: 'Advanced' },
-  { name: 'Flutter (Mobile)', level: 82, category: 'frontend', icon: 'logos:flutter', experience: 'Intermediate' },
-  { name: 'Vue.js 3 & Nuxt', level: 85, category: 'frontend', icon: 'logos:vue', experience: 'Advanced' },
-  { name: 'HTML5 & CSS3', level: 95, category: 'frontend', icon: 'logos:html-5', experience: 'Advanced' },
-  { name: 'JavaScript (ES6+)', level: 88, category: 'frontend', icon: 'logos:javascript', experience: 'Advanced' },
-  { name: 'PHP & REST APIs', level: 84, category: 'frontend', icon: 'logos:php', experience: 'Advanced' },
-
-  // Tools & Creative
-  { name: 'Git & GitHub', level: 90, category: 'tools', icon: 'mdi:github', experience: 'Advanced' },
-  { name: 'Canva & Graphic Design', level: 92, category: 'tools', icon: 'logos:canva', experience: 'Advanced' },
-  { name: 'CapCut & Video Editing', level: 86, category: 'tools', icon: 'ph:video-camera-fill', experience: 'Advanced' },
-  { name: 'Notion & Project Workflow', level: 90, category: 'tools', icon: 'logos:notion-icon', experience: 'Advanced' }
+  { name: 'Figma', icon: 'logos:figma' },
+  { name: 'Laravel', icon: 'logos:laravel' },
+  { name: 'Flutter', icon: 'logos:flutter' },
+  { name: 'Vue.js', icon: 'logos:vue' },
+  { name: 'Nuxt', icon: 'logos:nuxt-icon' },
+  { name: 'HTML5', icon: 'logos:html-5' },
+  { name: 'CSS3', icon: 'logos:css-3' },
+  { name: 'JavaScript', icon: 'logos:javascript' },
+  { name: 'PHP', icon: 'logos:php' },
+  { name: 'Tailwind CSS', icon: 'logos:tailwindcss-icon' },
+  { name: 'Git', icon: 'logos:git-icon' },
+  { name: 'GitHub', icon: 'mdi:github' },
+  { name: 'Canva', icon: 'logos:canva' },
+  { name: 'CapCut', icon: 'ph:video-camera-fill' },
+  { name: 'Notion', icon: 'logos:notion-icon' },
+  { name: 'REST APIs', icon: 'mdi:api' }
 ]
-
-const selectedCategory = ref('all')
-const isVisible = ref(false)
-
-const filteredSkills = computed(() => {
-  if (selectedCategory.value === 'all') return skills
-  return skills.filter(s => s.category === selectedCategory.value)
-})
 </script>
 
 <template>
   <section id="skills" class="section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Skills &amp; Expertise</h2>
+        <h2 class="section-title">Tools &amp; Technologies</h2>
         <p class="section-subtitle">
-          Core technologies, modern frameworks, and tools I use to build scalable web applications.
+          Core applications, frameworks, and technologies I utilize to design and develop digital products.
         </p>
       </div>
 
-      <!-- Filter Category Buttons -->
-      <div class="category-filters" v-reveal>
-        <button
-          class="filter-pill"
-          :class="{ active: selectedCategory === 'all' }"
-          @click="selectedCategory = 'all'"
-        >
-          All Skills ({{ skills.length }})
-        </button>
-        <button
-          class="filter-pill"
-          :class="{ active: selectedCategory === 'uiux' }"
-          @click="selectedCategory = 'uiux'"
-        >
-          UI/UX Design
-        </button>
-        <button
-          class="filter-pill"
-          :class="{ active: selectedCategory === 'frontend' }"
-          @click="selectedCategory = 'frontend'"
-        >
-          Frontend &amp; Mobile
-        </button>
-        <button
-          class="filter-pill"
-          :class="{ active: selectedCategory === 'tools' }"
-          @click="selectedCategory = 'tools'"
-        >
-          Tools &amp; Creative
-        </button>
-      </div>
-
-      <!-- Skills Grid -->
+      <!-- Unified Monochrome Skills Grid -->
       <div class="skills-grid">
         <div
-          v-for="(skill, index) in filteredSkills"
+          v-for="(skill, index) in skills"
           :key="skill.name"
-          class="skill-card card"
+          class="skill-item card"
           v-reveal
-          :style="{ transitionDelay: `${index * 30}ms` }"
+          :style="{ transitionDelay: `${index * 25}ms` }"
         >
-          <div class="skill-header">
-            <div class="skill-info">
-              <div class="skill-icon">
-                <Icon :name="skill.icon" />
-              </div>
-              <div>
-                <h3 class="skill-title">{{ skill.name }}</h3>
-                <span class="skill-badge">{{ skill.experience }}</span>
-              </div>
-            </div>
-            <span class="skill-percentage">{{ skill.level }}%</span>
+          <div class="skill-icon-wrap">
+            <Icon :name="skill.icon" class="skill-icon-img" />
           </div>
-
-          <div class="progress-bar-bg" aria-hidden="true">
-            <div
-              class="progress-bar-fill"
-              :style="{ transform: `scaleX(${skill.level / 100})` }"
-            />
-          </div>
+          <span class="skill-name">{{ skill.name }}</span>
         </div>
       </div>
     </div>
@@ -111,133 +49,129 @@ const filteredSkills = computed(() => {
 </template>
 
 <style scoped>
-.category-filters {
-  display: flex;
-  justify-content: center;
-  gap: 12px;
-  flex-wrap: wrap;
-  margin-bottom: 42px;
-}
-
-.filter-pill {
-  padding: 8px 20px;
-  border-radius: 999px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  color: var(--muted);
-  font-family: inherit;
-  font-size: 0.9rem;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.25s ease;
-}
-
-.filter-pill:hover {
-  color: var(--text);
-  border-color: var(--border-light);
-}
-
-.filter-pill.active {
-  background: var(--accent);
-  color: var(--btn-primary-text);
-  border-color: var(--accent);
-  font-weight: 700;
-}
-
 .skills-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 20px;
-}
-
-.skill-card {
-  padding: 22px 24px;
-  background: var(--card);
-  border: 1px solid var(--border);
-  display: flex;
-  flex-direction: column;
-  gap: 16px;
-  perspective: 1000px;
-}
-
-.skill-card:hover .skill-icon {
-  transform: translateZ(12px) scale(1.08) rotate(-4deg);
-  border-color: var(--border-light);
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.1),
-              0 8px 16px rgba(0,0,0,0.25);
-}
-
-.skill-header {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.skill-info {
-  display: flex;
-  align-items: center;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
   gap: 14px;
 }
 
-.skill-icon {
-  font-size: 1.8rem;
+.skill-item {
+  padding: 18px 14px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  gap: 10px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: default;
+}
+
+.skill-item:hover {
+  border-color: var(--border-light);
+  box-shadow: 0 0 0 1px var(--border-light), 0 10px 24px rgba(0, 0, 0, 0.25);
+  transform: translateY(-3px);
+}
+
+.skill-icon-wrap {
+  width: 48px;
+  height: 48px;
+  border-radius: 10px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 48px;
-  height: 48px;
-  border-radius: 12px;
+  font-size: 1.75rem;
+  color: var(--text);
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.skill-item:hover .skill-icon-wrap {
+  border-color: var(--border-light);
+  transform: scale(1.06);
   background: var(--card-hover);
-  border: 1px solid var(--border-light);
-  box-shadow: inset 0 2px 4px rgba(255,255,255,0.04),
-              0 4px 10px rgba(0,0,0,0.12);
-  color: var(--text); /* Fallback for monochrome icons */
-  transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
-  transform-style: preserve-3d;
 }
 
-.skill-title {
-  font-size: 1.05rem;
-  font-weight: 700;
-  color: var(--text);
-  margin-bottom: 2px;
+/* =========================================================================
+   Monochrome Filter System for Icons (Dark & Light Theme Adaptive)
+   ========================================================================= */
+.skill-icon-wrap :deep(svg),
+.skill-icon-wrap :deep(img) {
+  display: block;
+  width: 28px;
+  height: 28px;
+  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
-.skill-badge {
-  font-size: 0.72rem;
+/* Dark Mode: Clean Crisp White/Silver Icons */
+html.dark .skill-icon-wrap :deep(svg),
+html.dark .skill-icon-wrap :deep(img) {
+  filter: grayscale(100%) brightness(1.8) contrast(1.1);
+  opacity: 0.85;
+}
+
+html.dark .skill-item:hover .skill-icon-wrap :deep(svg),
+html.dark .skill-item:hover .skill-icon-wrap :deep(img) {
+  filter: grayscale(100%) brightness(2.4) contrast(1.2);
+  opacity: 1;
+}
+
+/* Light Mode: Clean Crisp Charcoal/Black Icons */
+html.light .skill-icon-wrap :deep(svg),
+html.light .skill-icon-wrap :deep(img) {
+  filter: grayscale(100%) brightness(0.2) contrast(1.3);
+  opacity: 0.85;
+}
+
+html.light .skill-item:hover .skill-icon-wrap :deep(svg),
+html.light .skill-item:hover .skill-icon-wrap :deep(img) {
+  filter: grayscale(100%) brightness(0) contrast(1.6);
+  opacity: 1;
+}
+
+.skill-name {
+  font-size: 0.88rem;
   font-weight: 600;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  color: var(--muted);
-}
-
-.skill-percentage {
-  font-size: 1.05rem;
-  font-weight: 700;
-  font-family: var(--font-heading);
   color: var(--text);
-}
-
-.progress-bar-bg {
-  width: 100%;
-  height: 7px;
-  background: var(--border);
-  border-radius: 999px;
-  overflow: hidden;
-}
-
-.progress-bar-fill {
-  width: 100%;
-  height: 100%;
-  border-radius: 999px;
-  background: var(--accent);
-  transform-origin: left center;
-  transition: transform 1.2s cubic-bezier(0.16, 1, 0.3, 1);
+  letter-spacing: -0.01em;
+  line-height: 1.2;
 }
 
 @media (max-width: 640px) {
   .skills-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 10px;
+  }
+
+  .skill-item {
+    padding: 14px 10px;
+    gap: 8px;
+  }
+
+  .skill-icon-wrap {
+    width: 42px;
+    height: 42px;
+    font-size: 1.4rem;
+  }
+
+  .skill-icon-wrap :deep(svg),
+  .skill-icon-wrap :deep(img) {
+    width: 24px;
+    height: 24px;
+  }
+
+  .skill-name {
+    font-size: 0.8rem;
+  }
+}
+
+@media (max-width: 420px) {
+  .skills-grid {
+    grid-template-columns: repeat(2, 1fr);
   }
 }
 </style>

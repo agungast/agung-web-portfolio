@@ -101,18 +101,18 @@ onUnmounted(() => {
         <!-- Row 1: Story (wide) + Stats (narrow) -->
         <div class="bento-cell cell-story" v-reveal>
           <span class="cell-label">My Story</span>
-          <h3>Bridging UI/UX Design &amp; Frontend Engineering</h3>
+          <h3>Bridging UI/UX Design &amp; Web Development</h3>
           <p>
-            I am a Computer Engineering Technology student at Politeknik Negeri Semarang (GPA 3.81/4.00), specializing in UI/UX Design and digital product development.
+            I am a Computer Engineering Technology Student at Politeknik Negeri Semarang (GPA 3.84/4.00), specializing in UI/UX Design, Web Development and Multimedia.
           </p>
           <p>
             I build intuitive web and mobile interfaces grounded in user-centered design, problem framing, and high-fidelity prototyping, then translate them seamlessly into responsive, pixel-perfect code using Laravel, Flutter, and Vue.
           </p>
           <div class="traits">
-            <span class="trait">🎯 User-Centered Design</span>
-            <span class="trait">📐 Figma Prototyping</span>
-            <span class="trait">💻 Web &amp; Mobile Dev</span>
-            <span class="trait">🤝 Team Leadership</span>
+            <span class="trait">User-Centered Design</span>
+            <span class="trait">Figma Prototyping</span>
+            <span class="trait">Web &amp; Mobile Dev</span>
+            <span class="trait">Team Leadership</span>
           </div>
         </div>
 
@@ -173,7 +173,7 @@ onUnmounted(() => {
 
         <div class="bento-cell cell-cta" v-reveal>
           <div class="cta-inner">
-            <span class="cta-emoji">💡</span>
+            <div class="cta-badge">Open for Opportunities</div>
             <h4>Looking for a UI/UX Designer &amp; Developer?</h4>
             <p>I am eager to contribute to user-oriented product teams, internships, and digital innovation projects.</p>
             <a href="#contact" class="cta-link">Let's connect &rarr;</a>
@@ -187,7 +187,7 @@ onUnmounted(() => {
             <span class="clock-time">{{ currentTime }}</span>
           </div>
           <span class="clock-date">{{ currentDate }}</span>
-          <span class="clock-location">Semarang, Indonesia 🇮🇩</span>
+          <span class="clock-location">Semarang, Indonesia</span>
         </div>
       </div>
     </div>
@@ -362,10 +362,18 @@ onUnmounted(() => {
   text-align: center;
 }
 
-.cta-emoji {
-  font-size: 2rem;
-  display: block;
-  margin-bottom: 12px;
+.cta-badge {
+  display: inline-block;
+  font-size: 0.75rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding: 4px 12px;
+  border-radius: 999px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  color: var(--muted);
+  margin-bottom: 14px;
 }
 
 .cta-inner h4 {

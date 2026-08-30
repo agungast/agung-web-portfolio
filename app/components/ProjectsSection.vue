@@ -17,7 +17,7 @@ const projects = [
       'Pixel-perfect Design System Execution & Git Integration'
     ],
     tags: ['Figma', 'UI/UX Design', 'Laravel', 'Flutter', 'Git & GitHub'],
-    icon: '📢',
+    icon: 'ph:chat-circle-dots-bold',
     demoUrl: '',
     githubUrl: 'https://github.com/agungast'
   },
@@ -36,7 +36,7 @@ const projects = [
       'Collaborative Git Repository & Branch Workflow'
     ],
     tags: ['Figma', 'UI/UX Design', 'Laravel', 'Blade', 'Git & GitHub'],
-    icon: '📦',
+    icon: 'ph:package-bold',
     demoUrl: '',
     githubUrl: 'https://github.com/agungast'
   },
@@ -55,7 +55,7 @@ const projects = [
       'Rapid Prototyping under Competitive Deadlines'
     ],
     tags: ['Figma', 'UI/UX Design', 'User Research', 'Wireframing', 'Interactive Prototype'],
-    icon: '🌱',
+    icon: 'ph:plant-bold',
     demoUrl: '',
     githubUrl: 'https://github.com/agungast'
   }
@@ -141,7 +141,7 @@ onUnmounted(() => {
           @click="openModal(project)"
         >
           <div class="project-thumb">
-            <span class="project-icon">{{ project.icon }}</span>
+            <span class="project-icon"><Icon :name="project.icon" /></span>
             <div class="project-badge">{{ project.subtitle }}</div>
           </div>
 
@@ -192,7 +192,7 @@ onUnmounted(() => {
             </button>
 
             <div class="modal-banner">
-              <span class="banner-icon">{{ selectedProject.icon }}</span>
+              <span class="banner-icon"><Icon :name="selectedProject.icon" /></span>
               <div class="banner-info">
                 <h2 id="modal-project-title">{{ selectedProject.title }}</h2>
                 <p>{{ selectedProject.subtitle }}</p>
@@ -209,7 +209,11 @@ onUnmounted(() => {
                 <h4>Key Features</h4>
                 <ul class="features-list">
                   <li v-for="(feat, idx) in selectedProject.features" :key="idx">
-                    <span class="check-icon">✓</span>
+                    <span class="check-icon">
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round">
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                    </span>
                     <span>{{ feat }}</span>
                   </li>
                 </ul>
