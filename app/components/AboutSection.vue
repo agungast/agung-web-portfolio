@@ -2,7 +2,7 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 
 const stats = [
-  { value: 3.84, suffix: '', label: 'Cumulative GPA' },
+  { value: 3.81, suffix: '', label: 'Cumulative GPA' },
   { value: 3, suffix: '+', label: 'Key Projects' },
   { value: 2, suffix: '+', label: 'Years Design & Dev' },
   { value: 100, suffix: '%', label: 'Precision & Quality' }
@@ -103,16 +103,45 @@ onUnmounted(() => {
           <span class="cell-label">My Story</span>
           <h3>Bridging UI/UX Design &amp; Web Development</h3>
           <p>
-            I am a Computer Engineering Technology Student at Politeknik Negeri Semarang (GPA 3.84/4.00), specializing in UI/UX Design, Web Development and Multimedia.
+            I am a Computer Engineering Technology Student at Politeknik Negeri Semarang (GPA 3.81/4.00), specializing in UI/UX Design, Web Development and Multimedia.
           </p>
           <p>
             I build intuitive web and mobile interfaces grounded in user-centered design, problem framing, and high-fidelity prototyping, then translate them seamlessly into responsive, pixel-perfect code using Laravel, Flutter, and Vue.
           </p>
           <div class="traits">
-            <span class="trait">User-Centered Design</span>
-            <span class="trait">Figma Prototyping</span>
-            <span class="trait">Web &amp; Mobile Dev</span>
-            <span class="trait">Team Leadership</span>
+            <span class="trait">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="m18 16 4-4-4-4" />
+                <path d="m6 8-4 4 4 4" />
+                <path d="m14.5 4-5 16" />
+              </svg>
+              Design-to-Code
+            </span>
+            <span class="trait">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <polygon points="12 2 2 7 12 12 22 7 12 2" />
+                <polyline points="2 17 12 22 22 17" />
+                <polyline points="2 12 12 17 22 12" />
+              </svg>
+              High-Fidelity Prototyping
+            </span>
+            <span class="trait">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="3" width="18" height="18" rx="2" />
+                <path d="M3 9h18" />
+                <path d="M9 21V9" />
+              </svg>
+              Modern Web Architecture
+            </span>
+            <span class="trait">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+                <circle cx="9" cy="7" r="4" />
+                <path d="M22 21v-2a4 4 0 0 0-3-3.87" />
+                <path d="M16 3.13a4 4 0 0 1 0 7.75" />
+              </svg>
+              Cross-Functional Collaboration
+            </span>
           </div>
         </div>
 
@@ -140,7 +169,7 @@ onUnmounted(() => {
               <span class="timeline-date">2023 &mdash; Present</span>
               <h4>Politeknik Negeri Semarang</h4>
               <p class="timeline-sub">Sarjana Terapan (B.App.Sc) in Computer Engineering Technology</p>
-              <p>GPA: <strong>3.84 / 4.00</strong>. Focusing on digital product engineering, UI/UX design, and software systems.</p>
+              <p>GPA: <strong>3.81 / 4.00</strong>. Focusing on digital product engineering, UI/UX design, and software systems.</p>
             </div>
           </div>
         </div>
@@ -271,18 +300,33 @@ onUnmounted(() => {
 }
 
 .trait {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
   padding: 6px 14px;
-  border-radius: 6px;
+  border-radius: 8px;
   font-size: 0.85rem;
   font-weight: 600;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   color: var(--text-secondary);
-  transition: border-color 150ms ease-out, color 150ms ease-out;
+  transition: all 0.2s ease;
+}
+
+.trait svg {
+  flex-shrink: 0;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
 }
 
 .trait:hover {
   border-color: var(--border-light);
+  color: var(--text);
+  background: var(--card-hover);
+  transform: translateY(-1px);
+}
+
+.trait:hover svg {
   color: var(--text);
 }
 

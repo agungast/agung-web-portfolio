@@ -1,16 +1,14 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch } from 'vue'
-import { useToast } from '../composables/useToast'
 import { useAppState } from '../composables/useAppState'
 import profileImg from '~/assets/images/profile-picture.webp'
 
-const { showToast } = useToast()
 const { isAppReady } = useAppState()
 
 const titles = [
   'UI/UX Designer',
-  'Frontend Developer',
-  'Digital Product Designer',
+  'Web Developer',
+  'AI/ML Enthusiast',
   'Computer Engineering Student'
 ]
 
@@ -66,18 +64,6 @@ function handleMouseMove(e) {
   mouseY.value = Math.round(y)
 }
 
-function copyEmail() {
-  const email = 'agung.astanto14@gmail.com'
-  if (navigator.clipboard) {
-    navigator.clipboard.writeText(email).then(() => {
-      showToast('Email address copied to clipboard!', 'success')
-    }).catch(() => {
-      showToast('Email: agung.astanto14@gmail.com', 'info')
-    })
-  } else {
-    showToast('Email: agung.astanto14@gmail.com', 'info')
-  }
-}
 
 onMounted(() => {
   if (isAppReady.value) {
@@ -130,7 +116,7 @@ onUnmounted(() => {
         </div>
 
         <p class="desc reveal-up" :class="{ 'is-revealed': isAppReady }">
-          Computer Engineering student at Politeknik Negeri Semarang specializing in UI/UX Design and digital product development. Dedicated to crafting intuitive, user-centered web and mobile experiences.
+          Computer Engineering Student at Politeknik Negeri Semarang specializing in UI/UX Design and digital product development. Dedicated to crafting intuitive, user-centered web and mobile experiences.
         </p>
 
         <!-- Action buttons -->
@@ -142,13 +128,21 @@ onUnmounted(() => {
               <polyline points="12 5 19 12 12 19" />
             </svg>
           </a>
-          <button class="btn btn-outline" @click="copyEmail">
+          <a
+            href="/CV_Agung_Hadi_Astanto.pdf"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="btn btn-outline"
+          >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
-              <rect x="9" y="9" width="13" height="13" rx="2" ry="2" />
-              <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1" />
+              <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
+              <polyline points="14 2 14 8 20 8" />
+              <line x1="16" y1="13" x2="8" y2="13" />
+              <line x1="16" y1="17" x2="8" y2="17" />
+              <line x1="10" y1="9" x2="8" y2="9" />
             </svg>
-            Copy Email
-          </button>
+            View CV
+          </a>
         </div>
 
         <!-- Tech stack tags -->
@@ -156,9 +150,9 @@ onUnmounted(() => {
           <span class="pill-label">Focus &amp; Stack:</span>
           <div class="pills-list">
             <span class="tech-pill">Figma (UI/UX)</span>
-            <span class="tech-pill">Laravel</span>
-            <span class="tech-pill">Flutter</span>
             <span class="tech-pill">Vue 3 / Nuxt</span>
+            <span class="tech-pill">Javascript</span>
+            <span class="tech-pill">Supabase</span>
             <span class="tech-pill">Git &amp; GitHub</span>
           </div>
         </div>
