@@ -100,7 +100,14 @@ onUnmounted(() => {
       <div class="bento-grid">
         <!-- Row 1: Story (wide) + Stats (narrow) -->
         <div class="bento-cell cell-story" v-reveal>
-          <span class="cell-label">My Story</span>
+          <div class="bento-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <line x1="12" y1="16" x2="12" y2="12" />
+              <line x1="12" y1="8" x2="12.01" y2="8" />
+            </svg>
+            <span>01 // Narrative</span>
+          </div>
           <h3>Bridging UI/UX Design &amp; Web Development</h3>
           <p>
             I am a Computer Engineering Technology Student at Politeknik Negeri Semarang (GPA 3.81/4.00), specializing in UI/UX Design, Web Development and Multimedia.
@@ -146,7 +153,14 @@ onUnmounted(() => {
         </div>
 
         <div class="bento-cell cell-stats" v-reveal>
-          <span class="cell-label">Numbers</span>
+          <div class="bento-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <line x1="18" y1="20" x2="18" y2="10" />
+              <line x1="12" y1="20" x2="12" y2="4" />
+              <line x1="6" y1="20" x2="6" y2="14" />
+            </svg>
+            <span>02 // Key Metrics</span>
+          </div>
           <div class="stats-inner">
             <div
               v-for="(stat, index) in stats"
@@ -163,7 +177,13 @@ onUnmounted(() => {
 
         <!-- Row 2: Education + Experience + CTA -->
         <div class="bento-cell cell-edu" v-reveal>
-          <span class="cell-label">Education</span>
+          <div class="bento-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+              <path d="M6 12v5c3 3 9 3 12 0v-5" />
+            </svg>
+            <span>03 // Academic</span>
+          </div>
           <div class="timeline">
             <div class="timeline-entry">
               <span class="timeline-date">2023 &mdash; Present</span>
@@ -175,7 +195,13 @@ onUnmounted(() => {
         </div>
 
         <div class="bento-cell cell-exp" v-reveal>
-          <span class="cell-label">Experience &amp; Leadership</span>
+          <div class="bento-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+              <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+            </svg>
+            <span>04 // Trajectory</span>
+          </div>
           <div class="timeline">
             <div class="timeline-entry">
               <span class="timeline-date">2024 &mdash; 2026</span>
@@ -211,7 +237,13 @@ onUnmounted(() => {
 
         <!-- Row 3: Clock -->
         <div class="bento-cell cell-clock" v-reveal>
-          <span class="cell-label">Local Time</span>
+          <div class="bento-badge">
+            <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+              <circle cx="12" cy="12" r="10" />
+              <polyline points="12 6 12 12 16 14" />
+            </svg>
+            <span>05 // Studio Clock</span>
+          </div>
           <div class="clock-display">
             <span class="clock-time">{{ currentTime }}</span>
           </div>
@@ -267,15 +299,34 @@ onUnmounted(() => {
   padding: 20px 28px;
 }
 
-/* Cell Label (Overline) */
-.cell-label {
-  display: block;
-  font-size: 0.75rem;
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.08em;
+/* Bento Card Header Badge (Catalog Meta) */
+.bento-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: var(--font-mono, ui-monospace, SFMono-Regular, monospace);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
   color: var(--muted);
+  padding: 4px 11px;
+  background: var(--brand-mono-surface);
+  border: 1px solid var(--border);
+  border-radius: 9999px;
   margin-bottom: 16px;
+  user-select: none;
+  transition: border-color 0.2s ease, color 0.2s ease, background-color 0.2s ease;
+}
+
+.bento-badge svg {
+  flex-shrink: 0;
+  opacity: 0.8;
+}
+
+.bento-cell:hover .bento-badge {
+  border-color: var(--border-light);
+  color: var(--text);
+  background: var(--card-hover);
 }
 
 /* Story Cell */

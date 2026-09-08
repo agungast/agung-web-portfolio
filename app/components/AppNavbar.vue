@@ -18,17 +18,16 @@ const isScrolled = ref(false)
 const activeSection = ref('home')
 const scrollProgress = ref(0)
 
-// Magic sliding indicator
+// Magic sliding indicator (compositor-only transform animation)
 const navItems = ref([])
-const indicatorStyle = ref({ width: '0px', transform: 'translateX(0px)', opacity: '0' })
+const indicatorStyle = ref({ transform: 'translateX(0px) scaleX(0)', opacity: '0' })
 
 function updateIndicator() {
   const activeIndex = links.findIndex(l => l.href.replace('#', '') === activeSection.value)
   if (activeIndex !== -1 && navItems.value[activeIndex]) {
     const el = navItems.value[activeIndex]
     indicatorStyle.value = {
-      width: `${el.offsetWidth}px`,
-      transform: `translateX(${el.offsetLeft}px)`,
+      transform: `translateX(${el.offsetLeft}px) scaleX(${el.offsetWidth})`,
       opacity: '1'
     }
   } else {
@@ -325,10 +324,12 @@ function scrollToSection(e, href) {
   position: absolute;
   bottom: -2px;
   left: 0;
+  width: 1px;
   height: 2px;
   background: var(--text);
   border-radius: 2px;
-  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), width 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+  transform-origin: left center;
+  transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
   z-index: 1;
 }
 
