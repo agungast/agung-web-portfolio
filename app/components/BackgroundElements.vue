@@ -1,7 +1,73 @@
+<script setup>
+import { ref, onMounted, onUnmounted } from 'vue'
+
+const mouseX = ref(50)
+const mouseY = ref(40)
+const isVisible = ref(false)
+
+let rafId = null
+let currentX = 50
+let currentY = 40
+let targetX = 50
+let targetY = 40
+
+function updatePosition() {
+  // Smooth spring / lerp damping for fluid cursor flow
+  currentX += (targetX - currentX) * 0.12
+  currentY += (targetY - currentY) * 0.12
+
+  mouseX.value = Math.round(currentX * 10) / 10
+  mouseY.value = Math.round(currentY * 10) / 10
+
+  if (Math.abs(targetX - currentX) > 0.05 || Math.abs(targetY - currentY) > 0.05) {
+    rafId = requestAnimationFrame(updatePosition)
+  } else {
+    rafId = null
+  }
+}
+
+function handleMouseMove(e) {
+  if (!isVisible.value) isVisible.value = true
+  targetX = (e.clientX / window.innerWidth) * 100
+  targetY = (e.clientY / window.innerHeight) * 100
+
+  if (!rafId) {
+    rafId = requestAnimationFrame(updatePosition)
+  }
+}
+
+function handleMouseLeave() {
+  isVisible.value = false
+}
+
+onMounted(() => {
+  window.addEventListener('mousemove', handleMouseMove, { passive: true })
+  document.addEventListener('mouseleave', handleMouseLeave, { passive: true })
+})
+
+onUnmounted(() => {
+  if (typeof window !== 'undefined') {
+    window.removeEventListener('mousemove', handleMouseMove)
+    document.removeEventListener('mouseleave', handleMouseLeave)
+  }
+  if (rafId) cancelAnimationFrame(rafId)
+})
+</script>
+
 <template>
-  <div class="background-elements" aria-hidden="true">
+  <div
+    class="background-elements"
+    :style="{
+      '--cursor-x': `${mouseX}%`,
+      '--cursor-y': `${mouseY}%`
+    }"
+    aria-hidden="true"
+  >
+    <!-- Global Interactive Cursor Flow Spotlight -->
+    <div class="cursor-flow-spotlight" :class="{ 'is-active': isVisible }" />
+
     <!-- Ambient Blobs -->
-    <div class="ambient-blobs"></div>
+    <div class="ambient-blobs" />
     
     <!-- Geometric Decor 1: Radar/Crosshair (Top Right) -->
     <svg class="decor-element top-right" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -41,6 +107,24 @@
   pointer-events: none;
   z-index: 0;
   overflow: hidden;
+}
+
+.cursor-flow-spotlight {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(
+    circle 750px at var(--cursor-x, 50%) var(--cursor-y, 40%),
+    var(--spotlight-aura),
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  z-index: 1;
+}
+
+.cursor-flow-spotlight.is-active {
+  opacity: 1;
 }
 
 .ambient-blobs {

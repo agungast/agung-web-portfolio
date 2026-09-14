@@ -52,27 +52,10 @@ function startRoleTicker() {
   }, 3000)
 }
 
-// Mouse Spotlight Tracker
-const mouseX = ref(50)
-const mouseY = ref(50)
-
-function handleMouseMove(e) {
-  const heroEl = document.getElementById('home')
-  if (!heroEl) return
-  const rect = heroEl.getBoundingClientRect()
-  const x = ((e.clientX - rect.left) / rect.width) * 100
-  const y = ((e.clientY - rect.top) / rect.height) * 100
-  mouseX.value = Math.round(x)
-  mouseY.value = Math.round(y)
-}
-
-
 onMounted(() => {
   if (isAppReady.value) {
     startRoleTicker()
   }
-  const hero = document.getElementById('home')
-  hero?.addEventListener('mousemove', handleMouseMove)
 })
 
 watch(isAppReady, (ready) => {
@@ -83,21 +66,11 @@ watch(isAppReady, (ready) => {
 
 onUnmounted(() => {
   if (roleInterval) clearInterval(roleInterval)
-  const hero = document.getElementById('home')
-  hero?.removeEventListener('mousemove', handleMouseMove)
 })
 </script>
 
 <template>
-  <section
-    id="home"
-    class="hero"
-    :style="{
-      '--spotlight-x': `${mouseX}%`,
-      '--spotlight-y': `${mouseY}%`
-    }"
-  >
-    <div class="spotlight-layer" aria-hidden="true" />
+  <section id="home" class="hero">
 
     <div class="container hero-inner">
       <div class="hero-content">
@@ -230,18 +203,6 @@ onUnmounted(() => {
   padding: 60px 0 80px;
 }
 
-.spotlight-layer {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: radial-gradient(
-    circle 700px at var(--spotlight-x, 50%) var(--spotlight-y, 40%),
-    var(--spotlight-aura),
-    transparent 80%
-  );
-  opacity: 1;
-  transition: opacity 0.5s ease;
-}
 
 /* Masked Typography Reveal Classes */
 .mask-wrap {
@@ -517,15 +478,6 @@ onUnmounted(() => {
   animation: border-beam-spin 6s linear infinite;
 }
 
-.profile-frame-wrap:hover .frame-glow-runner {
-  opacity: 0.75;
-  filter: blur(28px);
-}
-
-.profile-frame-wrap:hover .glow-spinner,
-.profile-frame-wrap:hover .border-beam-spinner {
-  animation-duration: 3.5s;
-}
 
 /* Outer border shell containing the rotating border beam */
 .profile-frame-shell {
@@ -605,12 +557,7 @@ onUnmounted(() => {
   height: 14px;
   pointer-events: none;
   z-index: 3;
-  opacity: 0.55;
-  transition: opacity 0.3s ease, transform 0.3s ease;
-}
-
-.profile-frame-wrap:hover .corner-bracket {
-  opacity: 1;
+  opacity: 0.7;
 }
 
 .corner-bracket.top-left {
@@ -641,10 +588,6 @@ onUnmounted(() => {
   border-right: 1.5px solid var(--text);
 }
 
-.profile-frame-wrap:hover .corner-bracket.top-left { transform: translate(-2px, -2px); }
-.profile-frame-wrap:hover .corner-bracket.top-right { transform: translate(2px, -2px); }
-.profile-frame-wrap:hover .corner-bracket.bottom-left { transform: translate(-2px, 2px); }
-.profile-frame-wrap:hover .corner-bracket.bottom-right { transform: translate(2px, 2px); }
 
 
 @media (max-width: 960px) {
