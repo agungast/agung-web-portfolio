@@ -1,5 +1,6 @@
 <script setup>
 import websiteLogo from '~/assets/images/new-website-logo.webp'
+import { site } from '../data/site'
 </script>
 
 <template>
@@ -28,9 +29,9 @@ import websiteLogo from '~/assets/images/new-website-logo.webp'
           &copy; {{ new Date().getFullYear() }} Agung Hadi Astanto. Crafted with Vue 3 &amp; Nuxt.
         </p>
         <div class="socials">
-          <a href="https://github.com/agungast" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
-          <a href="https://www.linkedin.com/in/agunghadiastanto/" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=agung.astanto14@gmail.com" target="_blank" rel="noopener" aria-label="Email">Email</a>
+          <a :href="site.githubUrl" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>
+          <a :href="site.linkedinUrl" target="_blank" rel="noopener" aria-label="LinkedIn">LinkedIn</a>
+          <a :href="`https://mail.google.com/mail/?view=cm&fs=1&to=${site.email}`" target="_blank" rel="noopener" aria-label="Email">Email</a>
         </div>
       </div>
     </div>

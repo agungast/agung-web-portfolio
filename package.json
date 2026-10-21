@@ -6,17 +6,20 @@
     "build": "nuxt build",
     "dev": "nuxt dev",
     "generate": "nuxt generate",
+    "lint": "eslint .",
     "preview": "nuxt preview",
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@iconify/vue": "^5.0.1",
     "@nuxt/icon": "^2.5.1",
     "nuxt": "^4.5.2",
     "vue": "^3.5.0"
   },
   "devDependencies": {
+    "@eslint/js": "^9.0.0",
     "@iconify-json/logos": "^1.2.13",
-    "@iconify-json/ph": "^1.2.2"
+    "@iconify-json/ph": "^1.2.2",
+    "eslint": "^9.0.0",
+    "eslint-plugin-vue": "^10.0.0"
   }
 }

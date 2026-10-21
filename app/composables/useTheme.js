@@ -1,4 +1,4 @@
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed } from 'vue'
 
 const theme = ref('dark')
 
@@ -28,23 +28,10 @@ export function useTheme() {
     applyTheme(theme.value === 'dark' ? 'light' : 'dark')
   }
 
-  function initTheme() {
-    if (typeof window === 'undefined') return
-
-    const savedTheme = localStorage.getItem('theme')
-    if (savedTheme && (savedTheme === 'dark' || savedTheme === 'light')) {
-      applyTheme(savedTheme)
-    } else {
-      const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches
-      applyTheme(prefersDark ? 'dark' : 'light')
-    }
-  }
-
   return {
     theme,
     isDark,
     toggleTheme,
-    applyTheme,
-    initTheme
+    applyTheme
   }
 }

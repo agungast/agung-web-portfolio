@@ -1,9 +1,11 @@
 <script setup>
 import { ref, onMounted, onUnmounted, watch, nextTick } from 'vue'
 import { useTheme } from '../composables/useTheme'
+import { useScrollState } from '../composables/useScrollState'
 import websiteLogo from '~/assets/images/new-website-logo.webp'
 
-const { isDark, toggleTheme, initTheme } = useTheme()
+const { isDark, toggleTheme } = useTheme()
+const { scrollTop, scrollProgress, isScrolled } = useScrollState()
 
 const links = [
   { label: 'Home', href: '#home' },
@@ -12,11 +14,10 @@ const links = [
   { label: 'Projects', href: '#projects' },
   { label: 'Contact', href: '#contact' }
 ]
+const sectionIds = links.map(l => l.href.slice(1))
 
 const open = ref(false)
-const isScrolled = ref(false)
 const activeSection = ref('home')
-const scrollProgress = ref(0)
 
 // Magic sliding indicator (compositor-only transform animation)
 const navItems = ref([])
@@ -44,59 +45,39 @@ watch(activeSection, () => {
 let scrollTimeout = null
 const isProgrammaticScroll = ref(false)
 
-function handleScroll() {
-  if (typeof window === 'undefined') return
-  const scrollTop = window.scrollY || document.documentElement.scrollTop
-  isScrolled.value = scrollTop > 20
-
-  const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-  if (docHeight > 0) {
-    scrollProgress.value = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100))
-  }
-
+function updateActiveSection(val) {
   if (isProgrammaticScroll.value) return
 
-  // ScrollSpy Calculation
-  // 1. If near top, always activate 'home'
-  if (scrollTop < 120) {
+  if (val < 120) {
     activeSection.value = 'home'
     return
   }
 
-  // 2. If near the bottom of document, activate 'contact'
-  if (window.innerHeight + scrollTop >= document.documentElement.scrollHeight - 60) {
+  if (window.innerHeight + val >= document.documentElement.scrollHeight - 60) {
     activeSection.value = 'contact'
     return
   }
 
-  // 3. Find current active section by offsetTop
-  const sectionIds = ['home', 'about', 'skills', 'projects', 'contact']
   const offsetBuffer = 180
-
   for (let i = sectionIds.length - 1; i >= 0; i--) {
-    const id = sectionIds[i]
-    if (!id) continue
-    const el = document.getElementById(id)
-    if (el && el.offsetTop <= scrollTop + offsetBuffer) {
-      activeSection.value = id
+    const el = document.getElementById(sectionIds[i])
+    if (el && el.offsetTop <= val + offsetBuffer) {
+      activeSection.value = sectionIds[i]
       break
     }
   }
 }
 
+watch(scrollTop, updateActiveSection)
+
 onMounted(() => {
-  initTheme()
-  window.addEventListener('scroll', handleScroll, { passive: true })
   window.addEventListener('resize', updateIndicator, { passive: true })
-  handleScroll()
+  updateActiveSection(scrollTop.value)
   setTimeout(updateIndicator, 100) // Ensure fonts are loaded before calculating width
 })
 
 onUnmounted(() => {
-  if (typeof window !== 'undefined') {
-    window.removeEventListener('scroll', handleScroll)
-    window.removeEventListener('resize', updateIndicator)
-  }
+  window.removeEventListener('resize', updateIndicator)
 })
 
 function scrollToSection(e, href) {
@@ -137,7 +118,7 @@ function scrollToSection(e, href) {
       <nav class="nav-links" :class="{ open }">
         <div class="nav-indicator" :style="indicatorStyle" aria-hidden="true"></div>
         <a
-          v-for="(link, index) in links"
+          v-for="link in links"
           :key="link.href"
           :href="link.href"
           :class="{ active: activeSection === link.href.replace('#', '') }"

@@ -8,6 +8,12 @@ const isLeaving = ref(false)
 const isHidden = ref(false)
 
 onMounted(() => {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) {
+    isHidden.value = true
+    isAppReady.value = true
+    return
+  }
+
   // Lock scroll initially
   document.body.style.overflow = 'hidden'
   

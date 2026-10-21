@@ -52,7 +52,19 @@ function startRoleTicker() {
   }, 3000)
 }
 
+function handleVisibility() {
+  if (document.hidden) {
+    if (roleInterval) {
+      clearInterval(roleInterval)
+      roleInterval = null
+    }
+  } else if (!roleInterval && isAppReady.value) {
+    startRoleTicker()
+  }
+}
+
 onMounted(() => {
+  document.addEventListener('visibilitychange', handleVisibility)
   if (isAppReady.value) {
     startRoleTicker()
   }
@@ -65,6 +77,7 @@ watch(isAppReady, (ready) => {
 })
 
 onUnmounted(() => {
+  document.removeEventListener('visibilitychange', handleVisibility)
   if (roleInterval) clearInterval(roleInterval)
 })
 </script>
@@ -213,7 +226,6 @@ onUnmounted(() => {
   display: block;
   transform: translateY(110%);
   transition: transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-  will-change: transform;
 }
 
 .reveal-text.is-visible {
@@ -357,7 +369,6 @@ onUnmounted(() => {
 .role-text {
   display: inline-block;
   color: var(--text);
-  will-change: transform, opacity;
 }
 
 .role-slide-enter-active,

@@ -1,6 +1,7 @@
 <script setup>
 import { ref, reactive } from 'vue'
 import { useToast } from '../composables/useToast'
+import { site } from '../data/site'
 
 const { showToast } = useToast()
 
@@ -14,7 +15,7 @@ const form = reactive({
 const isSubmitting = ref(false)
 const sent = ref(false)
 
-function submit() {
+async function submit() {
   if (!form.name || !form.email || !form.message) {
     showToast('Please fill in all required fields.', 'warning')
     return
@@ -22,12 +23,28 @@ function submit() {
 
   isSubmitting.value = true
 
-  // Simulate network request
-  setTimeout(() => {
-    isSubmitting.value = false
+  try {
+    const res = await fetch(site.contactFormEndpoint, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Accept: 'application/json'
+      },
+      body: JSON.stringify({
+        name: form.name,
+        email: form.email,
+        subject: form.subject,
+        message: form.message
+      })
+    })
+    if (!res.ok) throw new Error('Request failed')
     sent.value = true
     showToast('Message sent successfully! I will reply soon.', 'success')
-  }, 1200)
+  } catch {
+    showToast('Failed to send message. Please email me directly.', 'error')
+  } finally {
+    isSubmitting.value = false
+  }
 }
 
 function resetForm() {
@@ -39,13 +56,12 @@ function resetForm() {
 }
 
 function copyEmail() {
-  const email = 'agung.astanto14@gmail.com'
   if (navigator.clipboard) {
-    navigator.clipboard.writeText(email).then(() => {
+    navigator.clipboard.writeText(site.email).then(() => {
       showToast('Email address copied to clipboard!', 'success')
     })
   } else {
-    showToast(`Email: ${email}`, 'info')
+    showToast(`Email: ${site.email}`, 'info')
   }
 }
 </script>
@@ -79,7 +95,7 @@ function copyEmail() {
                 </div>
                 <div class="channel-text">
                   <span class="channel-label">Email (Click to copy)</span>
-                  <span class="channel-val">agung.astanto14@gmail.com</span>
+                  <span class="channel-val">{{ site.email }}</span>
                 </div>
               </div>
 
@@ -112,7 +128,7 @@ function copyEmail() {
 
             <div class="social-links">
               <a
-                href="https://github.com/agungast"
+                :href="site.githubUrl"
                 target="_blank"
                 rel="noopener"
                 class="social-btn"
@@ -121,7 +137,7 @@ function copyEmail() {
                 GitHub &rarr;
               </a>
               <a
-                href="https://www.linkedin.com/in/agunghadiastanto/"
+                :href="site.linkedinUrl"
                 target="_blank"
                 rel="noopener"
                 class="social-btn"
@@ -373,6 +389,21 @@ textarea:focus {
   border-color: var(--accent);
   box-shadow: 0 0 0 3px rgba(var(--accent-rgb), 0.15);
   background: var(--card);
+}
+
+/* Autofill: pakai warna tema, tanpa ring highlight yang menempel */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+textarea:-webkit-autofill,
+textarea:-webkit-autofill:hover,
+textarea:-webkit-autofill:focus {
+  -webkit-box-shadow: inset 0 0 0 1000px var(--input-bg);
+  box-shadow: inset 0 0 0 1000px var(--input-bg);
+  -webkit-text-fill-color: var(--text);
+  caret-color: var(--text);
+  border-color: var(--border);
+  transition: background-color 9999s ease-in-out 0s;
 }
 
 .submit-btn {

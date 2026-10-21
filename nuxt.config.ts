@@ -29,6 +29,12 @@ export default defineNuxtConfig({
           rel: 'stylesheet',
           href: 'https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,400;0,9..40,500;0,9..40,600;0,9..40,700;1,9..40,400&family=Outfit:wght@400;500;600;700;800&display=swap'
         }
+      ],
+      script: [
+        {
+          // Terapkan theme sebelum paint pertama agar tidak ada kedipan (FOUC)
+          innerHTML: "(function(){try{var t=localStorage.getItem('theme');if(t!=='light'&&t!=='dark'){t=window.matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light'}document.documentElement.classList.add(t);document.documentElement.setAttribute('data-theme',t)}catch(e){}})()"
+        }
       ]
     }
   },

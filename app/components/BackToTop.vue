@@ -1,17 +1,9 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
+import { computed } from 'vue'
+import { useScrollState } from '../composables/useScrollState'
 
-const show = ref(false)
-const scrollProgress = ref(0)
-
-function updateScroll() {
-  const scrollTop = window.scrollY || document.documentElement.scrollTop
-  const docHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-  if (docHeight > 0) {
-    scrollProgress.value = Math.min(100, Math.max(0, (scrollTop / docHeight) * 100))
-  }
-  show.value = scrollTop > 300
-}
+const { scrollTop, scrollProgress } = useScrollState()
+const show = computed(() => scrollTop.value > 300)
 
 function scrollToTop() {
   window.scrollTo({
@@ -19,15 +11,6 @@ function scrollToTop() {
     behavior: 'smooth'
   })
 }
-
-onMounted(() => {
-  window.addEventListener('scroll', updateScroll, { passive: true })
-  updateScroll()
-})
-
-onUnmounted(() => {
-  window.removeEventListener('scroll', updateScroll)
-})
 </script>
 
 <template>

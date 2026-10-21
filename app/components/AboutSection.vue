@@ -1,12 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-
-const stats = [
-  { value: 3.81, suffix: '', label: 'Cumulative GPA' },
-  { value: 3, suffix: '+', label: 'Key Projects' },
-  { value: 2, suffix: '+', label: 'Years Design & Dev' },
-  { value: 100, suffix: '%', label: 'Precision & Quality' }
-]
+import { stats } from '../data/stats'
 
 const animatedValues = ref(stats.map(s => s.value % 1 !== 0 ? '0.00' : '0'))
 let animated = false
@@ -59,6 +53,18 @@ function updateClock() {
   })
 }
 
+function handleVisibility() {
+  if (document.hidden) {
+    if (clockInterval) {
+      clearInterval(clockInterval)
+      clockInterval = null
+    }
+  } else if (!clockInterval) {
+    updateClock()
+    clockInterval = setInterval(updateClock, 1000)
+  }
+}
+
 onMounted(() => {
   const section = document.getElementById('about')
   if (!section) return
@@ -76,13 +82,14 @@ onMounted(() => {
 
   observer.observe(section)
 
-  // Start clock
   updateClock()
   clockInterval = setInterval(updateClock, 1000)
+  document.addEventListener('visibilitychange', handleVisibility)
 })
 
 onUnmounted(() => {
   if (clockInterval) clearInterval(clockInterval)
+  document.removeEventListener('visibilitychange', handleVisibility)
 })
 </script>
 
