@@ -1,5 +1,3 @@
-import { site } from './site'
-
 export const projects = [
   {
     id: 'wicara',
@@ -17,7 +15,15 @@ export const projects = [
     ],
     tags: ['Figma', 'UI/UX Design', 'Laravel', 'Flutter', 'Git & GitHub'],
     icon: 'ph:chat-circle-dots-bold',
-    githubUrl: site.githubUrl
+    image: '/projects/cover-wicara.png',
+    githubLinks: [
+      { label: 'Web Admin (Laravel)', url: 'https://github.com/Aiyon860/PHP_PBL_Wicara.git' },
+      { label: 'Mobile App (Flutter)', url: 'https://github.com/Aiyon860/Flutter_PBL_Wicara.git' }
+    ],
+    figmaLinks: [
+      { label: 'Figma Web Prototype', url: 'https://www.figma.com/proto/yh0TXL3q912NzyCKKsejbb?node-id=0-1&t=ZJFRVTOUHd6BLKKa-6' },
+      { label: 'Figma Mobile Prototype', url: 'https://www.figma.com/proto/yh0TXL3q912NzyCKKsejbb?node-id=36-32&t=ZJFRVTOUHd6BLKKa-6' }
+    ]
   },
   {
     id: 'gudangku',
@@ -35,7 +41,14 @@ export const projects = [
     ],
     tags: ['Figma', 'UI/UX Design', 'Laravel', 'Blade', 'Git & GitHub'],
     icon: 'ph:package-bold',
-    githubUrl: site.githubUrl
+    image: '/projects/cover-gudangku.png',
+    githubLinks: [
+      { label: 'Frontend', url: 'https://github.com/davinalifianda123/Front_end_PBL.git' },
+      { label: 'Backend (Laravel)', url: 'https://github.com/Aiyon860/PBL-Manajemen-Gudang.git' }
+    ],
+    figmaLinks: [
+      { label: 'Figma Prototype', url: 'https://www.figma.com/proto/JDYsmHJtZomm8Cxc0EgD35?node-id=113-7674&t=ZJFRVTOUHd6BLKKa-6' }
+    ]
   },
   {
     id: 'tanikita',
@@ -53,6 +66,9 @@ export const projects = [
     ],
     tags: ['Figma', 'UI/UX Design', 'User Research', 'Wireframing', 'Interactive Prototype'],
     icon: 'ph:plant-bold',
-    githubUrl: site.githubUrl
+    image: '/projects/cover-tanikita.png',
+    figmaLinks: [
+      { label: 'Figma Prototype', url: 'https://www.figma.com/proto/418FaObB8vhhY0GhbRtgLx?node-id=464-4040&t=ZJFRVTOUHd6BLKKa-6' }
+    ]
   }
 ]

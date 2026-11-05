@@ -6,13 +6,13 @@ import { skills } from '../data/skills'
   <section id="skills" class="section">
     <div class="container">
       <div class="section-header">
-        <h2 class="section-title">Tools &amp; Technologies</h2>
+        <h2 class="section-title">Tools & Technologies</h2>
         <p class="section-subtitle">
           Core applications, frameworks, and technologies I utilize to design and develop digital products.
         </p>
       </div>
 
-      <!-- Unified Monochrome Skills Grid -->
+      <!-- Unified Skills Grid -->
       <div class="skills-grid">
         <div
           v-for="(skill, index) in skills"
@@ -22,7 +22,19 @@ import { skills } from '../data/skills'
           :style="{ transitionDelay: `${index * 25}ms` }"
         >
           <div class="skill-icon-wrap">
-            <Icon :name="skill.icon" class="skill-icon-img" />
+            <img
+              v-if="skill.image"
+              :src="skill.image"
+              :alt="skill.name"
+              class="skill-icon-img"
+            />
+            <Icon
+              v-else
+              :name="skill.icon"
+              width="46"
+              height="46"
+              class="skill-icon-img"
+            />
           </div>
           <span class="skill-name">{{ skill.name }}</span>
         </div>
@@ -60,17 +72,16 @@ import { skills } from '../data/skills'
 }
 
 .skill-icon-wrap {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
+  width: 54px;
+  height: 54px;
+  border-radius: 12px;
   background: var(--bg-soft);
   border: 1px solid var(--border);
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 1.75rem;
-  color: var(--text);
   transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+  overflow: hidden;
 }
 
 .skill-item:hover .skill-icon-wrap {
@@ -79,41 +90,22 @@ import { skills } from '../data/skills'
   background: var(--card-hover);
 }
 
-/* =========================================================================
-   Monochrome Filter System for Icons (Dark & Light Theme Adaptive)
-   ========================================================================= */
-.skill-icon-wrap :deep(svg),
+/* Iconify merender <span> dengan background-image SVG, bukan <svg> langsung */
+.skill-icon-wrap :deep(span.iconify) {
+  display: block !important;
+  width: 46px !important;
+  height: 46px !important;
+  background-size: 100% 100% !important;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Custom images: ukuran sama */
 .skill-icon-wrap :deep(img) {
   display: block;
-  width: 28px;
-  height: 28px;
-  transition: all 0.25s cubic-bezier(0.16, 1, 0.3, 1);
-}
-
-/* Dark Mode: Clean Crisp White/Silver Icons */
-html.dark .skill-icon-wrap :deep(svg),
-html.dark .skill-icon-wrap :deep(img) {
-  filter: grayscale(100%) brightness(1.8) contrast(1.1);
-  opacity: 0.85;
-}
-
-html.dark .skill-item:hover .skill-icon-wrap :deep(svg),
-html.dark .skill-item:hover .skill-icon-wrap :deep(img) {
-  filter: grayscale(100%) brightness(2.4) contrast(1.2);
-  opacity: 1;
-}
-
-/* Light Mode: Clean Crisp Charcoal/Black Icons */
-html.light .skill-icon-wrap :deep(svg),
-html.light .skill-icon-wrap :deep(img) {
-  filter: grayscale(100%) brightness(0.2) contrast(1.3);
-  opacity: 0.85;
-}
-
-html.light .skill-item:hover .skill-icon-wrap :deep(svg),
-html.light .skill-item:hover .skill-icon-wrap :deep(img) {
-  filter: grayscale(100%) brightness(0) contrast(1.6);
-  opacity: 1;
+  width: 46px;
+  height: 46px;
+  object-fit: contain;
+  transition: transform 0.25s cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .skill-name {
@@ -136,15 +128,18 @@ html.light .skill-item:hover .skill-icon-wrap :deep(img) {
   }
 
   .skill-icon-wrap {
-    width: 42px;
-    height: 42px;
-    font-size: 1.4rem;
+    width: 48px;
+    height: 48px;
   }
 
-  .skill-icon-wrap :deep(svg),
+  .skill-icon-wrap :deep(span.iconify) {
+    width: 38px !important;
+    height: 38px !important;
+  }
+
   .skill-icon-wrap :deep(img) {
-    width: 24px;
-    height: 24px;
+    width: 38px;
+    height: 38px;
   }
 
   .skill-name {

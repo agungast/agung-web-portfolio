@@ -117,7 +117,7 @@ onUnmounted(() => {
           </div>
           <h3>Bridging UI/UX Design &amp; Web Development</h3>
           <p>
-            I am a Computer Engineering Technology Student at Politeknik Negeri Semarang (GPA 3.81/4.00), specializing in UI/UX Design, Web Development and Multimedia.
+            I am a Computer Engineering Technology Student at Politeknik Negeri Semarang (GPA 3.84/4.00), specializing in UI/UX Design, Web Development and Multimedia.
           </p>
           <p>
             I build intuitive web and mobile interfaces grounded in user-centered design, problem framing, and high-fidelity prototyping, then translate them seamlessly into responsive, pixel-perfect code using Laravel, Flutter, and Vue.
@@ -196,7 +196,7 @@ onUnmounted(() => {
               <span class="timeline-date">2023 &mdash; Present</span>
               <h4>Politeknik Negeri Semarang</h4>
               <p class="timeline-sub">Sarjana Terapan (B.App.Sc) in Computer Engineering Technology</p>
-              <p>GPA: <strong>3.81 / 4.00</strong>. Focusing on digital product engineering, UI/UX design, and software systems.</p>
+              <p>GPA: <strong>3.84 / 4.00</strong>. Focusing on digital product engineering, UI/UX design, and software systems.</p>
             </div>
           </div>
         </div>

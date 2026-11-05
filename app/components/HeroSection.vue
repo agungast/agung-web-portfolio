@@ -36,10 +36,10 @@ function onGreetingHover() {
 }
 
 const titles = [
-  'UI/UX Designer',
+  'Computer Engineering Student',
   'Web Developer',
-  'AI/ML Enthusiast',
-  'Computer Engineering Student'
+  'UI/UX Designer',
+  'AI/ML Enthusiast'
 ]
 
 const currentRoleIndex = ref(0)
@@ -116,6 +116,10 @@ onUnmounted(() => {
         <div class="mask-wrap">
           <h1 class="hero-name reveal-text delay-1" :class="{ 'is-visible': isAppReady }">
             Agung Hadi Astanto
+            <span class="alias-badge" :class="{ 'is-visible': isAppReady }">
+              <span class="alias-slash">/</span>
+              <span class="alias-text">Haast</span>
+            </span>
           </h1>
         </div>
 
@@ -164,7 +168,7 @@ onUnmounted(() => {
           <span class="pill-label">Focus &amp; Stack:</span>
           <div class="pills-list">
             <span class="tech-pill">Figma (UI/UX)</span>
-            <span class="tech-pill">Vue 3 / Nuxt</span>
+            <span class="tech-pill">Vue / Nuxt</span>
             <span class="tech-pill">Javascript</span>
             <span class="tech-pill">Supabase</span>
             <span class="tech-pill">Git &amp; GitHub</span>
@@ -599,7 +603,66 @@ onUnmounted(() => {
   border-right: 1.5px solid var(--text);
 }
 
+/* Alias badge — subtle fade-in + shimmer */
+.alias-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity 0.6s ease 0.8s, transform 0.6s cubic-bezier(0.16, 1, 0.3, 1) 0.8s;
+  vertical-align: middle;
+  margin-left: 10px;
+}
 
+.alias-badge.is-visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.alias-slash {
+  font-size: clamp(1.2rem, 2.5vw, 1.8rem);
+  font-weight: 300;
+  color: var(--border-light);
+  line-height: 1;
+}
+
+.alias-text {
+  position: relative;
+  font-size: clamp(1rem, 2vw, 1.4rem);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  color: var(--muted);
+  font-family: var(--font-mono, 'Courier New', monospace);
+  padding: 2px 10px;
+  border-radius: 6px;
+  background: var(--bg-soft);
+  border: 1px solid var(--border);
+  overflow: hidden;
+}
+
+/* Shimmer sweep */
+.alias-text::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    105deg,
+    transparent 40%,
+    rgba(255, 255, 255, 0.12) 50%,
+    transparent 60%
+  );
+  background-size: 200% 100%;
+  animation: alias-shimmer 3.5s ease-in-out infinite;
+  animation-delay: 1.2s;
+  pointer-events: none;
+}
+
+@keyframes alias-shimmer {
+  0%   { background-position: 200% center; }
+  40%  { background-position: -200% center; }
+  100% { background-position: -200% center; }
+}
 
 @media (max-width: 960px) {
   .hero-inner {

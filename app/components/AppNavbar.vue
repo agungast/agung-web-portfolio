@@ -112,7 +112,7 @@ function scrollToSection(e, href) {
     <div class="container navbar-inner">
       <a href="#home" class="logo" @click="scrollToSection($event, '#home')">
         <img :src="websiteLogo" alt="Agung Portfolio Logo" class="logo-img" />
-        <span class="logo-text">Agung<span class="logo-accent">.Portfolio</span></span>
+        <span class="logo-text">Haast<span class="logo-accent">.dev</span></span>
       </a>
 
       <nav class="nav-links" :class="{ open }">
@@ -495,7 +495,7 @@ function scrollToSection(e, href) {
     display: inline-block;
     text-align: center;
     background: var(--accent);
-    color: #ffffff !important;
+    color: var(--btn-primary-text) !important;
     font-weight: 600;
     border-radius: 10px;
     padding: 12px 20px !important;

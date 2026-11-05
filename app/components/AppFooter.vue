@@ -9,7 +9,7 @@ import { site } from '../data/site'
       <div class="footer-brand">
         <div class="brand-row">
           <img :src="websiteLogo" alt="Agung Portfolio Logo" class="footer-logo-img" />
-          <span class="brand-title">Agung<span class="brand-accent">.Portfolio</span></span>
+          <span class="brand-title">Haast<span class="brand-accent">.dev</span></span>
         </div>
         <p class="brand-desc">
           Building thoughtful, interactive, and modern web experiences.
@@ -26,7 +26,7 @@ import { site } from '../data/site'
 
       <div class="footer-bottom">
         <p class="copy">
-          &copy; {{ new Date().getFullYear() }} Agung Hadi Astanto. Crafted with Vue 3 &amp; Nuxt.
+          &copy; {{ new Date().getFullYear() }} Haast. Crafted with Vue 3 &amp; Nuxt.
         </p>
         <div class="socials">
           <a :href="site.githubUrl" target="_blank" rel="noopener" aria-label="GitHub">GitHub</a>

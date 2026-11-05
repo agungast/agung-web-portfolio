@@ -321,3 +321,13 @@ img {
     transition-duration: 0.01ms !important;
   }
 }
+
+/* ===== Skills Section: Iconify icon size override =====
+   Iconify CSS mode renders <span class="iconify"> with width/height set via
+   :where(.i-collection\:name) — specificity 0. We override globally here
+   so scoped component styles are not needed to win the cascade. */
+.skill-icon-wrap .iconify {
+  width: 46px !important;
+  height: 46px !important;
+  background-size: 100% 100% !important;
+}
