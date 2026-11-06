@@ -10,14 +10,14 @@ export default defineNuxtConfig({
 
   app: {
     head: {
-      title: 'Agung Hadi Astanto | UI/UX Designer & Frontend Developer',
+      title: 'Agung Haast | Portfolio',
       htmlAttrs: { lang: 'en' },
       meta: [
         { charset: 'utf-8' },
         { name: 'viewport', content: 'width=device-width, initial-scale=1' },
         {
           name: 'description',
-          content: 'Personal portfolio of Agung Hadi Astanto – UI/UX Designer & Frontend Developer specializing in user-centered design, Laravel, Flutter, and Vue/Nuxt.'
+          content: 'Personal portfolio of Agung Hadi Astanto – UI/UX Designer & Web Developer specializing in user-centered design, Laravel, Flutter, and Vue/Nuxt.'
         },
         { name: 'theme-color', content: '#0c0d0e' }
       ],

@@ -344,7 +344,8 @@ onUnmounted(() => {
 .project-badge {
   position: absolute;
   bottom: 12px;
-  left: 16px;
+  left: 50%;
+  transform: translateX(-50%);
   background: var(--card);
   color: var(--text-secondary);
   font-size: 0.75rem;
@@ -355,6 +356,7 @@ onUnmounted(() => {
   /* Pastikan badge selalu di atas gambar */
   z-index: 1;
   backdrop-filter: blur(4px);
+  white-space: nowrap;
 }
 
 .project-body {
